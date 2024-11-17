@@ -54,7 +54,7 @@ export default function myLessons()
                     <span>{kanji.meaning}</span>
                     </div>
                   <div>
-                <h2 className = "font-medium">Readings</h2>
+                <h2 className="font-medium">Readings</h2>
                 <ul>
                   {kanji.readings.map((reading, index) => (
                       <li key={index}>{reading}</li>
@@ -65,7 +65,7 @@ export default function myLessons()
               ))}
             </ul>
 
-            <h3 className = "p-2 font-medium">Practice Sentences</h3>
+            <h3 className="p-2 font-medium">Practice Sentences</h3>
             <ul>
               {selectedLesson.practiceSentences.map((sentence, index) => (
                 <li key= {index}>
@@ -144,8 +144,8 @@ export default function myLessons()
     <>
     <Navbar></Navbar>
     <div className="max-w-screen-xl mx-auto p-4">
-      <div className = "flex justify-center">
-      <h1 className = "font-semibold pb-6">My Lessons</h1>
+      <div className="flex justify-center">
+      <h1 className="font-semibold pb-6">My Lessons</h1>
       </div>
       {renderLessonButtons()}
       {renderSelectedLesson()}

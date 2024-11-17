@@ -68,9 +68,9 @@ export default function flashcards()
           setIsFlipped={setIsFlipped}
         />
       )}
-    <div className = "flex justify-between">
-    <button onClick = {handleBack} className = "bg-customCream w-44 h-20 rounded-md ml-4" type= "button" >Back</button>
-    <button onClick = {handleNext} className = "bg-customCream w-44 h-20 rounded-md mr-4" type= "button" >Next</button>
+    <div className="flex justify-between">
+    <button onClick = {handleBack} className="bg-customCream w-44 h-20 rounded-md ml-4" type= "button" >Back</button>
+    <button onClick = {handleNext} className="bg-customCream w-44 h-20 rounded-md mr-4" type= "button" >Next</button>
     </div>
     </>
   )

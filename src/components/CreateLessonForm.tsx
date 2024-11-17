@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, FormEvent, MouseEvent } from "react";
+import { useState, ChangeEvent, FormEvent, MouseEvent, useCallback } from "react";
 import Button from "./button";
 import { collection } from "firebase/firestore";
 import { PracticeSentence, Kanji, Lesson } from "./Lesson";
@@ -127,6 +127,17 @@ const [name, setName] = useState<string>('');
     )));
   }
 
+  const generateAISentences = useCallback(async () => {
+    const res = await fetch("/api/generate-sentences", {
+      method: "POST",
+      body: JSON.stringify({
+        kanji: kanjiList.map(kanji => kanji.character)
+      })
+    });
+    const generatedSentences = await res.json();
+    setPracticeSentences([...generatedSentences, ...practiceSentences])
+  }, [kanjiList, practiceSentences, setPracticeSentences])
+
   function renderPracticeSentences(){
     return(
       <ul>
@@ -149,9 +160,9 @@ const [name, setName] = useState<string>('');
     <>
     <div className="flex justify-center items-center min-h-screen bg-customCream">
         <form className="w-2/3 bg-white shadow-lg rounded-lg p-8 space-y-6 mx-auto" onSubmit={handleSubmit}>
-            <h1 className = "font-semibold p-8 text-lg" >Create New Lesson</h1>
+            <h1 className="font-semibold p-8 text-lg" >Create New Lesson</h1>
             <div>
-                <label htmlFor="name" className = "p-2">Lesson Name</label>
+                <label htmlFor="name" className="p-2">Lesson Name</label>
                 <input className= "border"
                 type="text" 
                 id="name" 
@@ -160,14 +171,14 @@ const [name, setName] = useState<string>('');
                 />
             </div>
             <div>
-            <h3 className = "font-medium pt-6 pb-2">Kanji</h3>
+            <h3 className="font-medium pt-6 pb-2">Kanji</h3>
             <ul>
             {renderKanjiList()}
             </ul>
             </div>
             <div>
-                <label className = "p-2" htmlFor="kanjiChar">Kanji</label>
-                <input className = "border"
+                <label className="p-2" htmlFor="kanjiChar">Kanji</label>
+                <input className="border"
                 type="text" 
                 id="kanjiChar" 
                 value = {kanjiChar}
@@ -175,8 +186,8 @@ const [name, setName] = useState<string>('');
                 />
             </div>
             <div>
-                <label className = "p-2" htmlFor="meaning">Meaning</label>
-                <input className = "border" 
+                <label className="p-2" htmlFor="meaning">Meaning</label>
+                <input className="border" 
                 type="text" 
                 id="meaning" 
                 value = {meaning}
@@ -184,8 +195,8 @@ const [name, setName] = useState<string>('');
                 />
             </div>
             <div>
-                <label className = "p-2" htmlFor="strokeOrder">Stroke Order IMG url</label>
-                <input className = "border"
+                <label className="p-2" htmlFor="strokeOrder">Stroke Order IMG url</label>
+                <input className="border"
                 type="text" 
                 id="strokeOrder" 
                 value = {strokeOrder}
@@ -200,8 +211,8 @@ const [name, setName] = useState<string>('');
             </div>
             <div>
             <div className="flex items-center gap-2">
-                <label className = "whitespace-nowrap" htmlFor="reading">Readings</label>
-                <input className = "border rounded px-4 py-2 flex-grow"
+                <label className="whitespace-nowrap" htmlFor="reading">Readings</label>
+                <input className="border rounded px-4 py-2 flex-grow"
                 type="text" 
                 id="reading" 
                 value = {reading}
@@ -210,25 +221,28 @@ const [name, setName] = useState<string>('');
                 <Button onClick={handleReadingSubmit}>Add Reading</Button>
                 </div>
             </div>
-            <div className = "p-2">
+            <div className="p-2">
             <Button onClick={handleKanjiSubmit} >Add Kanji</Button>
             </div>
             <div>
-            <h1 className = "p-4 font-medium">Practice Sentences</h1>
+              <div className="flex w-full justify-between items-center">
+            <h1 className="p-4 font-medium">Practice Sentences</h1>
+              <button type="button" className="text-blue-500 text-sm" onClick={generateAISentences}>Generate with AI</button>
+            </div>
               <ul>
                 {renderPracticeSentences()}
               </ul>
             </div>
             <div>
-                <label className = "p-2" htmlFor="japanese">Japanese</label>
-                <input className = "border"
+                <label className="p-2" htmlFor="japanese">Japanese</label>
+                <input className="border"
                 type="text" 
                 id="japanese" 
                 value = {japanese}
                 onChange = {(e) => setJapanese(e.target.value)}
                 />
-                <label className = "p-2" htmlFor="english">Translation</label>
-                <input className = "border m-2"
+                <label className="p-2" htmlFor="english">Translation</label>
+                <input className="border m-2"
                 type="text" 
                 id="english" 
                 value = {english}
@@ -236,6 +250,7 @@ const [name, setName] = useState<string>('');
                 />
                 <Button onClick={handleSentenceSubmit}>Add</Button>
               </div>
+
             <Button onClick={handleSubmit} disabled={kanjiList.length==0}>Create Lesson</Button>
         </form>
     </div>
