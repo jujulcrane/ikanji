@@ -41,13 +41,42 @@ export default function myLessons()
     console.log("new name: " + newName);
   };
 
-  const saveLessonName = () => {
+  const saveLessonName = async() => {
     if (!selectedLesson) return;
     console.log("Saving new name", newName);
     setSelectedLesson({...selectedLesson, name: newName});
     setIsEditing(false);
     //PUT call
-  }
+    try 
+    {
+      console.log("Sending to API:", {
+        lessonId: selectedLesson.id,
+        newName,
+      });
+      
+      const res = await fetch("/api/change-lesson-name", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ 
+          lessonId: selectedLesson.id, 
+          newLessonName: newName 
+        }),
+    });
+
+      if (!res.ok)
+      {
+        const error = await res.json();
+        console.error("Error chaning lesson name:", error);
+        throw new Error(error.error);
+      } else {
+        console.log("Lesson name successfuly updated");
+      }
+      } catch (error) {
+      console.error ("Error in saveLessonName:", error);
+    }
+  };
 
   const handleFlashCards = (lesson: Lesson) => {
     if (lesson)
