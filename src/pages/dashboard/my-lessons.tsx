@@ -11,6 +11,8 @@ export default function myLessons()
   const fetchedLessons: Lesson[] | null = useLessons();
   const [myLessons, setMyLessons] = useState<Lesson[] | null>(null);
   const [selectedLesson, setSelectedLesson] = useState<Lesson | null>(null);
+  const [isEditing, setIsEditing] = useState(false);
+  const [newName, setNewName] = useState<string>('');
 
   useEffect(() => {
     if (fetchedLessons) {
@@ -20,6 +22,33 @@ export default function myLessons()
 
   console.log("Fetched Lessons:", myLessons);
 
+  const renderNameInput = () =>{
+    return (
+      <>
+        <input 
+        type="text" 
+        value= {newName} 
+        className="border" 
+        placeholder="new lesson name" 
+        onChange = {(e) => setNewName(e.target.value)}></input>
+      </>
+    );
+  };
+
+  const changeLessonName = () => {
+    console.log("changing lesson name")
+    setIsEditing(true);
+    console.log("new name: " + newName);
+  };
+
+  const saveLessonName = () => {
+    if (!selectedLesson) return;
+    console.log("Saving new name", newName);
+    setSelectedLesson({...selectedLesson, name: newName});
+    setIsEditing(false);
+    //PUT call
+  }
+
   const handleFlashCards = (lesson: Lesson) => {
     if (lesson)
     {
@@ -27,8 +56,9 @@ export default function myLessons()
         pathname: '/dashboard/flashcards',
         query: { lessonId: lesson.id},
       });
-    }
-  }
+    };
+  };
+
   function handleLessonSelect(lessonName: string){
     if (myLessons){
       if (selectedLesson && selectedLesson.name === lessonName) {
@@ -42,10 +72,36 @@ export default function myLessons()
 
   function renderSelectedLesson(): JSX.Element | null{
       if (!selectedLesson) return null;
+      
       console.log("Rendering Lesson:", selectedLesson);
         return (
           <>
             <h1>{selectedLesson.name}</h1>
+            <button 
+            className = "bg-customCream rounded-sm m-2" 
+            type="button" 
+            onClick={changeLessonName}>
+              edit lesson name
+              </button>
+              {isEditing && (
+                <>
+                {renderNameInput()}
+                <button
+              className="bg-customGold rounded-sm m-2"
+              type="button"
+              onClick={saveLessonName}
+            >
+              save
+            </button>
+            <button
+              className="bg-customBrownDark rounded-sm m-2"
+              type="button"
+              onClick={() => setIsEditing(false)}
+            >
+              cancel
+            </button>
+                </>
+              )}
             <ul>
               {selectedLesson.kanjiList.map((kanji) => (
                 <li key={kanji.character}>

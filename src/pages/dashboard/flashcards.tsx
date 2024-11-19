@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import Flashcard from "@/components/Flashcard";
 import { Lesson } from "@/components/Lesson";
 import Navbar from "@/components/Navbar"
+import { Checkbox } from "@/components/ui/checkbox"
+
 
 export default function flashcards() 
 {
@@ -13,6 +15,9 @@ export default function flashcards()
   const [back, setBack] = useState<string>('');
   const [currentCardIndex, setCurrentCardIndex] = useState<number>(0);
   const [isFlipped, setIsFlipped] = useState<boolean>(false);
+
+  const [isMeaningChecked, setIsMeaningChecked] = useState(true);
+  const [isReadingsChecked, setIsReadingsChecked] = useState(true);
   
   useEffect(() => {
     if (lessonId) {
@@ -33,6 +38,14 @@ export default function flashcards()
       fetchLesson();
     }
   }, [lessonId]);
+
+  useEffect(() => {
+    console.log(`Meaning checkbox is now: ${isMeaningChecked ? 'Checked' : 'Unchecked'}`);
+  }, [isMeaningChecked]);
+
+  useEffect(() => {
+    console.log(`Readings checkbox is now: ${isReadingsChecked ? 'Checked' : 'Unchecked'}`);
+  }, [isReadingsChecked]);
 
   if (!lesson) return <p>Loading...</p>
 
@@ -60,6 +73,28 @@ export default function flashcards()
   return (
     <>
     <Navbar></Navbar>
+    <div className="flex items-center space-x-2">
+      <Checkbox 
+      id="meaning"
+      checked={isMeaningChecked}
+      onCheckedChange={() => setIsMeaningChecked(!isMeaningChecked)} />
+      <label
+        htmlFor="meaning"
+        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+      >
+        Meaning
+      </label>
+      <Checkbox 
+      id="readings"
+      checked={isReadingsChecked}
+      onCheckedChange={() => setIsReadingsChecked(!isReadingsChecked)} />
+      <label
+        htmlFor="readings"
+        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+      >
+        Readings
+      </label>
+    </div>
     {lesson.kanjiList && lesson.kanjiList.length > 0 && (
         <Flashcard
           front={front}
