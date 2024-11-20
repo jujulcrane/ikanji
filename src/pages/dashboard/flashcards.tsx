@@ -5,16 +5,22 @@ import { Lesson } from "@/components/Lesson";
 import Navbar from "@/components/Navbar"
 import { Checkbox } from "@/components/ui/checkbox"
 
-
+type Back = {
+  meaning?: string,
+  readings?: string[],
+  strokeOrder?: string,
+  english?: string
+};
 export default function flashcards() 
 {
   const router = useRouter();
   const { lessonId } = router.query;
   const [lesson, setLesson] = useState<Lesson | null>(null);
   const [front, setFront] = useState<string>('');
-  const [back, setBack] = useState<string>('');
+  const [back, setBack] = useState<Back>({});
   const [currentCardIndex, setCurrentCardIndex] = useState<number>(0);
   const [isFlipped, setIsFlipped] = useState<boolean>(false);
+  const [isPracticeSentences, setIsPracticeSentences] = useState<boolean>(false);
 
   const [isMeaningChecked, setIsMeaningChecked] = useState(true);
   const [isReadingsChecked, setIsReadingsChecked] = useState(true);
@@ -40,14 +46,56 @@ export default function flashcards()
   }, [lessonId]);
 
   useEffect(() => {
-    console.log(`Meaning checkbox is now: ${isMeaningChecked ? 'Checked' : 'Unchecked'}`);
-  }, [isMeaningChecked]);
+    if (lesson && lesson.kanjiList[currentCardIndex]) {
+      const newBack: Back = {};
+      if (isPracticeSentences)
+      {
+        setIsMeaningChecked(false);
+        setIsReadingsChecked(false);
+        newBack.english = lesson.practiceSentences[currentCardIndex].english;
+        setFront(lesson.practiceSentences[currentCardIndex].japanese);
+      }
+      else
+      {
+        if (isMeaningChecked) {
+          newBack.meaning = lesson.kanjiList[currentCardIndex].meaning;
+        }
+        if (isReadingsChecked) {
+          newBack.readings = lesson.kanjiList[currentCardIndex].readings;
+        }
+      }
 
-  useEffect(() => {
-    console.log(`Readings checkbox is now: ${isReadingsChecked ? 'Checked' : 'Unchecked'}`);
-  }, [isReadingsChecked]);
+      setBack(newBack);
+    }
+  }, [isMeaningChecked, isReadingsChecked, isPracticeSentences, currentCardIndex, lesson]);
 
   if (!lesson) return <p>Loading...</p>
+
+  const handleMeaningCheck = () => {
+    setIsMeaningChecked(!isMeaningChecked);
+      if (isPracticeSentences) {
+        setIsPracticeSentences(false);
+        if (lesson && currentCardIndex >= lesson.kanjiList.length) {
+          setCurrentCardIndex(0);
+          setFront(lesson.kanjiList[0]?.character || '');
+        } else {
+          setFront(lesson?.kanjiList[currentCardIndex]?.character || '');
+        }
+      }
+    }
+
+    const handleReadingCheck = () => {
+      setIsReadingsChecked(!isReadingsChecked);
+      if (isPracticeSentences) {
+        setIsPracticeSentences(false);
+        if (lesson && currentCardIndex >= lesson.kanjiList.length) {
+          setCurrentCardIndex(0);
+          setFront(lesson.kanjiList[0]?.character || '');
+        } else {
+          setFront(lesson?.kanjiList[currentCardIndex]?.character || '');
+    }
+  }
+}
 
   const handleNext = () => {
     console.log('next card');
@@ -55,7 +103,15 @@ export default function flashcards()
       const nextIndex = currentCardIndex + 1;
       setCurrentCardIndex(nextIndex);
       setFront(lesson.kanjiList[nextIndex].character);
-      setBack(lesson.kanjiList[nextIndex].meaning);
+      
+      const newBack: Back = {};
+      if (isMeaningChecked) {
+        newBack.meaning = lesson.kanjiList[nextIndex].meaning;
+      }
+      if (isReadingsChecked) {
+        newBack.readings = lesson.kanjiList[nextIndex].readings;
+      }
+      setBack(newBack);
       setIsFlipped(false);
     }
   }
@@ -66,18 +122,27 @@ export default function flashcards()
       const prevIndex = currentCardIndex - 1;
       setCurrentCardIndex(prevIndex);
       setFront(lesson.kanjiList[prevIndex].character);
-      setBack(lesson.kanjiList[prevIndex].meaning);
+      
+      const newBack: Back = {};
+      if (isMeaningChecked) {
+        newBack.meaning = lesson.kanjiList[prevIndex].meaning;
+      }
+      if (isReadingsChecked) {
+        newBack.readings = lesson.kanjiList[prevIndex].readings;
+      }
+
+      setBack(newBack);
       setIsFlipped(false);
   }
 }
   return (
     <>
-    <Navbar></Navbar>
+    <Navbar />
     <div className="flex items-center space-x-2">
       <Checkbox 
       id="meaning"
       checked={isMeaningChecked}
-      onCheckedChange={() => setIsMeaningChecked(!isMeaningChecked)} />
+      onCheckedChange={handleMeaningCheck} />
       <label
         htmlFor="meaning"
         className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -87,13 +152,19 @@ export default function flashcards()
       <Checkbox 
       id="readings"
       checked={isReadingsChecked}
-      onCheckedChange={() => setIsReadingsChecked(!isReadingsChecked)} />
+      onCheckedChange={handleReadingCheck} />
       <label
         htmlFor="readings"
         className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
       >
         Readings
       </label>
+      <button
+      className = "rounded-sm border"
+      type = "button"
+      onClick = {() => setIsPracticeSentences(!isPracticeSentences)}>
+        practice sentences
+      </button>
     </div>
     {lesson.kanjiList && lesson.kanjiList.length > 0 && (
         <Flashcard

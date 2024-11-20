@@ -1,6 +1,5 @@
 import { db } from "@/utils/firebase";
-import { collection, deleteDoc, doc, updateDoc } from "firebase/firestore";
-import { getDoc } from "firebase/firestore/lite";
+import { collection, deleteDoc, doc, updateDoc, getDoc } from "firebase/firestore";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 type ResponseData = {
@@ -31,8 +30,9 @@ export default async function handler(
       console.log("Document reference:", lessonId); 
 
       const lessonRef = doc(db, "lessons", lessonId);
-
+      console.log("got lessonref")
       const docSnap = await getDoc(lessonRef);
+      console.log("got doc snap")
 
     if (!docSnap.exists()) 
     {
@@ -42,14 +42,14 @@ export default async function handler(
       });
     }
       console.log("updating doc");
-      await updateDoc(lessonRef, { lessonName: newLessonName});
+      await updateDoc(lessonRef, { name: newLessonName});
 
       res.status(200).json({ message: "Lesson name updated successfully!" });
       } 
       catch (error) 
       {
         console.error("Error updating lesson name from Firestore:", error);
-        res.status(500).json({ error: "Failed to update lesson name" });
+        res.status(500).json({error: error as string});
       }
   } 
   else 

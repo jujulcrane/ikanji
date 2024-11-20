@@ -2,7 +2,12 @@ import { useState } from "react";
 
 interface FlashcardProps {
   front: string;
-  back: string;
+  back: {
+    meaning?: string,
+    readings?: string[],
+    strokeOrder?: string,
+    english?: string
+  };
   isFlipped: boolean;
   setIsFlipped: (flipped: boolean) => void;
 }
@@ -34,7 +39,15 @@ export default function Flashcard({ front, back, isFlipped, setIsFlipped}: Flash
 
           {/* Back Side */}
           <div className="absolute w-full h-full bg-customGold rounded-lg shadow-xl flex items-center justify-center text-center backface-hidden rotate-y-180">
-            <p className="text-xl">{back}</p>
+          {back.meaning && <p className="text-xl">{back.meaning}</p>}
+            {back.readings && (
+              <ul>
+                {back.readings.map((reading, index) => (
+                  <li key={index}>{reading}</li>
+                ))}
+              </ul>
+            )}
+            {back.english && <p className="text-xl">{back.english}</p>}
           </div>
         </div>
       </div>

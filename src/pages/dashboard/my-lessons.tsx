@@ -53,7 +53,7 @@ export default function myLessons()
         lessonId: selectedLesson.id,
         newName,
       });
-      
+
       const res = await fetch("/api/change-lesson-name", {
         method: "PUT",
         headers: {
