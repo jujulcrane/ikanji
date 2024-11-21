@@ -99,28 +99,48 @@ export default function flashcards()
 
   const handleNext = () => {
     console.log('next card');
-    if (lesson && currentCardIndex < lesson.kanjiList.length -1) {
+    if (!lesson) return;
+
+    const listLength = isPracticeSentences
+    ? lesson.practiceSentences.length
+    : lesson.kanjiList.length;
+
+    if (currentCardIndex < listLength -1) {
       const nextIndex = currentCardIndex + 1;
       setCurrentCardIndex(nextIndex);
-      setFront(lesson.kanjiList[nextIndex].character);
-      
-      const newBack: Back = {};
-      if (isMeaningChecked) {
-        newBack.meaning = lesson.kanjiList[nextIndex].meaning;
-      }
-      if (isReadingsChecked) {
-        newBack.readings = lesson.kanjiList[nextIndex].readings;
-      }
-      setBack(newBack);
+
+      if (isPracticeSentences) {
+        setFront(lesson.practiceSentences[nextIndex].japanese);
+        setBack({ english: lesson.practiceSentences[nextIndex].english });
+    } else {
+        setFront(lesson.kanjiList[nextIndex].character);
+        const newBack: Back = {};
+        if (isMeaningChecked) {
+          newBack.meaning = lesson.kanjiList[nextIndex].meaning;
+        }
+        if (isReadingsChecked) {
+          newBack.readings = lesson.kanjiList[nextIndex].readings;
+        }
+        setBack(newBack);
+    }
       setIsFlipped(false);
     }
-  }
+  };
 
   const handleBack = () => {
     console.log('display prev card');
-    if (lesson && currentCardIndex > 0){
+    if (!lesson) return;
+    if (currentCardIndex > 0){
       const prevIndex = currentCardIndex - 1;
       setCurrentCardIndex(prevIndex);
+
+      if (isPracticeSentences)
+      {
+        setFront(lesson.practiceSentences[currentCardIndex].japanese);
+        setBack({english: lesson.practiceSentences[prevIndex].english });
+      }
+      else
+      {
       setFront(lesson.kanjiList[prevIndex].character);
       
       const newBack: Back = {};
@@ -132,9 +152,11 @@ export default function flashcards()
       }
 
       setBack(newBack);
+    }
       setIsFlipped(false);
   }
-}
+};
+
   return (
     <>
     <Navbar />

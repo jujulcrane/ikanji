@@ -78,11 +78,11 @@ export default function myLessons()
     }
   };
 
-  const handleFlashCards = (lesson: Lesson) => {
+  const handleLearning = (lesson: Lesson, route: string) => {
     if (lesson)
     {
       router.push({
-        pathname: '/dashboard/flashcards',
+        pathname: `/dashboard/${route}`,
         query: { lessonId: lesson.id},
       });
     };
@@ -160,7 +160,8 @@ export default function myLessons()
                   </li>
               ))}
             </ul>
-            <button onClick={() => handleFlashCards(selectedLesson)} className="bg-customGold  w-44 h-20 rounded-md m-2"type="button">Flash Cards</button>
+            <button onClick={() => handleLearning(selectedLesson, "flashcards")} className="bg-customGold  w-44 h-20 rounded-md m-2"type="button">Flash Cards</button>
+            <button onClick={() => handleLearning(selectedLesson, "multiple-choice")} className="bg-customGold  w-44 h-20 rounded-md m-2"type="button">Multiple Choice</button>
             <Button onClick={() => handleDeleteClick(selectedLesson)}>Delete {selectedLesson.name}</Button>
           </>
         );

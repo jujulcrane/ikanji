@@ -3,6 +3,7 @@ export interface Lesson  {
   name: string;
   kanjiList: Kanji[]; 
   practiceSentences: PracticeSentence[];
+  multipleChoice?: MultipleChoiceQuestion[];
 };
 
 export interface Kanji  { 
@@ -15,6 +16,12 @@ export interface Kanji  {
 export interface PracticeSentence  {
   japanese: string;
   english: string;
+}
+
+export interface MultipleChoiceQuestion {
+  term: string;
+  correct: string[];
+  false: string[];
 }
 
 export function Lesson() {
