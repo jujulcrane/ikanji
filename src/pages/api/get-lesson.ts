@@ -1,6 +1,5 @@
 import { Lesson } from "@/components/Lesson";
-import { db } from "@/utils/firebase";
-import { getDoc, doc } from "firebase/firestore";
+import { db, auth } from "@/utils/firebaseAdmin";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(
@@ -13,11 +12,23 @@ export default async function handler(
     if (!lessonId || typeof lessonId !== 'string'){
       return res.status(400).json({error: 'Invalid or missing lesson ID'});
     }
-    try{
-      const lessonRef = doc(db, "lessons", lessonId);
-      const lessonSnapshot = await getDoc(lessonRef);
 
-      if (!lessonSnapshot.exists()) {
+    const token = req.headers.authorization?.split("Bearer ")[1];
+    if (!token) {
+      return res.status(401).json({ error: 'Unauthorized, token missing' });
+    }
+
+    try{
+
+      const decodedToken = await auth.verifyIdToken(token);
+      const userId = decodedToken.uid;
+      
+      console.log("Authenticated user ID:", userId);
+
+      const lessonRef = db.collection("lessons").doc(lessonId);
+      const lessonSnapshot = await lessonRef.get();
+
+      if (!lessonSnapshot.exists) {
         return res.status(404).json({ error: 'Lesson not found'});
       }
 

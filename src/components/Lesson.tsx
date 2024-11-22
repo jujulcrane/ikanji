@@ -4,6 +4,7 @@ export interface Lesson  {
   kanjiList: Kanji[]; 
   practiceSentences: PracticeSentence[];
   multipleChoice?: MultipleChoiceQuestion[];
+  userId?: string;
 };
 
 export interface Kanji  { 

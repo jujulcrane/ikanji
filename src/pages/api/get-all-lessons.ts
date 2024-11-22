@@ -1,7 +1,8 @@
 import { Lesson } from "@/components/Lesson";
 import { db } from "@/utils/firebase";
-import { getDocs, collection, addDoc } from "firebase/firestore";
+import { getDocs, collection, query, where} from "firebase/firestore";
 import type { NextApiRequest, NextApiResponse } from "next";
+import { auth } from "@/utils/firebaseAdmin";
 
 type ResponseData = {
   error?: string;
@@ -15,7 +16,27 @@ export default async function handler(
 ) {
   if (req.method === "GET") {
     try{
-    const lessonsSnapshot = await getDocs(collection(db, "lessons"));
+      const token = req.headers.authorization?.split("Bearer ")[1];
+
+      if (!token) {
+        return res.status(401).json({ error: "Unauthorized: Missing token" });
+      }
+
+      // Verify the ID token using the Firebase Admin SDK
+      const decodedToken = await auth.verifyIdToken(token);
+      const userId = decodedToken.uid; // This should match the userId in the request
+      console.log("Authenticated user ID:", userId);
+
+      const { userId: requestedUserId } = req.query;
+
+      if (!requestedUserId || requestedUserId !== userId) {
+        return res.status(403).json({ error: "Forbidden: User ID does not match" });
+      }
+    
+    const lessonsRef = collection(db, "lessons")
+    const q = query(lessonsRef, where("userId", "==", userId));
+    const lessonsSnapshot = await getDocs(q);
+    
     const lessons: Lesson[] = (lessonsSnapshot.docs.map((doc) => ({
       id: doc.id, 
       ...doc.data(),

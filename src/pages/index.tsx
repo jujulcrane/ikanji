@@ -1,10 +1,12 @@
 import Image from "next/image";
 import Button from "@/components/button";
 import { useRouter } from "next/router";
-import Link from "next/link";
 import LoginPageBackground from "../../public/LoginPageIMG.webp";
-import { useState, ChangeEvent, FormEvent } from "react";
-import Navbar from "@/components/Navbar";
+import { useState, ChangeEvent, FormEvent, useEffect } from "react";
+import firebase from 'firebase/compat/app';
+import * as firebaseui from 'firebaseui';
+import 'firebaseui/dist/firebaseui.css';
+import { signInWithGoogle, signOut } from '../utils/firebase';
 
 export default function Home() {
   const router = useRouter();
@@ -34,9 +36,6 @@ export default function Home() {
   return (
     <>
       <div className="grid w-screen h-screen grid-cols-3 grid-flow-row">
-       {/* <Button onClick={() => router.push("/dashboard")}>Sign in</Button>
-       <Link href="/dashboard" className="underline">Go to dashboard</Link>
-       <div className="relative"> */}
        <Image src={LoginPageBackground} className="col-span-2 h-screen object-cover" alt="Login page background"/>
        <div className="flex flex-col w-full justify-center h-full">
         <div className="border p-8 rounded-lg bg-amber-50 h-96 w-4/5 mx-auto space-y-4">
@@ -61,9 +60,12 @@ export default function Home() {
                  onChange = {handlePasswordChange}
                  />
             </div>
-            <Button onClick={handleSubmit}>Sign in</Button>
+            <Button onClick={() => {
+              signInWithGoogle();
+              router.push("/dashboard");
+            }}>Sign in</Button>
         </form>
-        <Button onClick={handleCreateAccount}>Create account</Button>
+        <Button onClick={signOut}>Create account</Button>
         </div>
        </div>
        {/* </div> */}

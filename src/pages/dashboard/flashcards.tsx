@@ -2,8 +2,9 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import Flashcard from "@/components/Flashcard";
 import { Lesson } from "@/components/Lesson";
-import Navbar from "@/components/Navbar"
-import { Checkbox } from "@/components/ui/checkbox"
+import Navbar from "@/components/Navbar";
+import { Checkbox } from "@/components/ui/checkbox";
+import { auth } from "@/utils/firebase";
 
 type Back = {
   meaning?: string,
@@ -28,7 +29,19 @@ export default function flashcards()
   useEffect(() => {
     if (lessonId) {
       const fetchLesson = async() => {
-        const response = await fetch(`/api/get-lesson?lessonId=${lessonId}`);
+        const token = await auth.currentUser?.getIdToken(); 
+          if (!token) {
+            console.error('No authentication token found');
+            return;
+          }
+
+        const response = await fetch(`/api/get-lesson?lessonId=${lessonId}`, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`, // Include the token in the Authorization header
+          },
+        });
+        
         const data = await response.json();
         console.log("Fetched lesson data:", data);
         if (data)

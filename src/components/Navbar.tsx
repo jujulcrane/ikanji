@@ -1,12 +1,17 @@
 import Link from "next/link";
 import Image from "next/image";
 import KanjiLogo from "../../public/I-Kanji_Logo.png";
+import { useAuth } from "./AuthUserProvider";
+import { signOut } from "@/utils/firebase";
+import { useRouter } from "next/router";
 
-export default function Navvar() {
+export default function Navbar() {
+  const router = useRouter();
+
+const { user } = useAuth();
+
   return (
     <>
-
-
 <nav className="bg-white border-gray-200 dark:bg-gray-900">
     <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl p-4">
         <div className="flex items-center space-x-3 rtl:space-x-reverse">
@@ -14,8 +19,11 @@ export default function Navvar() {
             <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">I-漢字</span>
         </div>
         <div className="flex items-center space-x-6 rtl:space-x-reverse">
-            <p className="text-sm  text-gray-500 dark:text-white hover:underline">jlc565@cornell.edu</p>
-            <Link href="../" className="text-sm  text-blue-600 dark:text-blue-500 hover:underline">Login</Link>
+            <p className="text-sm  text-gray-500 dark:text-white hover:underline">{user?.email ?? 'not signed in'}</p>
+            <button onClick={ () => {
+                signOut();
+                router.push("/")
+            }} className="text-sm  text-blue-600 dark:text-blue-500 hover:underline">Sign out</button>
         </div>
     </div>
 </nav>

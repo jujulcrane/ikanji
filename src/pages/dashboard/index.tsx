@@ -10,11 +10,9 @@ import { useLessons } from "@/hooks/use-lessons";
 import Navbar from "@/components/Navbar";
 
 export default function Dashboard() {
-  const lessons = useLessons();
-
   return (
     <>
-    <Navbar></Navbar>
+    <Navbar/>
     <div>
       <p className="text-center p-8">I-漢字へようこそ！ Welcome to I-Kanji!</p>
       <p className="text-center ">Create custom kanji lessons and study them on the my lessons page.</p>

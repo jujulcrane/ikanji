@@ -1,3 +1,4 @@
+import AuthUserProvider from "@/components/AuthUserProvider";
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import localFont from "next/font/local";
@@ -18,7 +19,9 @@ export default function App({ Component, pageProps }: AppProps) {
     <div
     className={`${geistSans.variable} ${geistMono.variable} font-[family-name:var(--font-geist-sans)]`}
   >
+    <AuthUserProvider>
   <Component {...pageProps} />
+  </AuthUserProvider>
   </div>
   );
 }

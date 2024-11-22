@@ -2,6 +2,8 @@ import { useState, ChangeEvent, FormEvent, MouseEvent, useCallback } from "react
 import Button from "./button";
 import { collection } from "firebase/firestore";
 import { PracticeSentence, Kanji, Lesson } from "./Lesson";
+import { auth } from "@/utils/firebase";
+import { getIdToken } from "firebase/auth";
 
 export function CreateNewLessonForm()
 {
@@ -76,11 +78,24 @@ const [name, setName] = useState<string>('');
 
   const handleSubmit = async () => {
 
+    const user = auth.currentUser;
+
+    if (!user) {
+      console.error("User not authenticated");
+      return;
+    } else {
+      console.log("Authenticated user UID:", user.uid);
+    }
+
+    const token = await getIdToken(user);
+
     const newLesson: Lesson = {
       name: name,
       kanjiList: kanjiList,
       practiceSentences: practiceSentences,
+      userId: user.uid,
     };
+
     console.log("Creating Lesson:", newLesson);
 
      try {
@@ -88,6 +103,7 @@ const [name, setName] = useState<string>('');
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify(newLesson),
       });
@@ -97,7 +113,7 @@ const [name, setName] = useState<string>('');
 
         console.log("New lesson created with ID:", result.id);
         
-        setKanjiList([]);
+      setKanjiList([]);
       setPracticeSentences([]);
       setReadings([]);
       setKanjiChar('');
