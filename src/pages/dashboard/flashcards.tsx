@@ -38,7 +38,7 @@ export default function flashcards()
         const response = await fetch(`/api/get-lesson?lessonId=${lessonId}`, {
           method: 'GET',
           headers: {
-            'Authorization': `Bearer ${token}`, // Include the token in the Authorization header
+            'Authorization': `Bearer ${token}`, 
           },
         });
         

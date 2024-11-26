@@ -5,6 +5,7 @@ import { getAuth } from "firebase/auth";
 
 export function useLessons(): Lesson[] | null {
 
+  const [loading, setLoading] = useState(true);
   const [lessons, setLessons] = useState<Lesson[] | null>(null);
   const { user } = useAuth();
 
@@ -15,6 +16,7 @@ export function useLessons(): Lesson[] | null {
     if (!user) {
       console.error("User not authenticated");
       setLessons([]);
+      setLoading(false);
       return;
     }
     try {
@@ -22,14 +24,15 @@ export function useLessons(): Lesson[] | null {
       if (!currentUser) {
         console.error("No current user found");
         setLessons([]);
+        setLoading(false);
         return;
       }
 
-      const token = await currentUser.getIdToken(); // Get the Firebase ID token
+      const token = await currentUser.getIdToken(); 
       const res = await fetch(`/api/get-all-lessons?userId=${user.uid}`, {
         method: "GET",
         headers: {
-          "Authorization": `Bearer ${token}`, // Include the token here
+          "Authorization": `Bearer ${token}`, 
         },
       });
     
@@ -42,11 +45,14 @@ export function useLessons(): Lesson[] | null {
     console.error("Error fetching lessons:", error);
     setLessons([]);
   }
+  finally {
+    setLoading(false);
+  }
 };
 
   useEffect(() => {
     void queryData();
   }, []);
 
-  return lessons;
+  return loading ? null : lessons;
 }

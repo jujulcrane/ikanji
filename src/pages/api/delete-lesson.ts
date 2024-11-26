@@ -1,5 +1,4 @@
-import { db } from "@/utils/firebase";
-import { collection, deleteDoc, doc } from "firebase/firestore";
+import { db, auth } from "@/utils/firebaseAdmin";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 type ResponseData = {
@@ -13,15 +12,24 @@ export default async function handler(
 ) {
   if (req.method === "DELETE") {
   try{
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+
+    const idToken = authHeader.split(" ")[1];
+    const decodedToken = await auth.verifyIdToken(idToken);
+    console.log("Authenticated user ID:", decodedToken.uid);
+
     const { lessonId } = req.body;
 
     if (!lessonId){
       return res.status(400).json({ error: "Missing lesson ID" });
     }
 
-    const lessonRef = doc(db, "lessons", lessonId);
+    const lessonRef = db.collection("lessons").doc(lessonId);
     
-    await deleteDoc(lessonRef);
+    await lessonRef.delete();
 
     res.status(200).json({ message: "Lesson deleted successfully!" });
     } catch (error) {

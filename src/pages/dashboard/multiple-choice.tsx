@@ -1,7 +1,10 @@
 import { Lesson } from "@/components/Lesson";
+import MultipleChoiceCard from "@/components/MultipleChoiceCard";
 import Navbar from "@/components/Navbar";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
+import { auth } from "@/utils/firebase";
+import { getIdToken } from "firebase/auth";
 
 interface MultipleChoiceQuestion {
   term: string;
@@ -57,12 +60,25 @@ export default function MultipleChoice()
   const { lessonId } = router.query;
   const [lesson, setLesson] = useState<Lesson | null>(null);
   const [multipleChoice, setMultipleChoice] = useState<MultipleChoiceQuestion[] | null>(null);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [showNextButton, setShowNextButton] = useState(false);
 
 
   useEffect(() => {
     if (lessonId) {
       const fetchLesson = async() => {
-        const response = await fetch(`/api/get-lesson?lessonId=${lessonId}`);
+        const token = await auth.currentUser?.getIdToken(); 
+          if (!token) {
+            console.error('No authentication token found');
+            return;
+          }
+
+        const response = await fetch(`/api/get-lesson?lessonId=${lessonId}`, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`, 
+          },
+        });
         const data = await response.json();
         console.log("Fetched lesson data:", data);
         if (data)
@@ -98,57 +114,132 @@ export default function MultipleChoice()
   // });
 
   useEffect(() => {
-    if (lesson)
-    {
-        if (lesson.multipleChoice)
-      {
+    if (lesson) {
+      console.log("Lesson data:", lesson); // Debug log
+      const kanjiList = lesson.kanjiList || []; // Use a fallback
+      if (lesson.multipleChoice) {
         setMultipleChoice(lesson.multipleChoice);
-      }
-      else
-      {
-        
-        const newMultipleChoice: MultipleChoiceQuestion[] = lesson.kanjiList.map((kanji) => ({
+      } else if (kanjiList.length > 0) {
+        const newMultipleChoice: MultipleChoiceQuestion[] = kanjiList.map((kanji) => ({
           term: kanji.character,
           correct: kanji.readings,
           false: generateWrongAnswers(kanji.readings),
         }));
         setMultipleChoice(newMultipleChoice);
-        console.log('POST to database');
+        console.log("POST to database");
+      } else {
+        console.error("Kanji list is empty or undefined");
       }
-    };
+    }
   }, [lesson]);
+
+  useEffect(() => {
+    if (lessonId && multipleChoice && lesson && !lesson.multipleChoice) {
+      console.log("All data ready. Calling storeMultipleChoice.");
+      storeMultipleChoice(multipleChoice);
+    } else {
+      console.log("Waiting for data or multipleChoice already exists:", { lessonId, multipleChoice, lesson });
+    }
+  }, [lessonId, multipleChoice, lesson]);
+
+  const storeMultipleChoice = async (newMultipleChoice : MultipleChoiceQuestion[]) => {
+
+    if (!lessonId) {
+      console.error("Cannot store multiple choice: lessonId is undefined");
+      return;
+    }
+
+    if (!newMultipleChoice || newMultipleChoice.length === 0) {
+      console.error("Cannot store multiple choice: no data provided");
+      return;
+    }
+
+    const user = auth.currentUser;
+
+    if (!user) {
+      console.error("User not authenticated");
+      return;
+    } else {
+      console.log("Authenticated user UID:", user.uid);
+    }
+
+    const token = await getIdToken(user);
+
+    console.log("Storing multiple choice for lessonId:", lessonId);
+    console.log("Multiple Choice Data:", newMultipleChoice);
+
+     try {
+      const response = await fetch("/api/update-multiple-choice", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          lessonId, 
+          multipleChoice: newMultipleChoice,
+        }),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+
+        console.log("New multiple choice created with ID:", result.id);
+        
+      } else {
+        throw new Error("Failed to store multiple choice");
+      }
+     } catch (error) {
+      console.error("Error sending multiple choice to backend:", error);
+     }
+  };
+
+  const handleCorrectAnswer = () => {
+    setShowNextButton(true);
+  };
+
+  const handleNextQuestion = () => {
+    setShowNextButton(false);
+    setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
+  };
+
+  if (!lesson || !multipleChoice) {
+    return (
+      <div>
+        <Navbar />
+        <p>Loading lesson or multiple-choice data...</p>
+      </div>
+    );
+  }
+
+  const currentQuestion = multipleChoice[currentQuestionIndex];
+  if (!currentQuestion) {
+    return (
+      <div>
+        <Navbar />
+        <p>You've completed the lesson!</p>
+      </div>
+    );
+  }
   
   return (
     <>
-    <Navbar></Navbar>
-    <div className="flex items-center space-x-2">
-<p>Multiple Choice</p>
-{lesson ? multipleChoice ? (
-    <ul>
-  {multipleChoice.map((kanji, kanjiIndex) => 
-  <li key={kanjiIndex}>
-    <p>{kanji.term}</p>
-    <ul>
-    {kanji.correct.map((reading, index) => (
-    <li key={`correct-${kanjiIndex}-${index}`}>
-      {reading}
-      </li>))}
-    </ul>
-    <ul>
-      <p> Wrong answers </p>
-      <br></br>
-    {kanji.false.map((falseChoice, index) => (
-      <li key= {`false-${kanjiIndex}-${index}`}>{falseChoice}</li>))}
-    </ul>
-    </li>
-  )}
-  </ul>
-  ) : (
-    <p>Loading lesson data...</p>
-  ) : (
-    <p>Loading multiple choice data...</p>
-  )
-  }
+    <Navbar />
+      <div className="flex flex-col items-center">
+        <MultipleChoiceCard
+          question={currentQuestion.term}
+          correct={currentQuestion.correct[randomIndex(0, currentQuestion.correct.length)]}
+          incorrect={currentQuestion.false}
+          onCorrect={handleCorrectAnswer}
+        />
+        {showNextButton && (
+          <button
+            className="mt-4 bg-blue-500 text-white py-2 px-4 rounded"
+            onClick={handleNextQuestion}
+          >
+            Next Question
+          </button>
+        )}
       </div>
     </>
   );

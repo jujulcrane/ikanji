@@ -2,6 +2,7 @@ import { Lesson } from "@/components/Lesson";
 import Navbar from "@/components/Navbar";
 import Button from "@/components/button";
 import { useLessons } from "@/hooks/use-lessons";
+import { auth } from "@/utils/firebase";
 import router from "next/router";
 import { useEffect, useState } from "react";
 
@@ -13,10 +14,12 @@ export default function myLessons()
   const [selectedLesson, setSelectedLesson] = useState<Lesson | null>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [newName, setNewName] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     if (fetchedLessons) {
       setMyLessons(fetchedLessons);
+      setLoading(false);
     }
   }, [fetchedLessons]);
 
@@ -46,6 +49,15 @@ export default function myLessons()
     console.log("Saving new name", newName);
     setSelectedLesson({...selectedLesson, name: newName});
     setIsEditing(false);
+
+  const currentUser = auth.currentUser;
+
+  if (!currentUser) {
+    console.error("No authenticated user found");
+    return;
+  }
+
+  const idToken = await currentUser.getIdToken();
     //PUT call
     try 
     {
@@ -58,6 +70,7 @@ export default function myLessons()
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Bearer ${idToken}`,
         },
         body: JSON.stringify({ 
           lessonId: selectedLesson.id, 
@@ -168,11 +181,11 @@ export default function myLessons()
   }
 
   function renderLessonButtons(): JSX.Element | null {
-    if (!myLessons){
+    if (loading){
       console.log("No lessons loaded yet");
       return <p>Loading...</p>;
     }
-    if (myLessons.length === 0){
+    if (!myLessons || myLessons.length === 0){
       return <p>No Lessons Available</p>
     }
         return (
@@ -192,7 +205,7 @@ export default function myLessons()
   }
 
   const deleteLesson = async (lessonId: string | undefined) => {
-    if (!myLessons) return;
+    if (!myLessons || !lessonId) return;
     const backupLessons: Lesson[] = [...myLessons];
     const updatedLessons = myLessons.filter((lesson) => lesson.id != lessonId);
     setMyLessons(updatedLessons);
@@ -203,10 +216,18 @@ export default function myLessons()
     }
     
     try {
+      const user = auth.currentUser;
+      if (!user) {
+        console.error("User not authenticated");
+        throw new Error("User not authenticated");
+      }
+      const token = await user.getIdToken();
+
       const response = await fetch("/api/delete-lesson", {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ lessonId }),
       });

@@ -3,6 +3,8 @@ import { Lesson } from "@/components/Lesson";
 import { useLessons } from "@/hooks/use-lessons";
 import Button from "@/components/button";
 import Navbar from "@/components/Navbar";
+import { auth } from "@/utils/firebase";
+import { getIdToken } from "firebase/auth";
 
 export default function Dashboard() {
   const lessons = useLessons();
@@ -167,11 +169,24 @@ export default function Dashboard() {
 
   //for testing purposes
   const postRequest = async (lessonToAdd : Lesson) => {
+    const user = auth.currentUser;
+
+    if (!user) {
+      console.error("User not authenticated");
+      return;
+    } else {
+      console.log("Authenticated user UID:", user.uid);
+    }
+
+    const token = await getIdToken(user);
+
+    lessonToAdd = { ...lessonToAdd, userId: user.uid };
     try {
       const response = await fetch("/api/update-lessons", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify(lessonToAdd),
       });
