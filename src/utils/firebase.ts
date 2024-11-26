@@ -3,7 +3,7 @@ import { initializeApp } from "firebase/app";
 import { getFirestore } from 'firebase/firestore';
 import firebaseConfig from "./firebase.json";
 import withFirebaseAuth from 'react-with-firebase-auth';
-import { GoogleAuthProvider, getAuth, signInWithPopup, signInWithRedirect, signOut } from "firebase/auth";
+import { GoogleAuthProvider, getAuth, signInWithPopup, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -33,6 +33,26 @@ const signInWithGoogle = async() => {
   }
 };
 
+const signInWithEmail = async (email: string, password: string) => {
+  try {
+    const result = await signInWithEmailAndPassword(auth, email, password);
+    return result.user;
+  } catch (error) {
+    console.error("Error during email sign-in:", error);
+    throw error;
+  }
+};
+
+const createAccountWithEmail = async (email: string, password: string) => {
+  try {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    return userCredential.user;
+  } catch (error) {
+    console.error("Error during account creation:", error);
+    throw error;
+  }
+};
+
 const signOutFirebase = () => {
   signOut(auth);
 };
@@ -42,5 +62,7 @@ export {
   auth,
   createComponentWithAuth,
   signInWithGoogle,
+  signInWithEmail,
+  createAccountWithEmail,
   signOutFirebase as signOut,
 };

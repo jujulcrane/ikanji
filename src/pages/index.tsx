@@ -6,31 +6,58 @@ import { useState, ChangeEvent, FormEvent, useEffect } from "react";
 import firebase from 'firebase/compat/app';
 import * as firebaseui from 'firebaseui';
 import 'firebaseui/dist/firebaseui.css';
-import { signInWithGoogle, signOut } from '../utils/firebase';
+import { signInWithGoogle, signOut, signInWithEmail, createAccountWithEmail } from '../utils/firebase';
+import { FirebaseError } from "firebase/app";
 
 export default function Home() {
   const router = useRouter();
 
-  const [username, setUsername] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   
-  const handleUsernameChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setUsername(event.target.value);
+  const handleEmailChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setEmail(event.target.value);
   };
   
   const handlePasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
   };
 
-  const handleSubmit = () => {
-    console.log(`username is set to ${username}`);
-    console.log(`password is set to ${password}`);
-    router.push('/dashboard');
+  const handleSignInWithEmail = async () => {
+    try {
+      await signInWithEmail(email, password);
+      console.log("User signed in successfully");
+      router.push('/dashboard');
+    } catch (error) {
+      alert("Incorrect password or email.");
+      console.error("Sign-in failed:", error);
+    }
   };
 
-  const handleCreateAccount = () =>
-  {
-    console.log(`Let user create an account`);
+  const handleCreateAccount = async() => {
+    try {
+      await createAccountWithEmail(email, password);
+      console.log("account created successfully");
+      router.push('/dashboard');
+    } catch (error) {
+      const firebaseError = error as FirebaseError;
+      if (firebaseError.code === 'auth/email-already-in-use') {
+        alert("You already have an account. Please sign in.");
+        return;
+      } else {
+        console.error("Account creation failed:", error);
+      }
+    }
+  };
+
+  const handleSignInWithGoogle = async () => {
+    try {
+      await signInWithGoogle();
+      console.log("signed in with Google");
+      router.push('/dashboard');
+    } catch (error) {
+      console.error("Google sign-in failed:", error);
+    }
   };
 
   return (
@@ -38,18 +65,18 @@ export default function Home() {
       <div className="grid w-screen h-screen grid-cols-3 grid-flow-row">
        <Image src={LoginPageBackground} className="col-span-2 h-screen object-cover" alt="Login page background"/>
        <div className="flex flex-col w-full justify-center h-full">
-        <div className="border p-8 rounded-lg bg-amber-50 h-96 w-4/5 mx-auto space-y-4">
-        <form onSubmit={handleSubmit}>
+        <div className="border p-8 rounded-lg bg-amber-50 h-auto w-4/5 mx-auto space-y-4">
             <h1>I-漢字</h1>
             <h2>Login</h2>
             <div className="flex flex-col">
-                <label htmlFor="username" className="text-sm">Username</label>
-                <input 
-                type="text" 
-                id="username" 
-                value = {username}
-                onChange = {handleUsernameChange}
-                />
+            <label htmlFor="email" className="text-sm">Email</label>
+            <input
+              type="email"
+              id="email"
+              value={email}
+              onChange={handleEmailChange}
+              className = "border p-2 rounded"
+            />
             </div>
             <div className="flex flex-col">
                 <label htmlFor="password" className="text-sm">Password</label>
@@ -58,17 +85,16 @@ export default function Home() {
                  id="password"
                  value = {password}
                  onChange = {handlePasswordChange}
+                 className="border p-2 rounded"
                  />
             </div>
-            <Button onClick={() => {
-              signInWithGoogle();
-              router.push("/dashboard");
-            }}>Sign in</Button>
-        </form>
-        <Button onClick={signOut}>Create account</Button>
+            <div className="flex flex-col space-y-4">
+        <button type ="button" onClick={handleSignInWithEmail} className="w-full py-2 px-2 font-medium rounded-md bg-black text-white hover:bg-gray-800">Sign in with Email</button>
+          <button type = "button" onClick={handleCreateAccount} className="w-full py-2 px-2 font-medium rounded-md bg-black text-white hover:bg-gray-800">Create Account</button>
+          <button type="button" onClick={handleSignInWithGoogle} className="w-full py-2 px-2 font-medium rounded-md bg-black text-white hover:bg-gray-800">Sign in with Google</button>
+        </div>
         </div>
        </div>
-       {/* </div> */}
       </div>
       </>
   );
