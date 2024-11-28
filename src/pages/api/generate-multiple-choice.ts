@@ -1,4 +1,4 @@
-import { generateObject, streamObject } from 'ai';
+import { streamObject } from 'ai';
 import { z } from 'zod';
 import { openai } from '@ai-sdk/openai';
 import { NextApiRequest, NextApiResponse } from 'next';
@@ -9,24 +9,23 @@ type FalseAnswer = z.infer<typeof falseAnswer>;
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<FalseAnswer[]>
+  res: NextApiResponse<FalseAnswer[] | { error: string }>
 ) {
   if (req.method !== 'POST') {
     res.status(405);
     return;
   }
 
-  try
-  {
+  try {
     console.log('Request body:', req.body);
     const readings = req.body.readings as string[];
     console.log('Parsed readings:', readings);
-   
+
     const { elementStream } = await streamObject({
       model: openai('gpt-4-turbo'),
       output: 'array',
       schema: falseAnswer,
-      prompt: `Generate 5 potential kanji readings in Japanese, that do not include the readings ${readings.join(", ")}.`
+      prompt: `Generate 5 potential kanji readings in Japanese, that do not include the readings ${readings.join(', ')}.`,
     });
     console.log('Element stream initialized:', elementStream);
 
@@ -38,6 +37,7 @@ export default async function handler(
     }
     res.status(200).json(falseAnswers);
   } catch (error) {
-    res.status(500);
+    console.error('Error during processing:', error);
+    res.status(500).json({ error: 'An error occurred' });
   }
 }

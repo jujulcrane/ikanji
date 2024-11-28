@@ -9,9 +9,11 @@ type AuthData = Omit<WrappedComponentProps, 'user'> & {
 
 const AuthUserContext = createContext<AuthData | undefined>(undefined);
 
-const AuthUserProvider: FC<WrappedComponentProps & {
-  children: ReactNode
-}> = ({ children, ...auth }) => (
+const AuthUserProvider: FC<
+  WrappedComponentProps & {
+    children: ReactNode;
+  }
+> = ({ children, ...auth }) => (
   <AuthUserContext.Provider value={auth}>{children}</AuthUserContext.Provider>
 );
 

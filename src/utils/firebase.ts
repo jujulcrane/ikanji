@@ -1,8 +1,15 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
+import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 import withFirebaseAuth from 'react-with-firebase-auth';
-import { GoogleAuthProvider, getAuth, signInWithPopup, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import {
+  GoogleAuthProvider,
+  getAuth,
+  signInWithPopup,
+  signOut,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from 'firebase/auth';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -31,13 +38,13 @@ const createComponentWithAuth = withFirebaseAuth({
   firebaseAppAuth: auth,
 });
 
-const signInWithGoogle = async() => {
+const signInWithGoogle = async () => {
   try {
     const result = await signInWithPopup(auth, providers.googleProvider);
     return result.user; // Return the user object
   } catch (error) {
-    console.error("Error during sign-in:", error);
-    throw error; 
+    console.error('Error during sign-in:', error);
+    throw error;
   }
 };
 
@@ -46,17 +53,21 @@ const signInWithEmail = async (email: string, password: string) => {
     const result = await signInWithEmailAndPassword(auth, email, password);
     return result.user;
   } catch (error) {
-    console.error("Error during email sign-in:", error);
+    console.error('Error during email sign-in:', error);
     throw error;
   }
 };
 
 const createAccountWithEmail = async (email: string, password: string) => {
   try {
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
     return userCredential.user;
   } catch (error) {
-    console.error("Error during account creation:", error);
+    console.error('Error during account creation:', error);
     throw error;
   }
 };

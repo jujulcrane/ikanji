@@ -1,27 +1,27 @@
-import AuthUserProvider from "@/components/AuthUserProvider";
-import "@/styles/globals.css";
-import type { AppProps } from "next/app";
-import localFont from "next/font/local";
+import AuthUserProvider from '@/components/AuthUserProvider';
+import '@/styles/globals.css';
+import type { AppProps } from 'next/app';
+import localFont from 'next/font/local';
 
 const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
+  src: './fonts/GeistVF.woff',
+  variable: '--font-geist-sans',
+  weight: '100 900',
 });
 const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
+  src: './fonts/GeistMonoVF.woff',
+  variable: '--font-geist-mono',
+  weight: '100 900',
 });
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <div
-    className={`${geistSans.variable} ${geistMono.variable} font-[family-name:var(--font-geist-sans)]`}
-  >
-    <AuthUserProvider>
-  <Component {...pageProps} />
-  </AuthUserProvider>
-  </div>
+      className={`${geistSans.variable} ${geistMono.variable} font-[family-name:var(--font-geist-sans)]`}
+    >
+      <AuthUserProvider>
+        <Component {...pageProps} />
+      </AuthUserProvider>
+    </div>
   );
 }

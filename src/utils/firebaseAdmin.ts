@@ -6,7 +6,7 @@ if (!admin.apps.length) {
     credential: admin.credential.cert({
       projectId: process.env.FIREBASE_PROJECT_ID,
       clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-      privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, "\n"),
+      privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
     }),
   });
 }
@@ -19,7 +19,7 @@ const verifyIdToken = async (idToken: string) => {
     const decodedToken = await auth.verifyIdToken(idToken);
     return decodedToken; // Contains the user's UID and other data
   } catch (error) {
-    console.error("Error verifying token:", error);
+    console.error('Error verifying token:', error);
     throw error;
   }
 };

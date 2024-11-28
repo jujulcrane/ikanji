@@ -1,20 +1,20 @@
-export interface Lesson  {
+export interface Lesson {
   id?: string;
   name: string;
-  kanjiList: Kanji[]; 
+  kanjiList: Kanji[];
   practiceSentences: PracticeSentence[];
   multipleChoice?: MultipleChoiceQuestion[];
   userId?: string;
-};
+}
 
-export interface Kanji  { 
+export interface Kanji {
   character: string;
   meaning: string;
   strokeOrder: string;
   readings: string[];
 }
 
-export interface PracticeSentence  {
+export interface PracticeSentence {
   japanese: string;
   english: string;
 }
@@ -25,6 +25,4 @@ export interface MultipleChoiceQuestion {
   false: string[];
 }
 
-export function Lesson() {
-  
-}
+export function Lesson() {}

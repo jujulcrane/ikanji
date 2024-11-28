@@ -1,21 +1,22 @@
-import { useState } from "react";
-
 interface FlashcardProps {
   front: string;
   back: {
-    meaning?: string,
-    readings?: string[],
-    strokeOrder?: string,
-    english?: string
+    meaning?: string;
+    readings?: string[];
+    strokeOrder?: string;
+    english?: string;
   };
   isFlipped: boolean;
-  setIsFlipped: (flipped: boolean) => void;
+  setIsFlipped: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function Flashcard({ front, back, isFlipped, setIsFlipped}: FlashcardProps) {
-  
+export default function Flashcard({
+  front,
+  back,
+  isFlipped,
+  setIsFlipped,
+}: FlashcardProps) {
   const handleFlip = () => {
-    // @ts-ignore
     setIsFlipped((prev) => !prev);
   };
 
@@ -29,7 +30,7 @@ export default function Flashcard({ front, back, isFlipped, setIsFlipped}: Flash
         {/* Inner container that rotates */}
         <div
           className={`relative w-full h-full transition-transform duration-500 ease-in-out transform-style-3d ${
-            isFlipped ? "rotate-y-180" : ""
+            isFlipped ? 'rotate-y-180' : ''
           }`}
         >
           {/* Front Side */}
@@ -39,7 +40,7 @@ export default function Flashcard({ front, back, isFlipped, setIsFlipped}: Flash
 
           {/* Back Side */}
           <div className="absolute w-full h-full bg-customGold rounded-lg shadow-xl flex items-center justify-center text-center backface-hidden rotate-y-180">
-          {back.meaning && <p className="text-xl">{back.meaning}</p>}
+            {back.meaning && <p className="text-xl">{back.meaning}</p>}
             {back.readings && (
               <ul>
                 {back.readings.map((reading, index) => (

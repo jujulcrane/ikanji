@@ -1,6 +1,6 @@
-import { Lesson } from "@/components/Lesson";
-import { db, auth } from "@/utils/firebaseAdmin";
-import type { NextApiRequest, NextApiResponse } from "next";
+import { Lesson } from '@/components/Lesson';
+import { db, auth } from '@/utils/firebaseAdmin';
+import type { NextApiRequest, NextApiResponse } from 'next';
 
 type ResponseData = {
   error?: string;
@@ -13,43 +13,45 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseData>
 ) {
-  if (req.method === "POST") {
-  try{
-
-    const token = req.headers.authorization?.split("Bearer ")[1];
+  if (req.method === 'POST') {
+    try {
+      const token = req.headers.authorization?.split('Bearer ')[1];
       if (!token) {
-        return res.status(401).json({ error: "Unauthorized, token missing" });
+        return res.status(401).json({ error: 'Unauthorized, token missing' });
       }
 
-    console.log("Request received:", req.body);
+      console.log('Request received:', req.body);
 
-    const decodedToken = await auth.verifyIdToken(token);
-    const userId = decodedToken.uid;
+      const decodedToken = await auth.verifyIdToken(token);
+      const userId = decodedToken.uid;
 
-    const lesson: Lesson & { userId: string } = req.body;
+      const lesson: Lesson & { userId: string } = req.body;
 
-    if (!lesson.name || !lesson.kanjiList || !lesson.practiceSentences){
-      console.error("Invalid lesson data:", lesson);
-      return res.status(400).json({error: "Missing lesson data"});
+      if (!lesson.name || !lesson.kanjiList || !lesson.practiceSentences) {
+        console.error('Invalid lesson data:', lesson);
+        return res.status(400).json({ error: 'Missing lesson data' });
+      }
+
+      if (lesson.userId !== userId) {
+        return res
+          .status(403)
+          .json({ error: 'Forbidden, user ID does not match' });
+      }
+
+      console.log('userId from request:', lesson.userId);
+
+      const lessonRef = db.collection('lessons').doc(lesson.userId);
+      console.log('Adding lesson to Firestore:', lesson);
+      await lessonRef.set(lesson);
+
+      res
+        .status(200)
+        .json({ id: lessonRef.id, message: 'Lesson created successfully' });
+    } catch (error) {
+      console.error('Error adding lesson to Firestore:', error);
+      res.status(500).json({ error: 'Failed to create lesson' });
     }
-
-    if (lesson.userId !== userId) {
-      return res.status(403).json({ error: "Forbidden, user ID does not match" });
-    }
-
-    console.log('userId from request:', lesson.userId);
-
-    const lessonRef = db.collection("lessons").doc(lesson.userId);
-    console.log("Adding lesson to Firestore:", lesson);
-    await lessonRef.set(lesson);
-
-    res.status(200).json({ id: lessonRef.id, message: "Lesson created successfully" });
-  } catch (error){
-    console.error("Error adding lesson to Firestore:", error);
-    res.status(500).json({ error: "Failed to create lesson"});
+  } else {
+    res.status(405).json({ error: 'Method Not Allowed' });
   }
-}
-  else {
-  res.status(405).json({ error: "Method Not Allowed" });
-}
 }

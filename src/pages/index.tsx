@@ -1,24 +1,25 @@
-import Image from "next/image";
-import Button from "@/components/button";
-import { useRouter } from "next/router";
-import LoginPageBackground from "../../public/LoginPageIMG.webp";
-import { useState, ChangeEvent, FormEvent, useEffect } from "react";
-import firebase from 'firebase/compat/app';
-import * as firebaseui from 'firebaseui';
+import Image from 'next/image';
+import { useRouter } from 'next/router';
+import LoginPageBackground from '../../public/LoginPageIMG.webp';
+import { useState, ChangeEvent } from 'react';
 import 'firebaseui/dist/firebaseui.css';
-import { signInWithGoogle, signOut, signInWithEmail, createAccountWithEmail } from '../utils/firebase';
-import { FirebaseError } from "firebase/app";
+import {
+  signInWithGoogle,
+  signInWithEmail,
+  createAccountWithEmail,
+} from '../utils/firebase';
+import { FirebaseError } from 'firebase/app';
 
 export default function Home() {
   const router = useRouter();
 
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  
+
   const handleEmailChange = (event: ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
   };
-  
+
   const handlePasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
   };
@@ -26,26 +27,26 @@ export default function Home() {
   const handleSignInWithEmail = async () => {
     try {
       await signInWithEmail(email, password);
-      console.log("User signed in successfully");
+      console.log('User signed in successfully');
       router.push('/dashboard');
     } catch (error) {
-      alert("Incorrect password or email.");
-      console.error("Sign-in failed:", error);
+      alert('Incorrect password or email.');
+      console.error('Sign-in failed:', error);
     }
   };
 
-  const handleCreateAccount = async() => {
+  const handleCreateAccount = async () => {
     try {
       await createAccountWithEmail(email, password);
-      console.log("account created successfully");
+      console.log('account created successfully');
       router.push('/dashboard');
     } catch (error) {
       const firebaseError = error as FirebaseError;
       if (firebaseError.code === 'auth/email-already-in-use') {
-        alert("You already have an account. Please sign in.");
+        alert('You already have an account. Please sign in.');
         return;
       } else {
-        console.error("Account creation failed:", error);
+        console.error('Account creation failed:', error);
       }
     }
   };
@@ -53,49 +54,75 @@ export default function Home() {
   const handleSignInWithGoogle = async () => {
     try {
       await signInWithGoogle();
-      console.log("signed in with Google");
+      console.log('signed in with Google');
       router.push('/dashboard');
     } catch (error) {
-      console.error("Google sign-in failed:", error);
+      console.error('Google sign-in failed:', error);
     }
   };
 
   return (
     <>
       <div className="grid w-screen h-screen grid-cols-3 grid-flow-row">
-       <Image src={LoginPageBackground} className="col-span-2 h-screen object-cover" alt="Login page background"/>
-       <div className="flex flex-col w-full justify-center h-full">
-        <div className="border p-8 rounded-lg bg-amber-50 h-auto w-4/5 mx-auto space-y-4">
+        <Image
+          src={LoginPageBackground}
+          className="col-span-2 h-screen object-cover"
+          alt="Login page background"
+        />
+        <div className="flex flex-col w-full justify-center h-full">
+          <div className="border p-8 rounded-lg bg-amber-50 h-auto w-4/5 mx-auto space-y-4">
             <h1>I-漢字</h1>
             <h2>Login</h2>
             <div className="flex flex-col">
-            <label htmlFor="email" className="text-sm">Email</label>
-            <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={handleEmailChange}
-              className = "border p-2 rounded"
-            />
+              <label htmlFor="email" className="text-sm">
+                Email
+              </label>
+              <input
+                type="email"
+                id="email"
+                value={email}
+                onChange={handleEmailChange}
+                className="border p-2 rounded"
+              />
             </div>
             <div className="flex flex-col">
-                <label htmlFor="password" className="text-sm">Password</label>
-                <input 
+              <label htmlFor="password" className="text-sm">
+                Password
+              </label>
+              <input
                 type="password"
-                 id="password"
-                 value = {password}
-                 onChange = {handlePasswordChange}
-                 className="border p-2 rounded"
-                 />
+                id="password"
+                value={password}
+                onChange={handlePasswordChange}
+                className="border p-2 rounded"
+              />
             </div>
             <div className="flex flex-col space-y-4">
-        <button type ="button" onClick={handleSignInWithEmail} className="w-full py-2 px-2 font-medium rounded-md bg-black text-white hover:bg-gray-800">Sign in with Email</button>
-          <button type = "button" onClick={handleCreateAccount} className="w-full py-2 px-2 font-medium rounded-md bg-black text-white hover:bg-gray-800">Create Account</button>
-          <button type="button" onClick={handleSignInWithGoogle} className="w-full py-2 px-2 font-medium rounded-md bg-black text-white hover:bg-gray-800">Sign in with Google</button>
+              <button
+                type="button"
+                onClick={handleSignInWithEmail}
+                className="w-full py-2 px-2 font-medium rounded-md bg-black text-white hover:bg-gray-800"
+              >
+                Sign in with Email
+              </button>
+              <button
+                type="button"
+                onClick={handleCreateAccount}
+                className="w-full py-2 px-2 font-medium rounded-md bg-black text-white hover:bg-gray-800"
+              >
+                Create Account
+              </button>
+              <button
+                type="button"
+                onClick={handleSignInWithGoogle}
+                className="w-full py-2 px-2 font-medium rounded-md bg-black text-white hover:bg-gray-800"
+              >
+                Sign in with Google
+              </button>
+            </div>
+          </div>
         </div>
-        </div>
-       </div>
       </div>
-      </>
+    </>
   );
 }

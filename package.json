@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint . --ext .ts,.tsx",
+    "format": "prettier --write .",
+    "lint:fix": "eslint . --ext .ts,.tsx --fix && pnpm run format"
   },
   "dependencies": {
     "@ai-sdk/openai": "^0.0.72",
@@ -31,9 +33,12 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "eslint": "^8",
+    "@typescript-eslint/eslint-plugin": "^8.16.0",
+    "@typescript-eslint/parser": "^8.16.0",
+    "eslint": "^8.57.1",
     "eslint-config-next": "15.0.3",
     "postcss": "^8",
+    "prettier": "^3.4.1",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
   }
