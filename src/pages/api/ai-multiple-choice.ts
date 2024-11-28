@@ -1,4 +1,4 @@
-import { generateObject, streamObject } from 'ai';
+import { streamObject } from 'ai';
 import { z } from 'zod';
 import { openai } from '@ai-sdk/openai';
 import { NextApiRequest, NextApiResponse } from 'next';
