@@ -37,10 +37,11 @@ export default async function handler(
 
     for await (const question of elementStream) {
       questions.push(question);
+      console.log('Received question:', question);
     }
     res.status(200).json(questions);
   } catch (error) {
     console.error('Error during processing:', error);
-    res.status(500).json({ error: 'An error occurred' });
+    res.status(500);
   }
 }

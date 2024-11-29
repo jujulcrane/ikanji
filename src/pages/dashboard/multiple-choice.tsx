@@ -1,4 +1,4 @@
-import { Lesson } from '@/components/Lesson';
+import { Lesson, QuizSets } from '@/components/Lesson';
 import MultipleChoiceCard from '@/components/MultipleChoiceCard';
 import Navbar from '@/components/Navbar';
 import { useRouter } from 'next/router';
@@ -11,6 +11,13 @@ interface MultipleChoiceQuestion {
   correct: string[];
   false: string[];
 }
+
+type AiQuestion = {
+  question: string;
+  correctAnswer: string;
+  incorrectOptions: string[];
+};
+
 const hiragana = [
   'あ',
   'い',
@@ -147,11 +154,15 @@ export default function MultipleChoice() {
   const router = useRouter();
   const { lessonId } = router.query;
   const [lesson, setLesson] = useState<Lesson | null>(null);
-  const [multipleChoice, setMultipleChoice] = useState<
-    MultipleChoiceQuestion[] | null
-  >(null);
+  const [readingSet, setReadingSet] = useState<MultipleChoiceQuestion[] | null>(
+    null
+  );
+  const [aiSet, setAiSet] = useState<MultipleChoiceQuestion[] | null>(null);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [showNextButton, setShowNextButton] = useState(false);
+  const [isReadings, setIsReadings] = useState(true);
+  const [hasFetchedQuizSet, setHasFetchedQuizSet] = useState(false);
+  const [loadingAiSet, setLoadingAiSet] = useState(true);
 
   useEffect(() => {
     if (lessonId) {
@@ -202,11 +213,13 @@ export default function MultipleChoice() {
   // });
 
   useEffect(() => {
-    if (lesson) {
+    if (lesson && !hasFetchedQuizSet) {
       console.log('Lesson data:', lesson); // Debug log
       const kanjiList = lesson.kanjiList || []; // Use a fallback
-      if (lesson.multipleChoice) {
-        setMultipleChoice(lesson.multipleChoice);
+      if (lesson.quizSets) {
+        setLoadingAiSet(false);
+        setReadingSet(lesson.quizSets.readingSet);
+        setAiSet(lesson.quizSets.aiSet);
       } else if (kanjiList.length > 0) {
         const newMultipleChoice: MultipleChoiceQuestion[] = kanjiList.map(
           (kanji) => ({
@@ -215,36 +228,86 @@ export default function MultipleChoice() {
             false: generateWrongAnswers(kanji.readings),
           })
         );
-        setMultipleChoice(newMultipleChoice);
-        console.log('POST to database');
+        setReadingSet(newMultipleChoice);
+
+        generateAiSet();
+
+        setHasFetchedQuizSet(true);
       } else {
         console.error('Kanji list is empty or undefined');
       }
     }
-  }, [lesson]);
+  }, [lesson, hasFetchedQuizSet]);
+
+  const generateAiSet = async () => {
+    if (!lesson) return;
+
+    try {
+      console.log(
+        'Generating AI Set for Kanji:',
+        lesson.kanjiList.map((kanji) => kanji.character)
+      ); // Log Kanji being sent to the API
+
+      const res = await fetch('/api/ai-multiple-choice', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          kanji: lesson.kanjiList.map((kanji) => kanji.character),
+        }),
+      });
+
+      if (!res.ok) {
+        throw new Error(`API error: ${res.status} $res.statusText`);
+      }
+
+      const aiQuestions: {
+        question: string;
+        correctAnswer: string;
+        incorrectOptions: string[];
+      }[] = await res.json();
+
+      console.log('Received AI Questions:', aiQuestions); // Log the AI questions returned from the API
+
+      const newAiSet: MultipleChoiceQuestion[] = aiQuestions.map(
+        (q: AiQuestion) => ({
+          term: q.question,
+          correct: [q.correctAnswer],
+          false: q.incorrectOptions,
+        })
+      );
+
+      setAiSet(newAiSet);
+      setLoadingAiSet(false);
+    } catch (error) {
+      console.error('Failed to generate AI set:', error);
+    }
+  };
 
   useEffect(() => {
-    if (lessonId && multipleChoice && lesson && !lesson.multipleChoice) {
-      console.log('All data ready. Calling storeMultipleChoice.');
-      storeMultipleChoice(multipleChoice);
-    } else {
-      console.log('Waiting for data or multipleChoice already exists:', {
-        lessonId,
-        multipleChoice,
-        lesson,
-      });
+    if (lesson && !lesson.quizSets && readingSet && aiSet) {
+      const newQuizSet = {
+        readingSet: readingSet,
+        aiSet: aiSet,
+      };
+      storeMultipleChoice(newQuizSet);
     }
-  }, [lessonId, multipleChoice, lesson]);
+  }, [readingSet, aiSet]);
 
-  const storeMultipleChoice = async (
-    newMultipleChoice: MultipleChoiceQuestion[]
-  ) => {
+  const storeMultipleChoice = async (newQuizSet: QuizSets) => {
     if (!lessonId) {
       console.error('Cannot store multiple choice: lessonId is undefined');
       return;
     }
 
-    if (!newMultipleChoice || newMultipleChoice.length === 0) {
+    if (
+      !newQuizSet ||
+      !readingSet ||
+      !aiSet ||
+      readingSet.length === 0 ||
+      aiSet.length === 0
+    ) {
       console.error('Cannot store multiple choice: no data provided');
       return;
     }
@@ -261,7 +324,7 @@ export default function MultipleChoice() {
     const token = await getIdToken(user);
 
     console.log('Storing multiple choice for lessonId:', lessonId);
-    console.log('Multiple Choice Data:', newMultipleChoice);
+    console.log('Multiple Choice Data:', newQuizSet);
 
     try {
       const response = await fetch('/api/update-multiple-choice', {
@@ -272,7 +335,7 @@ export default function MultipleChoice() {
         },
         body: JSON.stringify({
           lessonId,
-          multipleChoice: newMultipleChoice,
+          newQuizSet: newQuizSet,
         }),
       });
 
@@ -297,7 +360,19 @@ export default function MultipleChoice() {
     setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
   };
 
-  if (!lesson || !multipleChoice) {
+  useEffect(() => {
+    setCurrentQuestionIndex(0);
+    console.log(
+      `Quiz type switched. Now showing: ${isReadings ? 'Readings' : 'AI'}`
+    );
+  }, [isReadings]);
+
+  const selectedSet = isReadings ? readingSet : aiSet;
+  const currentQuestion = selectedSet
+    ? selectedSet[currentQuestionIndex]
+    : null;
+
+  if (!lesson || !selectedSet) {
     return (
       <div>
         <Navbar />
@@ -306,7 +381,6 @@ export default function MultipleChoice() {
     );
   }
 
-  const currentQuestion = multipleChoice[currentQuestionIndex];
   if (!currentQuestion) {
     return (
       <div>
@@ -320,6 +394,30 @@ export default function MultipleChoice() {
     <>
       <Navbar />
       <div className="flex flex-col items-center">
+        <div>
+          <button
+            className="border rounded-sm p-2 m-1"
+            onClick={() => {
+              console.log('Learn Readings clicked');
+              setIsReadings(true);
+              if (!readingSet) {
+                console.log('Reading Set is empty, something is wrong...');
+              }
+            }}
+          >
+            Readings Quiz Set
+          </button>
+          <button
+            className="border rounded-sm p-2 m-1"
+            onClick={() => {
+              console.log('Practice with AI clicked');
+              setIsReadings(false);
+            }}
+            disabled={loadingAiSet}
+          >
+            Practice with AI Set
+          </button>
+        </div>
         <MultipleChoiceCard
           question={currentQuestion.term}
           correct={

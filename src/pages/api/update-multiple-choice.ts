@@ -25,22 +25,23 @@ export default async function handler(
 
       console.log('Decoded user ID:', uid);
 
-      const { lessonId, multipleChoice } = req.body;
-      console.log('Received in API:', { lessonId, multipleChoice });
+      const { lessonId, newQuizSet } = req.body;
+      console.log('Received in API:', { lessonId, newQuizSet });
       console.log('Raw request body:', req.body);
 
       if (!lessonId) {
         return res.status(400).json({ error: 'Missing lesson ID' });
       }
 
-      if (!Array.isArray(multipleChoice) || multipleChoice.length === 0) {
+      if (!newQuizSet) {
         return res
           .status(400)
-          .json({ error: 'Invalid or empty multipleChoice array' });
+          .json({ error: 'Invalid or malformed multipleChoice object' });
       }
 
-      console.log('Received in API:', { lessonId, multipleChoice });
-      console.log('Document reference:', lessonId);
+      console.log('Validated MultipleChoice object:', newQuizSet);
+
+      console.log('Received in API:', { lessonId, newQuizSet });
 
       const lessonRef = db.collection('lessons').doc(lessonId);
       console.log('got lessonref');
@@ -53,7 +54,7 @@ export default async function handler(
         });
       }
 
-      await lessonRef.set({ multipleChoice: multipleChoice }, { merge: true });
+      await lessonRef.set({ quizSets: newQuizSet }, { merge: true });
 
       res.status(200).json({
         id: lessonRef.id,

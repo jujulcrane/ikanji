@@ -3,7 +3,7 @@ export interface Lesson {
   name: string;
   kanjiList: Kanji[];
   practiceSentences: PracticeSentence[];
-  multipleChoice?: MultipleChoiceQuestion[];
+  quizSets?: QuizSets;
   userId?: string;
 }
 
@@ -23,6 +23,16 @@ export interface MultipleChoiceQuestion {
   term: string;
   correct: string[];
   false: string[];
+}
+
+export interface MultipleChoice {
+  questions: MultipleChoiceQuestion[];
+  name: 'readings' | 'ai';
+}
+
+export interface QuizSets {
+  readingSet: MultipleChoiceQuestion[] | null;
+  aiSet: MultipleChoiceQuestion[] | null;
 }
 
 export function Lesson() {}
