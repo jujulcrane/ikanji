@@ -3,7 +3,7 @@ import MultipleChoiceCard from '@/components/MultipleChoiceCard';
 import Navbar from '@/components/Navbar';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
-import { auth } from '@/utils/firebase';
+import { getAuth } from 'firebase/auth';
 import { getIdToken } from 'firebase/auth';
 
 interface MultipleChoiceQuestion {
@@ -163,6 +163,8 @@ export default function MultipleChoice() {
   const [isReadings, setIsReadings] = useState(true);
   const [hasFetchedQuizSet, setHasFetchedQuizSet] = useState(false);
   const [loadingAiSet, setLoadingAiSet] = useState(true);
+
+  const auth = getAuth();
 
   useEffect(() => {
     if (lessonId) {
