@@ -1,6 +1,8 @@
 import { Lesson } from '@/components/Lesson';
-import { db, auth } from '@/utils/firebaseAdmin';
+import { auth } from '@/utils/firebaseAdmin';
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { db } from '@/utils/firebase';
+import { doc, collection, getDoc } from 'firebase/firestore';
 
 export default async function handler(
   req: NextApiRequest,
@@ -24,8 +26,8 @@ export default async function handler(
 
       console.log('Authenticated user ID:', userId);
 
-      const lessonRef = db.collection('lessons').doc(lessonId);
-      const lessonSnapshot = await lessonRef.get();
+      const lessonRef = doc(collection(db, 'lessons'), lessonId);
+      const lessonSnapshot = await getDoc(lessonRef);
 
       if (!lessonSnapshot.exists) {
         return res.status(404).json({ error: 'Lesson not found' });
