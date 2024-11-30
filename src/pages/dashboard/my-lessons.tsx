@@ -55,13 +55,12 @@ export default function MyLessons() {
       console.error('No authenticated user found');
       return;
     }
-
-    const idToken = await currentUser.getIdToken();
     //PUT call
     try {
+      const idToken = await currentUser.getIdToken();
       console.log('Sending to API:', {
         lessonId: selectedLesson.id,
-        newName,
+        newLessonName: newName,
       });
 
       const res = await fetch('/api/change-lesson-name', {
