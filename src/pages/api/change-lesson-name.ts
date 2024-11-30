@@ -1,6 +1,6 @@
 import { db } from '@/utils/firebase';
 import { auth } from '@/utils/firebaseAdmin';
-import { doc, collection, getDoc, updateDoc } from 'firebase/firestore';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 type ResponseData = {
