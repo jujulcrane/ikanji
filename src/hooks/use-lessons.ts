@@ -49,7 +49,7 @@ export function useLessons(): Lesson[] | null {
 
   useEffect(() => {
     void queryData();
-  }, []);
+  }, [user]);
 
   return loading ? null : lessons;
 }
