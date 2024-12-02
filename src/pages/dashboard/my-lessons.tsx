@@ -115,11 +115,11 @@ export default function MyLessons() {
       <>
         <h1>{selectedLesson.name}</h1>
         <button
-          className="bg-customCream rounded-sm m-2"
+          className="bg-customCream rounded-sm mt-2 mb-2 p-1"
           type="button"
           onClick={changeLessonName}
         >
-          edit lesson name
+          Edit Lesson Name
         </button>
         {isEditing && (
           <>
@@ -140,12 +140,12 @@ export default function MyLessons() {
             </button>
           </>
         )}
-        <ul>
+        <ul className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {selectedLesson.kanjiList.map((kanji) => (
             <li key={kanji.character}>
-              <div className="flex justify-center items-center space-x-2">
-                <h2 className="font-medium">{kanji.character}</h2>
-                <span>{kanji.meaning}</span>
+              <div className="flex flex-col items-center space-y-2">
+                <h2 className="font-bold text-2xl">{kanji.character}</h2>
+                <span className="text-sm">{kanji.meaning}</span>
               </div>
               <div>
                 <h2 className="font-medium">Readings</h2>
@@ -266,7 +266,7 @@ export default function MyLessons() {
   return (
     <>
       <Navbar></Navbar>
-      <div className="max-w-screen-xl mx-auto p-4">
+      <div className="max-w-screen-xl mx-auto p-4 md:w-96 lg:w-2/3">
         <div className="flex justify-center">
           <h1 className="font-semibold pb-6">My Lessons</h1>
         </div>
