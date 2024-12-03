@@ -1,4 +1,6 @@
-import { auth, db } from '@/utils/firebaseAdmin';
+import { auth } from '@/utils/firebaseAdmin';
+import { db } from '@/utils/firebase';
+import { doc, updateDoc, getDoc } from "firebase/firestore";
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 type ResponseData = {
@@ -34,8 +36,8 @@ export default async function handler(
       console.log('Received in API:', { lessonId, newLessonName });
       console.log('Document reference:', lessonId);
 
-      const lessonRef = db.doc(`lessons/${lessonId}`);
-      const lessonSnapshot = await lessonRef.get();
+      const lessonRef = doc(db, "lessons", lessonId);
+      const lessonSnapshot = await getDoc(lessonRef);
       console.log('got doc snap');
 
       if (!lessonSnapshot.exists) {
@@ -43,7 +45,7 @@ export default async function handler(
           error: 'Lesson not found',
         });
       }
-      await lessonRef.update({ name: newLessonName });
+      await updateDoc(lessonRef, { name: newLessonName});
 
       res.status(200).json({ message: 'Lesson name updated successfully!' });
     } catch (error) {
