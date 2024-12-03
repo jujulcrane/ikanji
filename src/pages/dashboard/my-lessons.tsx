@@ -144,7 +144,7 @@ export default function MyLessons() {
             </button>
           </>
         )}
-        <ul className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {selectedLesson.kanjiList.map((kanji) => (
             <li key={kanji.character} className='border p-4 rounded-lg bg-customCream/50'>
               <div className="flex flex-col items-center space-y-2">
@@ -163,13 +163,14 @@ export default function MyLessons() {
           ))}
         </ul>
 
-        <h3 className="p-2 font-medium">Practice Sentences</h3>
+        <h3 className="mt-2 p-2 font-medium text-lg">Practice Sentences</h3>
         <ul>
           {selectedLesson.practiceSentences.map((sentence, index) => (
-            <li key={index}>
-              <p>{sentence.japanese}</p>
-              <p>{sentence.english}</p>
-              <br></br>
+            <li className="border my-8 rounded-sm" key={index}>
+              <div className="p-4">
+                <p className="text-lg">{sentence.japanese}</p>
+                <p>{sentence.english}</p>
+              </div>
             </li>
           ))}
         </ul>
@@ -273,7 +274,7 @@ export default function MyLessons() {
   return (
     <>
       <Navbar></Navbar>
-      <div className="max-w-screen-xl mx-auto p-4 md:w-96 lg:w-2/3">
+      <div className="max-w-screen-xl mx-auto p-4 md:w-3/4 lg:w-2/3">
         <h1 className="font-semibold text-lg pb-2">My Lessons</h1>
         {renderLessonButtons()}
         {renderSelectedLesson()}

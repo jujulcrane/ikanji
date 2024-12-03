@@ -172,7 +172,7 @@ export default function Flashcards() {
   return (
     <>
       <Navbar />
-      <div className="flex items-center space-x-2">
+      <div className="flex items-center space-x-2 m-2">
         <Checkbox
           id="meaning"
           checked={isMeaningChecked}
@@ -203,29 +203,31 @@ export default function Flashcards() {
           practice sentences
         </button>
       </div>
-      {lesson.kanjiList && lesson.kanjiList.length > 0 && (
-        <Flashcard
-          front={front}
-          back={back}
-          isFlipped={isFlipped}
-          setIsFlipped={setIsFlipped}
-        />
-      )}
-      <div className="flex justify-between">
-        <button
-          onClick={handleBack}
-          className="bg-customCream w-44 h-20 rounded-md ml-4"
-          type="button"
-        >
-          Back
-        </button>
-        <button
-          onClick={handleNext}
-          className="bg-customCream w-44 h-20 rounded-md mr-4"
-          type="button"
-        >
-          Next
-        </button>
+      <div className="flex flex-col items-center justfiy-center min-h-screen">
+        {lesson.kanjiList && lesson.kanjiList.length > 0 && (
+          <Flashcard
+            front={front}
+            back={back}
+            isFlipped={isFlipped}
+            setIsFlipped={setIsFlipped}
+          />
+        )}
+        <div className="flex justify-evenly w-full mt-4">
+          <button
+            onClick={handleBack}
+            className="bg-customCream w-44 h-20 rounded-md ml-4"
+            type="button"
+          >
+            Back
+          </button>
+          <button
+            onClick={handleNext}
+            className="bg-customCream w-44 h-20 rounded-md mr-4"
+            type="button"
+          >
+            Next
+          </button>
+        </div>
       </div>
     </>
   );

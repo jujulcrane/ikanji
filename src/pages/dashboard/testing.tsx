@@ -5,7 +5,7 @@ import Navbar from '@/components/Navbar';
 import { auth } from '@/utils/firebase';
 import { getIdToken } from 'firebase/auth';
 
-export default function Dashboard() {
+export default function Testing() {
   const lesson9: Lesson = {
     name: 'Lesson 9',
     kanjiList: [
