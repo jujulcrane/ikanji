@@ -281,7 +281,7 @@ export default function Dashboard() {
 
     lessonToAdd = { ...lessonToAdd, userId: user.uid };
     try {
-      const response = await fetch('/api/update-lessons', {
+      const response = await fetch('/api/create-lesson', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -1,5 +1,7 @@
 import { Lesson } from '@/components/Lesson';
-import { db, auth } from '@/utils/firebaseAdmin';
+import { auth } from '@/utils/firebaseAdmin';
+import { db } from '@/utils/firebase';
+import { collection, addDoc } from 'firebase/firestore';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 type ResponseData = {
@@ -39,10 +41,10 @@ export default async function handler(
       }
 
       console.log('userId from request:', lesson.userId);
+      console.log(lesson)
 
-      const lessonRef = db.collection('lessons').doc(lesson.userId);
+      const lessonRef = await addDoc(collection(db, 'lessons'), {...lesson, userId})
       console.log('Adding lesson to Firestore:', lesson);
-      await lessonRef.set(lesson);
 
       res
         .status(200)

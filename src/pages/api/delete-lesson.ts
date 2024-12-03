@@ -1,4 +1,6 @@
-import { db, auth } from '@/utils/firebaseAdmin';
+import { auth } from '@/utils/firebaseAdmin';
+import { db } from '@/utils/firebase';
+import { collection, doc, deleteDoc } from 'firebase/firestore';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 type ResponseData = {
@@ -27,9 +29,9 @@ export default async function handler(
         return res.status(400).json({ error: 'Missing lesson ID' });
       }
 
-      const lessonRef = db.collection('lessons').doc(lessonId);
+      const lessonRef = doc(collection(db, 'lessons'),(lessonId));
 
-      await lessonRef.delete();
+      await deleteDoc(lessonRef);
 
       res.status(200).json({ message: 'Lesson deleted successfully!' });
     } catch (error) {

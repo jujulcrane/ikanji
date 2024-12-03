@@ -5,6 +5,7 @@ import { useLessons } from '@/hooks/use-lessons';
 import { auth } from '@/utils/firebase';
 import router from 'next/router';
 import { useEffect, useState } from 'react';
+import { FaRegEdit } from "react-icons/fa";
 
 export default function MyLessons() {
   const fetchedLessons: Lesson[] | null = useLessons();
@@ -112,15 +113,18 @@ export default function MyLessons() {
 
     console.log('Rendering Lesson:', selectedLesson);
     return (
-      <>
-        <h1>{selectedLesson.name}</h1>
-        <button
-          className="bg-customCream rounded-sm mt-2 mb-2 p-1"
-          type="button"
-          onClick={changeLessonName}
-        >
-          Edit Lesson Name
-        </button>
+      <div className='py-6'>
+        <div className="flex items-start space-x-2">
+          <h1 className='text-2xl font-semibold'>{selectedLesson.name}</h1>
+          <button
+            type="button"
+            className='opacity-60 hover:opacity-100 transition-opacity'
+            onClick={changeLessonName}
+          >
+            <FaRegEdit />
+          </button>
+        </div>
+
         {isEditing && (
           <>
             {renderNameInput()}
@@ -142,7 +146,7 @@ export default function MyLessons() {
         )}
         <ul className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {selectedLesson.kanjiList.map((kanji) => (
-            <li key={kanji.character}>
+            <li key={kanji.character} className='border p-4 rounded-lg bg-customCream/50'>
               <div className="flex flex-col items-center space-y-2">
                 <h2 className="font-bold text-2xl">{kanji.character}</h2>
                 <span className="text-sm">{kanji.meaning}</span>
@@ -169,24 +173,27 @@ export default function MyLessons() {
             </li>
           ))}
         </ul>
-        <button
-          onClick={() => handleLearning(selectedLesson, 'flashcards')}
-          className="bg-customGold  w-44 h-20 rounded-md m-2"
-          type="button"
-        >
-          Flash Cards
-        </button>
-        <button
-          onClick={() => handleLearning(selectedLesson, 'multiple-choice')}
-          className="bg-customGold  w-44 h-20 rounded-md m-2"
-          type="button"
-        >
-          Multiple Choice
-        </button>
+        <div className="pb-2 space-y-2">
+          <h3 className='text-lg font-semibold'>Practice</h3>
+          <button
+            onClick={() => handleLearning(selectedLesson, 'flashcards')}
+            className="bg-customGold  w-44 h-20 rounded-md m-2"
+            type="button"
+          >
+            Flash Cards
+          </button>
+          <button
+            onClick={() => handleLearning(selectedLesson, 'multiple-choice')}
+            className="bg-customGold  w-44 h-20 rounded-md m-2"
+            type="button"
+          >
+            Multiple Choice
+          </button>
+        </div>
         <Button onClick={() => handleDeleteClick(selectedLesson)}>
           Delete {selectedLesson.name}
         </Button>
-      </>
+      </div>
     );
   }
 
@@ -199,7 +206,7 @@ export default function MyLessons() {
       return <p>No Lessons Available</p>;
     }
     return (
-      <>
+      <div className="grid grid-cols-3 gap-2">
         {myLessons.map((lesson) => (
           <Button
             key={lesson.name}
@@ -208,7 +215,7 @@ export default function MyLessons() {
             {lesson.name}
           </Button>
         ))}
-      </>
+      </div>
     );
   }
 
@@ -267,9 +274,7 @@ export default function MyLessons() {
     <>
       <Navbar></Navbar>
       <div className="max-w-screen-xl mx-auto p-4 md:w-96 lg:w-2/3">
-        <div className="flex justify-center">
-          <h1 className="font-semibold pb-6">My Lessons</h1>
-        </div>
+        <h1 className="font-semibold text-lg pb-2">My Lessons</h1>
         {renderLessonButtons()}
         {renderSelectedLesson()}
       </div>
