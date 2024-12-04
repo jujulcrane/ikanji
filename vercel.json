@@ -1,0 +1,8 @@
+{
+  "functions": {
+    "api/ai-multiple-choice.ts": {
+      "runtime": "edge",
+      "maxDuration": 60
+    }
+  }
+}
