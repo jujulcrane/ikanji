@@ -37,19 +37,18 @@ export default function MultipleChoiceCard({
   return (
     <div className="flex flex-col items-center justify-center w-full mt-10">
       <div className="bg-customGold rounded-sm flex items-center justify-center pt-8 pb-4 w-96 h-64 mb-4">
-        <h1 className="text-4xl text-center">{question}</h1>
+        <h1 className="mx-2 text-4xl text-center leading-relaxed">{question}</h1>
       </div>
       <div className="mt-4 grid grid-cols-2 gap-4 w-96">
         {options.map((option, index) => (
           <button
             key={index}
-            className={`pt-1 pb-1 rounded-sm bg-customBrownLight text-white ${
-              selected === option
-                ? option === correct
-                  ? 'bg-green-500'
-                  : 'bg-red-500'
-                : ''
-            }`}
+            className={`pt-1 pb-1 rounded-sm bg-customBrownLight text-white ${selected === option
+              ? option === correct
+                ? 'bg-green-500'
+                : 'bg-red-500'
+              : ''
+              }`}
             type="button"
             value={option}
             onClick={handleSelect}

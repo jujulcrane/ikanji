@@ -440,6 +440,11 @@ export default function MultipleChoice() {
             Practice with AI Set
           </button>
         </div>
+        {loadingAiSet && (
+          <div>
+            <h1>Generating AI set please wait...</h1>
+          </div>
+        )}
         <MultipleChoiceCard
           question={currentQuestion.term}
           correct={
