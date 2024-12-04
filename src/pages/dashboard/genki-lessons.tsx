@@ -2,8 +2,13 @@ import { Lesson } from '@/components/Lesson';
 import Navbar from '@/components/Navbar';
 import { auth } from '@/utils/firebase';
 import { getIdToken } from 'firebase/auth';
+import { useState } from 'react';
+import { TbTruckLoading } from "react-icons/tb";
 
 export default function GenkiLessons() {
+  const [addedLesson, setAddedLesson] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   const chapter10Lesson: Lesson = {
     name: "Genki Book 1 Chapter 10",
@@ -439,10 +444,26 @@ export default function GenkiLessons() {
   };
 
 
+  const displayLoading = () => {
+    return (
+      <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+        <h1 className="text-white"> Adding lesson
+          <TbTruckLoading className="animate-spin" /> ... </h1>
+      </div>
+    );
+  };
 
+  const handleSuccess = () => {
+    setAddedLesson(false);
+    setSuccessMessage(null);  // Clear the success message
+  };
 
 
   const postRequest = async (lessonToAdd: Lesson) => {
+    setLoading(true);
+    setAddedLesson(true);
+    setSuccessMessage(null);
+
     const user = auth.currentUser;
 
     if (!user) {
@@ -473,34 +494,53 @@ export default function GenkiLessons() {
 
       const result = await response.json();
       console.log(result.message);
+      setSuccessMessage('Lesson successfully added!');
     } catch (error) {
       console.error('Error sending lesson to backend:', error);
+      setSuccessMessage('Failed to add lesson :(');
     }
+
+    setLoading(false);
   };
 
   return (
     <div>
       <Navbar></Navbar>
       <h1 className="my-4 font-semibold text-xl text-center"> Add Kanji Lessons from Genki Book 1 to My Lessons</h1>
-      {
-        <div className="flex flex-col items-center min-h-screen">
-          <button className="bg-customCream rounded-sm p-2 my-2 flex justify-center" onClick={() => postRequest(chapter3Lesson)}>
-            <h1 className="mr-2"> Add Genki Lesson 3: </h1> {chapter3Lesson.kanjiList.map((kanji) => kanji.character).join(", ")}
-          </button>
-          {[chapter4Lesson, chapter5Lesson, chapter6Lesson, chapter7Lesson, chapter8Lesson, chapter9Lesson, chapter10Lesson].map(
-            (lesson, index) => (
-              <button
-                key={index}
-                className="bg-customCream rounded-sm p-2 my-2 flex justify-center"
-                onClick={() => postRequest(lesson)}
-              >
-                <h1 className="mr-2">{`Add Genki Lesson ${index + 4}: `}</h1>{" "}
-                {lesson.kanjiList.map((kanji) => kanji.character).join(", ")}
-              </button>
-            )
-          )}
+      {loading && displayLoading()}
+      {successMessage ? (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+          <div className="bg-white p-6 rounded-md text-center">
+            <h2 className="text-xl text-customBrownDark">{successMessage}</h2>
+            <button
+              onClick={handleSuccess}
+              className="mt-4 py-2 px-4 bg-customBrownDark text-white rounded-md hover:bg-customBrownLight"
+            >
+              OK
+            </button>
+          </div>
         </div>
-      }
+      ) : (
+        <div className="flex flex-col items-center min-h-screen">
+          {[chapter3Lesson, chapter4Lesson, chapter5Lesson, chapter6Lesson, chapter7Lesson, chapter8Lesson, chapter9Lesson, chapter10Lesson].map((lesson, index) => (
+            <button
+              key={index}
+              className="bg-customCream rounded-sm p-2 my-2 flex justify-center hover:opacity-50"
+              onClick={() => {
+                const confirmed = window.confirm(`Are you sure you want to add Genki Lesson ${index + 3}?`);
+
+                if (confirmed) {
+                  postRequest(lesson);
+                }
+              }}
+              disabled={addedLesson}
+            >
+              <h1 className="mr-2">{`Add Genki Lesson ${index + 3}:`}</h1>
+              {lesson.kanjiList.map((kanji) => kanji.character).join(", ")}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

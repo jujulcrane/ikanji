@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react';
 import { getAuth } from 'firebase/auth';
 import { getIdToken } from 'firebase/auth';
 import Image from 'next/image';
+import { TbTruckLoading } from "react-icons/tb";
 
 interface MultipleChoiceQuestion {
   term: string;
@@ -441,8 +442,9 @@ export default function MultipleChoice() {
           </button>
         </div>
         {loadingAiSet && (
-          <div>
+          <div className="inline-flex items-center">
             <h1>Generating AI set please wait...</h1>
+            <TbTruckLoading className="animate-spin" />
           </div>
         )}
         <MultipleChoiceCard
