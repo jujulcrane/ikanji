@@ -63,14 +63,14 @@ export default function Home() {
 
   return (
     <>
-      <div className="grid w-screen h-screen grid-cols-3 grid-flow-row">
+      <div className="grid w-screen h-screen md:grid-cols-3 grid-flow-row">
         <Image
           src={LoginPageBackground}
-          className="col-span-2 h-screen object-cover"
+          className="md:col-span-2 md:h-screen object-cover"
           alt="Login page background"
         />
         <div className="flex flex-col w-full justify-center h-full">
-          <div className="border p-8 rounded-lg bg-amber-50 h-auto w-4/5 mx-auto space-y-4">
+          <div className="border p-8 rounded-lg bg-amber-50 h-auto w-4/5 mx-auto md:space-y-4 space-y-2">
             <h1>I-漢字</h1>
             <h2>Login</h2>
             <div className="flex flex-col">
