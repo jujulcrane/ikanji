@@ -129,14 +129,14 @@ export default function MyLessons() {
           <>
             {renderNameInput()}
             <button
-              className="bg-customGold rounded-sm m-2"
+              className="bg-customGold rounded-sm m-2 px-1"
               type="button"
               onClick={saveLessonName}
             >
               save
             </button>
             <button
-              className="bg-customBrownDark rounded-sm m-2"
+              className="bg-customBrownDark rounded-sm m-2 px-1 text-customCream"
               type="button"
               onClick={() => setIsEditing(false)}
             >
