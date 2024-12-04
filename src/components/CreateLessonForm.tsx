@@ -242,14 +242,16 @@ export function CreateNewLessonForm() {
               <label className="whitespace-nowrap" htmlFor="reading">
                 Readings
               </label>
-              <input
-                className="border rounded px-4 py-2 flex-grow"
-                type="text"
-                id="reading"
-                value={reading}
-                onChange={handleReadingChange}
-              />
-              <Button onClick={handleReadingSubmit}>Add Reading</Button>
+              <div className="flex">
+                <input
+                  className="border rounded px-4 py-2 mr-2 md:mr-4 w-1/3 md:w-1/2 lg:w-2/3"
+                  type="text"
+                  id="reading"
+                  value={reading}
+                  onChange={handleReadingChange}
+                />
+                <Button onClick={handleReadingSubmit}>Add Reading</Button>
+              </div>
             </div>
           </div>
           <div className="p-2">
