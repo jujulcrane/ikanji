@@ -144,6 +144,23 @@ export default function MyLessons() {
             </button>
           </>
         )}
+        <div className="my-4 pb-2 space-y-2">
+          <h3 className='text-lg font-semibold'>Practice</h3>
+          <button
+            onClick={() => handleLearning(selectedLesson, 'flashcards')}
+            className="bg-customGold  w-44 h-20 rounded-md m-2"
+            type="button"
+          >
+            Flash Cards
+          </button>
+          <button
+            onClick={() => handleLearning(selectedLesson, 'multiple-choice')}
+            className="bg-customGold  w-44 h-20 rounded-md m-2"
+            type="button"
+          >
+            Multiple Choice
+          </button>
+        </div>
         <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {selectedLesson.kanjiList.map((kanji) => (
             <li key={kanji.character} className='border p-4 rounded-lg bg-customCream/50'>
@@ -167,30 +184,13 @@ export default function MyLessons() {
         <ul>
           {selectedLesson.practiceSentences.map((sentence, index) => (
             <li className="border my-8 rounded-sm" key={index}>
-              <div className="p-4">
+              <div className="p-4 md:flex md:justify-between">
                 <p className="text-lg">{sentence.japanese}</p>
-                <p>{sentence.english}</p>
+                <p className="text-sm opacity-40 mt-2 md:ml-4 md:mt-0">{sentence.english}</p>
               </div>
             </li>
           ))}
         </ul>
-        <div className="pb-2 space-y-2">
-          <h3 className='text-lg font-semibold'>Practice</h3>
-          <button
-            onClick={() => handleLearning(selectedLesson, 'flashcards')}
-            className="bg-customGold  w-44 h-20 rounded-md m-2"
-            type="button"
-          >
-            Flash Cards
-          </button>
-          <button
-            onClick={() => handleLearning(selectedLesson, 'multiple-choice')}
-            className="bg-customGold  w-44 h-20 rounded-md m-2"
-            type="button"
-          >
-            Multiple Choice
-          </button>
-        </div>
         <Button onClick={() => handleDeleteClick(selectedLesson)}>
           Delete {selectedLesson.name}
         </Button>

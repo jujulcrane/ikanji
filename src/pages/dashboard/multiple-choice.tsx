@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import { getAuth } from 'firebase/auth';
 import { getIdToken } from 'firebase/auth';
+import Image from 'next/image';
 
 interface MultipleChoiceQuestion {
   term: string;
@@ -387,7 +388,26 @@ export default function MultipleChoice() {
     return (
       <div>
         <Navbar />
-        <p>You&apos;ve completed the lesson!</p>
+        <div className="flex flex-col items-center justify-center h-screen">
+          <p className="text-center text-xl font-semibold mb-4">You&apos;ve completed the lesson!</p>
+          <Image
+            src="/luffy-thumbs-up-one-piece.avif"
+            alt="Luffy giving a thumbs-up"
+            width={300} // Adjust width as needed
+            height={150} // Adjust height as needed
+            className="my-4"
+          />
+          <button
+            className="mt-4 bg-customBrownLight text-white py-2 px-4 rounded"
+            onClick={() => {
+              setCurrentQuestionIndex(0);
+              setShowNextButton(false);
+              console.log('Quiz restarted');
+            }}
+          >
+            Restart Quiz
+          </button>
+        </div>
       </div>
     );
   }
@@ -396,7 +416,7 @@ export default function MultipleChoice() {
     <>
       <Navbar />
       <div className="flex flex-col items-center">
-        <div>
+        <div className="mt-4">
           <button
             className="border rounded-sm p-2 m-1"
             onClick={() => {
@@ -424,7 +444,7 @@ export default function MultipleChoice() {
           question={currentQuestion.term}
           correct={
             currentQuestion.correct[
-              randomIndex(0, currentQuestion.correct.length)
+            randomIndex(0, currentQuestion.correct.length)
             ]
           }
           incorrect={currentQuestion.false}

@@ -177,7 +177,7 @@ export function CreateNewLessonForm() {
     <>
       <div className="flex justify-center items-center min-h-screen bg-customCream">
         <form
-          className="w-2/3 bg-white shadow-lg rounded-lg p-8 space-y-6 mx-auto"
+          className="w-2/3 bg-white shadow-lg rounded-lg p-8 space-y-6 mx-auto mt-4"
           onSubmit={handleSubmit}
         >
           <h1 className="font-semibold p-8 text-lg">Create New Lesson</h1>
