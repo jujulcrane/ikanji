@@ -3,6 +3,7 @@ import Button from './button';
 import { PracticeSentence, Kanji, Lesson } from './Lesson';
 import { auth } from '@/utils/firebase';
 import { getIdToken } from 'firebase/auth';
+import { TbTruckLoading } from "react-icons/tb";
 
 export function CreateNewLessonForm() {
   const [kanjiChar, setKanjiChar] = useState<string>('');
@@ -11,6 +12,7 @@ export function CreateNewLessonForm() {
   const [reading, setReading] = useState<string>('');
   const [japanese, setJapanese] = useState<string>('');
   const [english, setEnglish] = useState<string>('');
+  const [loadingAiSentences, setLoadingAiSentences] = useState(false);
 
   const [readings, setReadings] = useState<string[]>([]);
   const [practiceSentences, setPracticeSentences] = useState<
@@ -153,6 +155,9 @@ export function CreateNewLessonForm() {
     });
     const generatedSentences = await res.json();
     setPracticeSentences([...generatedSentences, ...practiceSentences]);
+    if (res.ok) {
+      setLoadingAiSentences(false);
+    }
   }, [kanjiList, practiceSentences, setPracticeSentences]);
 
   function renderPracticeSentences() {
@@ -263,10 +268,19 @@ export function CreateNewLessonForm() {
               <button
                 type="button"
                 className="text-blue-500 text-sm"
-                onClick={generateAISentences}
+                onClick={() => {
+                  setLoadingAiSentences(true);
+                  generateAISentences();
+                }}
               >
                 Generate with AI
               </button>
+              {loadingAiSentences && (
+                <div className="inline-flex items-center">
+                  <h1 className="text-sm">Generating AI sentences please wait...</h1>
+                  <TbTruckLoading className="animate-spin" />
+                </div>
+              )}
             </div>
             <ul>{renderPracticeSentences()}</ul>
           </div>
