@@ -10,7 +10,7 @@ export interface Lesson {
 export interface Kanji {
   character: string;
   meaning: string;
-  strokeOrder: string;
+  strokeOrder?: string;
   readings: string[];
 }
 
@@ -35,4 +35,4 @@ export interface QuizSets {
   aiSet: MultipleChoiceQuestion[] | null;
 }
 
-export function Lesson() {}
+export function Lesson() { }
