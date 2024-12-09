@@ -4,6 +4,7 @@ import { auth } from '@/utils/firebase';
 import { getIdToken } from 'firebase/auth';
 import { useState } from 'react';
 import { TbTruckLoading } from "react-icons/tb";
+import { MdAddShoppingCart } from "react-icons/md";
 
 export default function GenkiLessons() {
   const [addedLesson, setAddedLesson] = useState<boolean>(false);
@@ -506,7 +507,7 @@ export default function GenkiLessons() {
   return (
     <div>
       <Navbar></Navbar>
-      <h1 className="my-4 font-semibold text-xl text-center"> Add Kanji Lessons from Genki Book 1 to My Lessons</h1>
+      <h1 className="my-4 font-bold text-xl text-center"> Add Kanji Lessons from Genki Book 1 to My Lessons</h1>
       {loading && displayLoading()}
       {successMessage ? (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
@@ -521,23 +522,27 @@ export default function GenkiLessons() {
           </div>
         </div>
       ) : (
-        <div className="flex flex-col items-center min-h-screen">
+        <div className="grid md:grid-cols-3 sm:gird-cols-2 gird-cols-1 gap-4 items-center justify-center min-h-screen mx-auto md:w-2/3">
           {[chapter3Lesson, chapter4Lesson, chapter5Lesson, chapter6Lesson, chapter7Lesson, chapter8Lesson, chapter9Lesson, chapter10Lesson].map((lesson, index) => (
-            <button
-              key={index}
-              className="bg-customCream rounded-sm p-2 my-2 flex justify-center hover:opacity-50"
-              onClick={() => {
-                const confirmed = window.confirm(`Are you sure you want to add Genki Lesson ${index + 3}?`);
+            <div className="border rounded-sm p-4 relative" key={index}>
 
-                if (confirmed) {
-                  postRequest(lesson);
-                }
-              }}
-              disabled={addedLesson}
-            >
-              <h1 className="mr-2">{`Add Genki Lesson ${index + 3}:`}</h1>
-              {lesson.kanjiList.map((kanji) => kanji.character).join(", ")}
-            </button>
+              <h1 className="font-semibold mr-2">{`Genki Lesson ${index + 3}:`}</h1>
+              <p className="pt-1 md:pb-10 md:w-full w-3/4">{lesson.kanjiList.map((kanji) => kanji.character).join(", ")}</p>
+              <button
+                key={index}
+                className="bg-customCream rounded-sm p-2 my-2 flex justify-center hover:opacity-50 hover:scale-105 absolute bottom-2 right-2"
+                onClick={() => {
+                  const confirmed = window.confirm(`Are you sure you want to add Genki Lesson ${index + 3}?`);
+
+                  if (confirmed) {
+                    postRequest(lesson);
+                  }
+                }}
+                disabled={addedLesson}
+              >
+                <MdAddShoppingCart size={24} />
+              </button>
+            </div>
           ))}
         </div>
       )}
