@@ -1,14 +1,16 @@
 Deployed at https://ikanji.vercel.app/
 
-IKanji: A Customizable Kanji Study App
+# IKanji: A Customizable Kanji Study App
 
 IKanji is a web application designed to make learning Japanese kanji interactive and efficient. Users can create personalized kanji lessons, specifying the meanings, readings, and practice sentences for the characters they wish to study. The app provides engaging study tools like flashcards and multiple-choice quizzes to reinforce learning.
 
-IKanji leverages AI to enhance the user experience:
+### Key Features
+- **Personalized Lessons**: Create custom lessons tailored to your learning needs.
+- **Flashcards and Quizzes**: Study your lessons with interactive tools.
+- **AI Integration**:
+  - **AI-Generated Multiple-Choice Questions**: Dynamically created to test understanding.
+  - **AI-Generated Practice Sentences**: Generate tailored sentences for selected kanji, enhancing contextual learning.
+- **Pre-Made Lessons**: Users can opt to use existing kanji lessons from *Genki Book 1* if they prefer not to create their own custom lessons.
 
-AI-Generated Multiple-Choice Questions: Dynamically created to test understanding.
-AI-Generated Practice Sentences: Users can generate tailored sentences for their selected kanji, deepening contextual learning.
-This combination of customization and intelligent features helps users achieve their language-learning goals more effectively.
-
-
+This combination of customization and intelligent features helps users achieve their language-learning goals more effectively, with flexibility to suit their preferred study approach.
 
