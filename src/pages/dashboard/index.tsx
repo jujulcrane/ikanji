@@ -29,12 +29,12 @@ export default function Dashboard() {
       </div>
       <div className="relative flex flex-col justify-center items-center h-screen px-6 mx-auto rounded-sm w-full">
         <div
-          className="absolute inset-0 bg-cover bg-center bg-black bg-opacity-80 rounded-sm"
+          className="absolute inset-0 bg-cover bg-center bg-black bg-opacity-80 rounded-sm max-w-full p-6"
           style={{
             backgroundImage: "url('/GenkiBg.PNG')",
           }}
         ></div>
-        <div className="flex lg:w-2/3">
+        <div className="flex lg:w-2/3 flex-col lg:flex-row items-center bg-cover bg-center relative p-10">
           <Image
             src="/GenkiBk1Cover.jpg"
             alt="Genki Book 1 Cover"
@@ -43,8 +43,8 @@ export default function Dashboard() {
             sizes="(max-width: 768px) 50vw, (max-width: 1024px) 30vw, 400px"
             className="z-10 rounded-md shadow-lg"
           />
-          <div className="lg:mt-12 lg:mx-10 relative z-10 text-center text-customCream p-6">
-            <p className="lg:mb-10 md:text-lg mb-4 text-sm">
+          <div className="lg:mt-12 lg:mx-10 relative z-10 text-center text-customCream py-6 lg:ml-10">
+            <p className="lg:mb-10 md:text-lg md:px-6 mb-4 text-sm text-left">
               Are you a Genki student? Take your learning to the next level by adding pre-made Kanji lessons from Genki Book 1. Each lesson includes the exact same kanji covered in the corresponding chapter, allowing you to master the material as you progress through the book. These lessons are designed to enhance your learning experience and help you achieve a deeper understanding of the kanji in context.
             </p>
             <Link
