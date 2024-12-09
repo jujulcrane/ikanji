@@ -2,6 +2,9 @@
   "functions": {
     "src/pages/api/ai-multiple-choice.ts": {
       "maxDuration": 60
+    },
+    "src/pages/api/generate-sentences.ts": {
+      "maxDuration": 60
     }
   }
 }
