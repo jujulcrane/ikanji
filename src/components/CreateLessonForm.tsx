@@ -226,7 +226,7 @@ export function CreateNewLessonForm() {
               onChange={(e) => setMeaning(e.target.value)}
             />
           </div>
-          {/* <div>
+          <div>
             <label className="p-2" htmlFor="strokeOrder">
               Stroke Order IMG url
             </label>
@@ -237,7 +237,7 @@ export function CreateNewLessonForm() {
               value={strokeOrder}
               onChange={(e) => setStrokeOrder(e.target.value)}
             />
-          </div> */}
+          </div>
           <div>
             <h1>Readings</h1>
             <ul>{renderReadings()}</ul>

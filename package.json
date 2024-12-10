@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@ai-sdk/openai": "^0.0.72",
+    "@fontsource/noto-sans-jp": "^5.1.0",
     "@radix-ui/react-checkbox": "^1.1.2",
     "@radix-ui/react-toast": "^1.2.2",
     "ai": "^3.4.33",

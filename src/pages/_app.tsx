@@ -3,6 +3,7 @@ import '@/styles/globals.css';
 import type { AppProps } from 'next/app';
 import localFont from 'next/font/local';
 import Head from 'next/head';
+import '@fontsource/noto-sans-jp';
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -41,6 +42,7 @@ export default function App({ Component, pageProps }: AppProps) {
       </Head>
       <div
         className={`${geistSans.variable} ${geistMono.variable} font-[family-name:var(--font-geist-sans)]`}
+        style={{ fontFamily: "'Noto Sans JP', sans-serif" }}
       >
         <AuthUserProvider>
           <Component {...pageProps} />

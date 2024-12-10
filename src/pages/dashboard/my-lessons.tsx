@@ -7,6 +7,7 @@ import router from 'next/router';
 import { useEffect, useState } from 'react';
 import { FaRegEdit } from "react-icons/fa";
 import { RiDeleteBin5Line } from "react-icons/ri";
+import '@fontsource/noto-sans-jp';
 
 export default function MyLessons() {
   const fetchedLessons: Lesson[] | null = useLessons();
@@ -164,7 +165,7 @@ export default function MyLessons() {
         </div>
         <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {selectedLesson.kanjiList.map((kanji) => (
-            <li key={kanji.character} className='border p-4 rounded-lg bg-customCream/50'>
+            <li key={kanji.character} className='border p-4 rounded-lg bg-customCream/50 font-sansJP'>
               <div className="flex flex-col items-center space-y-2">
                 <h2 className="font-bold text-2xl">{kanji.character}</h2>
                 <span className="text-sm">{kanji.meaning}</span>
