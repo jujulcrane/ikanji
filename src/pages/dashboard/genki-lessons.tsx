@@ -522,7 +522,7 @@ export default function GenkiLessons() {
           </div>
         </div>
       ) : (
-        <div className="grid md:grid-cols-3 sm:gird-cols-2 gird-cols-1 gap-4 items-center justify-center min-h-screen mx-auto md:w-2/3">
+        <div className="grid md:grid-cols-3 sm:gird-cols-2 gird-cols-1 gap-x-4 gap-y-4 md:gap-y-2 items-center justify-center min-h-screen mx-auto md:w-2/3">
           {[chapter3Lesson, chapter4Lesson, chapter5Lesson, chapter6Lesson, chapter7Lesson, chapter8Lesson, chapter9Lesson, chapter10Lesson].map((lesson, index) => (
             <div className="border rounded-sm p-4 relative" key={index}>
 

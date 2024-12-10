@@ -6,6 +6,7 @@ import { auth } from '@/utils/firebase';
 import router from 'next/router';
 import { useEffect, useState } from 'react';
 import { FaRegEdit } from "react-icons/fa";
+import { RiDeleteBin5Line } from "react-icons/ri";
 
 export default function MyLessons() {
   const fetchedLessons: Lesson[] | null = useLessons();
@@ -191,9 +192,16 @@ export default function MyLessons() {
             </li>
           ))}
         </ul>
-        <Button onClick={() => handleDeleteClick(selectedLesson)}>
-          Delete {selectedLesson.name}
-        </Button>
+        <div className="flex flex-end">
+          <button className="bg-customBrownLight rounded-sm min-h-44px text-white flex justify-center items-center p-2 hover:bg-opacity-70 ml-auto" onClick={() => handleDeleteClick(selectedLesson)}>
+            <div className="flex">
+              Delete {selectedLesson.name}
+              <div className="pl-2">
+                <RiDeleteBin5Line size={22} />
+              </div>
+            </div>
+          </button>
+        </div>
       </div>
     );
   }
