@@ -1,5 +1,7 @@
 import { Lesson } from '@/components/Lesson';
-import { db, auth } from '@/utils/firebaseAdmin';
+import { auth } from '@/utils/firebaseAdmin';
+import { db } from '@/utils/firebase';
+import { doc, updateDoc, getDoc } from "firebase/firestore";
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 type ResponseData = {
@@ -43,9 +45,9 @@ export default async function handler(
 
       console.log('Received in API:', { lessonId, newQuizSet });
 
-      const lessonRef = db.collection('lessons').doc(lessonId);
+      const lessonRef = doc(db, "lessons", lessonId);
       console.log('got lessonref');
-      const docSnap = await lessonRef.get();
+      const docSnap = await getDoc(lessonRef);
       console.log('got doc snap');
 
       if (!docSnap.exists) {
@@ -54,7 +56,7 @@ export default async function handler(
         });
       }
 
-      await lessonRef.set({ quizSets: newQuizSet }, { merge: true });
+      await updateDoc(lessonRef, { quizSets: newQuizSet });
 
       res.status(200).json({
         id: lessonRef.id,
