@@ -9,6 +9,15 @@ import {
   createAccountWithEmail,
 } from '../utils/firebase';
 import { FirebaseError } from 'firebase/app';
+import { FcGoogle } from "react-icons/fc";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
 
 export default function Home() {
   const router = useRouter();
@@ -107,18 +116,52 @@ export default function Home() {
               </button>
               <button
                 type="button"
-                onClick={handleCreateAccount}
-                className="w-full py-2 px-2 font-medium rounded-md bg-black text-white hover:bg-gray-800"
-              >
-                Create Account
-              </button>
-              <button
-                type="button"
                 onClick={handleSignInWithGoogle}
-                className="w-full py-2 px-2 font-medium rounded-md bg-black text-white hover:bg-gray-800"
+                className="flex items-center justify-center w-full py-2 px-2 font-medium rounded-md bg-black text-white hover:bg-gray-800"
               >
-                Sign in with Google
+                <FcGoogle size={24} className="mr-2" />Continue with Google
               </button>
+              <Dialog>
+                <DialogTrigger className="hover:underline">New to I-Kanji? Create an Account</DialogTrigger>
+                <DialogContent className="bg-customCream">
+                  <DialogHeader>
+                    <DialogTitle>Create an Account</DialogTitle>
+                    <DialogDescription>
+                      <div className="flex flex-col">
+                        <label htmlFor="email" className="text-sm">
+                          Email
+                        </label>
+                        <input
+                          type="email"
+                          id="email"
+                          value={email}
+                          onChange={handleEmailChange}
+                          className="border p-2 rounded"
+                        />
+                      </div>
+                      <div className="flex flex-col">
+                        <label htmlFor="password" className="text-sm">
+                          Password
+                        </label>
+                        <input
+                          type="password"
+                          id="password"
+                          value={password}
+                          onChange={handlePasswordChange}
+                          className="border p-2 rounded"
+                        />
+                      </div>
+                    </DialogDescription>
+                    <button
+                      type="button"
+                      onClick={handleCreateAccount}
+                      className="w-full py-2 px-2 font-medium rounded-md bg-customBrownDark text-customGold hover:opacity-50"
+                    >
+                      Create Account
+                    </button>
+                  </DialogHeader>
+                </DialogContent>
+              </Dialog>
             </div>
           </div>
         </div>
