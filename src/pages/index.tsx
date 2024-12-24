@@ -128,7 +128,7 @@ export default function Home() {
                     <DialogTitle>Create an Account</DialogTitle>
                     <DialogDescription>
                       <div className="flex flex-col">
-                        <label htmlFor="email" className="text-sm">
+                        <label htmlFor="email" className="text-sm mt-2">
                           Email
                         </label>
                         <input
@@ -136,7 +136,7 @@ export default function Home() {
                           id="email"
                           value={email}
                           onChange={handleEmailChange}
-                          className="border p-2 rounded"
+                          className="border p-2 rounded mb-2"
                         />
                       </div>
                       <div className="flex flex-col">
@@ -148,14 +148,14 @@ export default function Home() {
                           id="password"
                           value={password}
                           onChange={handlePasswordChange}
-                          className="border p-2 rounded"
+                          className="border p-2 rounded mb-2"
                         />
                       </div>
                     </DialogDescription>
                     <button
                       type="button"
                       onClick={handleCreateAccount}
-                      className="w-full py-2 px-2 font-medium rounded-md bg-customBrownDark text-customGold hover:opacity-50"
+                      className="w-full py-2 px-2 font-medium rounded-md bg-customBrownDark text-customCream hover:opacity-50"
                     >
                       Create Account
                     </button>

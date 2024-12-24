@@ -7,6 +7,7 @@ import { getAuth } from 'firebase/auth';
 import { getIdToken } from 'firebase/auth';
 import Image from 'next/image';
 import { TbTruckLoading } from "react-icons/tb";
+import { IoIosSettings } from "react-icons/io";
 
 interface MultipleChoiceQuestion {
   term: string;
@@ -371,6 +372,15 @@ export default function MultipleChoice() {
     );
   }, [isReadings]);
 
+  const handleSettings = (lesson: Lesson) => {
+    if (lesson) {
+      router.push({
+        pathname: `/dashboard/quiz-settings`,
+        query: { lessonId: lesson.id },
+      });
+    }
+  };
+
   const selectedSet = isReadings ? readingSet : aiSet;
   const currentQuestion = selectedSet
     ? selectedSet[currentQuestionIndex]
@@ -417,7 +427,7 @@ export default function MultipleChoice() {
     <>
       <Navbar />
       <div className="flex flex-col items-center">
-        <div className="mt-4">
+        <div className="flex justify-content items-center mt-4">
           <button
             className="border rounded-sm p-2 m-1"
             onClick={() => {
@@ -439,6 +449,13 @@ export default function MultipleChoice() {
             disabled={loadingAiSet}
           >
             Practice with AI Set
+          </button>
+          <button
+            className="hover:opacity-50"
+            disabled={loadingAiSet}
+            onClick={() => handleSettings(lesson)}
+          >
+            <IoIosSettings size={24} className="ml-2" />
           </button>
         </div>
         {loadingAiSet && (
