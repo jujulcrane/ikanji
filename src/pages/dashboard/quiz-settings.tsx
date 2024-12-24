@@ -67,7 +67,31 @@ export default function QuizSettings() {
     setLesson(updatedLesson);
 
     //put changes to firebase
-  }
+    try {
+      const idToken = await auth.currentUser?.getIdToken();
+
+      const res = await fetch('/api/update-lesson', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${idToken}`,
+        },
+        body: JSON.stringify({ lessonId: lessonId, updatedLesson: updatedLesson }),
+      });
+
+      if (!res.ok) {
+        const error = await res.json();
+        console.error('Error chaning lesson:', error);
+        throw new Error(error.error);
+      } else {
+        console.log('Lesson successfuly updated');
+        setLesson(updatedLesson);
+        setEditingQuestion(null);
+      }
+    } catch (error) {
+      console.error('Error in saveLesson:', error);
+    }
+  };
 
   const addCorrectAnswer = () => {
     if (!editingQuestion) return;
@@ -78,7 +102,11 @@ export default function QuizSettings() {
   };
 
   const deleteAnswer = (answerIndex: number) => {
-    if (!lesson || !editingQuestion || editingQuestion.question.correct.length <= 1) return;
+    if (!lesson || !editingQuestion) return;
+    if (editingQuestion.question.correct.length <= 1) {
+      alert(`Please add at least 1 correct answer before deleting`);
+      return;
+    }
 
     const updatedQuestion = { ...editingQuestion.question };
     updatedQuestion.correct = updatedQuestion.correct.filter((_, index) => index != answerIndex);
@@ -95,7 +123,7 @@ export default function QuizSettings() {
             <li key={index} className="list-none text-xl m-4 border rounded-sm p-2">
               <Dialog>
                 <DialogTrigger onClick={() => editQuestion(question, index)} className="hover:underline"><FaRegEdit className='opacity-60 hover:opacity-100 transition-opacity' /></DialogTrigger>
-                <DialogContent className="bg-customCream">
+                <DialogContent className="mb-2">
                   <DialogHeader>
                     <DialogTitle>Edit Question</DialogTitle>
                     <DialogDescription>
@@ -108,7 +136,7 @@ export default function QuizSettings() {
                           id="term"
                           value={updatedTerm}
                           onChange={(e) => setUpdatedTerm(e.target.value)}
-                          className="border p-2 rounded mb-2"
+                          className="m-1 border p-2 rounded mb-2 text-sm"
                         />
                       </div>
                       <div className="flex flex-col">
@@ -116,8 +144,8 @@ export default function QuizSettings() {
                           Correct Answers:
                         </label>
                         {editingQuestion?.question.correct.map((answer, idx) => (
-                          <li className="list-none" key={idx}>
-                            {answer} <button className="ml-2 text-red-500" onClick={() => deleteAnswer(idx)}><RiDeleteBin5Line size={22} /></button>
+                          <li className="list-none flex justify-between items-center ml-12" key={idx}>
+                            {answer} <button className="mr-2" onClick={() => deleteAnswer(idx)}><RiDeleteBin5Line size={22} /></button>
                           </li>
                         ))}
                         <input
@@ -125,37 +153,40 @@ export default function QuizSettings() {
                           id="newAnswer"
                           value={newCorrectAnswer}
                           onChange={(e) => setNewCorrectAnswer(e.target.value)}
-                          className="border p-2 rounded mb-2"
+                          className="m-1 border p-2 rounded mb-2 text-sm"
                         />
                         <button
                           type="button"
                           onClick={addCorrectAnswer}
-                          className="bg-customBrownDark text-customCream px-2 py-1 rounded">Add Corect Answer</button>
+                          className="m-2 bg-customGold text-left text-black text-sm px-2 py-1 rounded w-fit hover:opacity-50">Add Corect Answer</button>
                       </div>
                     </DialogDescription>
                     <button
                       type="button"
                       onClick={saveQuestion}
-                      className="w-full py-2 px-2 font-medium rounded-md bg-customBrownDark text-customCream hover:opacity-50"
+                      className="w-full py-2 px-2 font-medium rounded-md bg-customBrownDark text-white hover:opacity-50"
                     >
                       Save
                     </button>
                   </DialogHeader>
                 </DialogContent>
-              </Dialog>
+              </Dialog >
               {question.term}
-              <ul className="mt-2">
+              < ul className="mt-2" >
                 <h1 className="text-sm">Correct Answer:</h1>
-                {question.correct.map((answer, index) => (
-                  <li className="text-sm font-normal" key={index}>
-                    {answer}
-                  </li>
-                ))}
-              </ul>
-            </li>
-          ))}
-        </ul>
-      </div>
+                {
+                  question.correct.map((answer, index) => (
+                    <li className="text-sm font-normal" key={index}>
+                      {answer}
+                    </li>
+                  ))
+                }
+              </ul >
+            </li >
+          ))
+          }
+        </ul >
+      </div >
     </>
   )
 }
