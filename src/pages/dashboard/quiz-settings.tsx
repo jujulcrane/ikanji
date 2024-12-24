@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { FaRegEdit } from "react-icons/fa";
 import { RiDeleteBin5Line } from "react-icons/ri";
+import { BiError } from "react-icons/bi";
 
 export default function QuizSettings() {
   const router = useRouter();
@@ -113,81 +114,95 @@ export default function QuizSettings() {
     setEditingQuestion({ ...editingQuestion, question: updatedQuestion });
   };
 
+  const returnToMult = () => {
+    if (!lesson) return;
+    router.push({
+      pathname: `/dashboard/multiple-choice`,
+      query: { lessonId: lesson.id },
+    });
+  };
+
   return (
     <>
       <Navbar />
       <div className="bg-customCream">
-        <h1 className="text-center text-xl pt-4 font-semibold">Settings for {lesson?.name}</h1>
-        <div className="">
-          <ul className="md:grid lg:grid-cols-3">
-            {lesson?.quizSets?.aiSet?.map((question, index) => (
-              <li key={index} className="list-none text-xl m-4 rounded-sm p-3 bg-white">
-                <Dialog>
-                  <DialogTrigger onClick={() => editQuestion(question, index)} className="hover:underline"><FaRegEdit className='opacity-60 hover:opacity-100 transition-opacity mr-2' /></DialogTrigger>
-                  <DialogContent className="mb-2">
-                    <DialogHeader>
-                      <DialogTitle>Edit Question</DialogTitle>
-                      <DialogDescription>
-                        <div className="flex flex-col">
-                          <label htmlFor="email" className="text-sm mt-2">
-                            Term
-                          </label>
-                          <input
-                            type="text"
-                            id="term"
-                            value={updatedTerm}
-                            onChange={(e) => setUpdatedTerm(e.target.value)}
-                            className="m-1 border p-2 rounded mb-2 text-sm"
-                          />
-                        </div>
-                        <div className="flex flex-col">
-                          <label htmlFor="password" className="text-sm">
-                            Correct Answers:
-                          </label>
-                          {editingQuestion?.question.correct.map((answer, idx) => (
-                            <li className="list-none flex justify-between items-center ml-12" key={idx}>
-                              {answer} <button className="mr-2" onClick={() => deleteAnswer(idx)}><RiDeleteBin5Line size={22} /></button>
-                            </li>
-                          ))}
-                          <input
-                            type="text"
-                            id="newAnswer"
-                            value={newCorrectAnswer}
-                            onChange={(e) => setNewCorrectAnswer(e.target.value)}
-                            className="m-1 border p-2 rounded mb-2 text-sm"
-                          />
-                          <button
-                            type="button"
-                            onClick={addCorrectAnswer}
-                            className="m-2 bg-customGold text-left text-black text-sm px-2 py-1 rounded w-fit hover:opacity-50">Add Corect Answer</button>
-                        </div>
-                      </DialogDescription>
-                      <button
-                        type="button"
-                        onClick={saveQuestion}
-                        className="w-full py-2 px-2 font-medium rounded-md bg-customBrownDark text-white hover:opacity-50"
-                      >
-                        Save
-                      </button>
-                    </DialogHeader>
-                  </DialogContent>
-                </Dialog >
-                {question.term}
-                < ul className="mt-2" >
-                  <h1 className="text-sm">Correct Answer:</h1>
-                  {
-                    question.correct.map((answer, index) => (
-                      <li className="text-sm font-normal" key={index}>
-                        {answer}
-                      </li>
-                    ))
-                  }
-                </ul >
-              </li >
-            ))
-            }
-          </ul >
-        </div >
+        {!lesson ? <div className='flex items-center justify-center h-screen'>
+          <BiError size={32} className='mr-2' />
+          <h1 className=" text-center font-semibold text-2xl"> No Multiple Choice Data Avaliable</h1>
+          <BiError size={32} className='ml-2' />
+        </div> :
+          <div>
+            <button onClick={() => returnToMult()} className='lg:absolute lg:left-2 lg:top-35 bg-customGold text-white hover:opacity-50 uppercase text-sm m-2 px-2 py-1 rounded-sm'>Return to multiple choice questions</button>
+            <h1 className=" text-center text-xl pt-4 font-semibold">Settings for {lesson?.name}</h1>
+            <ul className="md:grid lg:grid-cols-3">
+              {lesson?.quizSets?.aiSet?.map((question, index) => (
+                <li key={index} className="list-none text-xl m-4 rounded-sm p-3 bg-white">
+                  <Dialog>
+                    <DialogTrigger onClick={() => editQuestion(question, index)} className="hover:underline"><FaRegEdit className='opacity-60 hover:opacity-100 transition-opacity mr-2' /></DialogTrigger>
+                    <DialogContent className="mb-2">
+                      <DialogHeader>
+                        <DialogTitle>Edit Question</DialogTitle>
+                        <DialogDescription>
+                          <div className="flex flex-col">
+                            <label htmlFor="email" className="text-sm mt-2">
+                              Term
+                            </label>
+                            <input
+                              type="text"
+                              id="term"
+                              value={updatedTerm}
+                              onChange={(e) => setUpdatedTerm(e.target.value)}
+                              className="m-1 border p-2 rounded mb-2 text-sm"
+                            />
+                          </div>
+                          <div className="flex flex-col">
+                            <label htmlFor="password" className="text-sm">
+                              Correct Answers:
+                            </label>
+                            {editingQuestion?.question.correct.map((answer, idx) => (
+                              <li className="list-none flex justify-between items-center ml-12" key={idx}>
+                                {answer} <button className="mr-2" onClick={() => deleteAnswer(idx)}><RiDeleteBin5Line size={22} /></button>
+                              </li>
+                            ))}
+                            <input
+                              type="text"
+                              id="newAnswer"
+                              value={newCorrectAnswer}
+                              onChange={(e) => setNewCorrectAnswer(e.target.value)}
+                              className="m-1 border p-2 rounded mb-2 text-sm"
+                            />
+                            <button
+                              type="button"
+                              onClick={addCorrectAnswer}
+                              className="m-2 bg-customGold text-left text-black text-sm px-2 py-1 rounded w-fit hover:opacity-50">Add Corect Answer</button>
+                          </div>
+                        </DialogDescription>
+                        <button
+                          type="button"
+                          onClick={saveQuestion}
+                          className="w-full py-2 px-2 font-medium rounded-md bg-customBrownDark text-white hover:opacity-50"
+                        >
+                          Save
+                        </button>
+                      </DialogHeader>
+                    </DialogContent>
+                  </Dialog >
+                  {question.term}
+                  < ul className="mt-2" >
+                    <h1 className="text-sm">Correct Answer:</h1>
+                    {
+                      question.correct.map((answer, index) => (
+                        <li className="text-sm font-normal" key={index}>
+                          {answer}
+                        </li>
+                      ))
+                    }
+                  </ul >
+                </li >
+              ))
+              }
+            </ul >
+          </div >}
       </div>
     </>
   )
