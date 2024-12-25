@@ -1,4 +1,4 @@
-import { Lesson } from '@/components/Lesson';
+import { Lesson, Kanji } from '@/components/Lesson';
 import Navbar from '@/components/Navbar';
 import Button from '@/components/button';
 import { useLessons } from '@/hooks/use-lessons';
@@ -8,6 +8,9 @@ import { useEffect, useState } from 'react';
 import { FaRegEdit } from "react-icons/fa";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import '@fontsource/noto-sans-jp';
+import { DialogHeader } from '@/components/ui/dialog';
+import { Dialog, DialogTrigger, DialogContent, DialogTitle, DialogDescription } from '@radix-ui/react-dialog';
+import { IoIosSettings } from "react-icons/io";
 
 export default function MyLessons() {
   const fetchedLessons: Lesson[] | null = useLessons();
@@ -16,6 +19,12 @@ export default function MyLessons() {
   const [isEditing, setIsEditing] = useState(false);
   const [newName, setNewName] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(true);
+  const [editingKanji, setEditingKanji] = useState<{
+    kanji: Kanji;
+    index: number;
+  } | null>(null);
+  const [updatedCharacter, setUpdatedCharacter] = useState<string>('');
+  const [newReading, setNewReading] = useState<string>('');
 
   useEffect(() => {
     if (fetchedLessons) {
@@ -58,7 +67,6 @@ export default function MyLessons() {
       console.error('No authenticated user found');
       return;
     }
-    //PUT call
     try {
       const idToken = await currentUser.getIdToken();
       console.log('Sending to API:', {
@@ -110,6 +118,76 @@ export default function MyLessons() {
     }
   }
 
+  const editKanji = (kanji: Kanji, index: number) => {
+    setEditingKanji({ kanji, index });
+    setUpdatedCharacter(kanji.character);
+  };
+
+  const saveKanji = async () => {
+    if (!selectedLesson || !editingKanji) return;
+
+    const updatedLesson = { ...selectedLesson };
+    updatedLesson.kanjiList[editingKanji.index] = {
+      ...editingKanji.kanji,
+      readings: editingKanji.kanji.readings,
+      character: updatedCharacter,
+    };
+    setSelectedLesson(updatedLesson);
+    try {
+      const idToken = await auth.currentUser?.getIdToken();
+
+      const res = await fetch('/api/update-lesson', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${idToken}`,
+        },
+        body: JSON.stringify({ lessonId: updatedLesson.id, updatedLesson: updatedLesson }),
+      });
+
+      if (!res.ok) {
+        const error = await res.json();
+        console.error('Error chaning lesson:', error);
+        throw new Error(error.error);
+      } else {
+        console.log('Lesson successfuly updated');
+        setSelectedLesson(updatedLesson);
+        setEditingKanji(null);
+      }
+    } catch (error) {
+      console.error('Error in saveLesson:', error);
+    }
+  };
+
+  const addNewReading = () => {
+    if (!editingKanji) return;
+    const updatedKanji = { ...editingKanji.kanji };
+    updatedKanji.readings = [...updatedKanji.readings, newReading];
+    setEditingKanji({ ...editingKanji, kanji: updatedKanji });
+    setNewReading('');
+  };
+
+  const deleteReading = (readingIndex: number) => {
+    if (!selectedLesson || !editingKanji) return;
+    if (editingKanji.kanji.readings.length <= 1) {
+      alert(`Please add at least 1 reading before deleting`);
+      return;
+    }
+
+    const updatedKanji = { ...editingKanji.kanji };
+    updatedKanji.readings = updatedKanji.readings.filter((_, index) => index != readingIndex);
+    setEditingKanji({ ...editingKanji, kanji: updatedKanji });
+  };
+
+  const handleSettings = (lesson: Lesson) => {
+    if (lesson) {
+      router.push({
+        pathname: `/dashboard/quiz-settings`,
+        query: { lessonId: lesson.id },
+      });
+    }
+  };
+
   function renderSelectedLesson(): JSX.Element | null {
     if (!selectedLesson) return null;
 
@@ -148,24 +226,86 @@ export default function MyLessons() {
         )}
         <div className="my-4 pb-2 space-y-2">
           <h3 className='text-lg font-semibold'>Practice</h3>
-          <button
-            onClick={() => handleLearning(selectedLesson, 'flashcards')}
-            className="bg-customGold  w-44 h-20 rounded-md m-2"
-            type="button"
-          >
-            Flash Cards
-          </button>
-          <button
-            onClick={() => handleLearning(selectedLesson, 'multiple-choice')}
-            className="bg-customGold  w-44 h-20 rounded-md m-2"
-            type="button"
-          >
-            Multiple Choice
-          </button>
+          <div className='flex'>
+            <button
+              onClick={() => handleLearning(selectedLesson, 'flashcards')}
+              className="bg-customGold  w-44 h-20 rounded-md m-2"
+              type="button"
+            >
+              Flash Cards
+            </button>
+            <div className="relative w-44 h-20 m-2">
+              <button
+                onClick={() => handleLearning(selectedLesson, 'multiple-choice')}
+                className="bg-customGold  w-full h-full rounded-md"
+                type="button"
+              >
+                Multiple Choice
+              </button>
+              <button
+                className="hover:opacity-50 absolute top-2 right-2"
+                disabled={!(selectedLesson.quizSets) ||
+                  !(selectedLesson.quizSets.aiSet)}
+                onClick={() => handleSettings(selectedLesson)}
+              >
+                <IoIosSettings size={24} className="" />
+              </button>
+            </div>
+          </div>
         </div>
         <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {selectedLesson.kanjiList.map((kanji) => (
-            <li key={kanji.character} className='border p-4 rounded-lg bg-customCream/50 font-sansJP'>
+          {selectedLesson.kanjiList.map((kanji, index) => (
+            <li key={kanji.character} className='relative border p-4 rounded-lg bg-customCream/50 font-sansJP'>
+              <Dialog>
+                <DialogTrigger onClick={() => editKanji(kanji, index)} className="aboslute right-2"><FaRegEdit size={22} className='opacity-60 hover:opacity-100 transition-opacity mr-2' /></DialogTrigger>
+                <DialogContent className="mb-2">
+                  <DialogHeader>
+                    <DialogTitle>Edit Kanji</DialogTitle>
+                    <DialogDescription>
+                      <div className="flex flex-col">
+                        <label htmlFor="email" className="text-sm mt-2">
+                          Character
+                        </label>
+                        <input
+                          type="text"
+                          id="term"
+                          value={updatedCharacter}
+                          onChange={(e) => setUpdatedCharacter(e.target.value)}
+                          className="m-1 border p-2 rounded mb-2 text-sm"
+                        />
+                      </div>
+                      <div className="flex flex-col">
+                        <label htmlFor="password" className="text-sm">
+                          Readings:
+                        </label>
+                        {editingKanji?.kanji.readings.map((reading, idx) => (
+                          <li className="list-none flex justify-between items-center ml-12" key={idx}>
+                            {reading} <button className="mr-2" onClick={() => deleteReading(idx)}><RiDeleteBin5Line size={22} /></button>
+                          </li>
+                        ))}
+                        <input
+                          type="text"
+                          id="newAnswer"
+                          value={newReading}
+                          onChange={(e) => setNewReading(e.target.value)}
+                          className="m-1 border p-2 rounded mb-2 text-sm"
+                        />
+                        <button
+                          type="button"
+                          onClick={addNewReading}
+                          className="m-2 bg-customGold text-left text-black text-sm px-2 py-1 rounded w-fit hover:opacity-50">Add Corect Answer</button>
+                      </div>
+                    </DialogDescription>
+                    <button
+                      type="button"
+                      onClick={saveKanji}
+                      className="w-full py-2 px-2 font-medium rounded-md bg-customBrownDark text-white hover:opacity-50"
+                    >
+                      Save
+                    </button>
+                  </DialogHeader>
+                </DialogContent>
+              </Dialog >
               <div className="flex flex-col items-center space-y-2">
                 <h2 className="font-bold text-2xl">{kanji.character}</h2>
                 <span className="text-sm">{kanji.meaning}</span>

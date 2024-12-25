@@ -66,8 +66,6 @@ export default function QuizSettings() {
       };
     }
     setLesson(updatedLesson);
-
-    //put changes to firebase
     try {
       const idToken = await auth.currentUser?.getIdToken();
 
