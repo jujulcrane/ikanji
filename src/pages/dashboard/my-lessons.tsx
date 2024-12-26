@@ -1,4 +1,4 @@
-import { Lesson, Kanji } from '@/components/Lesson';
+import { Lesson, Kanji, PracticeSentence } from '@/components/Lesson';
 import Navbar from '@/components/Navbar';
 import Button from '@/components/button';
 import { useLessons } from '@/hooks/use-lessons';
@@ -11,6 +11,15 @@ import '@fontsource/noto-sans-jp';
 import { DialogHeader } from '@/components/ui/dialog';
 import { Dialog, DialogTrigger, DialogContent, DialogTitle, DialogDescription } from '@radix-ui/react-dialog';
 import { IoIosSettings } from "react-icons/io";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog"
 
 export default function MyLessons() {
   const fetchedLessons: Lesson[] | null = useLessons();
@@ -25,6 +34,11 @@ export default function MyLessons() {
   } | null>(null);
   const [updatedCharacter, setUpdatedCharacter] = useState<string>('');
   const [newReading, setNewReading] = useState<string>('');
+  const [updatedPracticeSentences, setUpdatedPracticeSentences] = useState<PracticeSentence[] | null>(null);
+  const [newSentence, setNewSentence] = useState<PracticeSentence>({ japanese: '', english: '' });
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [alertOpen, setAlertOpen] = useState<boolean>(false);
+  const [confirmDelete, setConfirmDelete] = useState<boolean>(false);
 
   useEffect(() => {
     if (fetchedLessons) {
@@ -123,6 +137,33 @@ export default function MyLessons() {
     setUpdatedCharacter(kanji.character);
   };
 
+  const putToFb = async (lessonId: string, lessonToPut: Lesson) => {
+    try {
+      const idToken = await auth.currentUser?.getIdToken();
+
+      const res = await fetch('/api/update-lesson', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${idToken}`,
+        },
+        body: JSON.stringify({ lessonId: lessonId, updatedLesson: lessonToPut }),
+      });
+
+      if (!res.ok) {
+        const error = await res.json();
+        console.error('Error chaning lesson:', error);
+        throw new Error(error.error);
+      } else {
+        console.log('Lesson successfuly updated');
+        setSelectedLesson(lessonToPut);
+        setEditingKanji(null);
+      }
+    } catch (error) {
+      console.error('Error in saveLesson:', error);
+    }
+  }
+
   const saveKanji = async () => {
     if (!selectedLesson || !editingKanji) return;
 
@@ -133,30 +174,24 @@ export default function MyLessons() {
       character: updatedCharacter,
     };
     setSelectedLesson(updatedLesson);
-    try {
-      const idToken = await auth.currentUser?.getIdToken();
-
-      const res = await fetch('/api/update-lesson', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${idToken}`,
-        },
-        body: JSON.stringify({ lessonId: updatedLesson.id, updatedLesson: updatedLesson }),
-      });
-
-      if (!res.ok) {
-        const error = await res.json();
-        console.error('Error chaning lesson:', error);
-        throw new Error(error.error);
-      } else {
-        console.log('Lesson successfuly updated');
-        setSelectedLesson(updatedLesson);
-        setEditingKanji(null);
-      }
-    } catch (error) {
-      console.error('Error in saveLesson:', error);
+    if (!updatedLesson.id) {
+      console.error('Missing Lesson Id');
+      return;
     }
+    await putToFb(updatedLesson.id, updatedLesson);
+  };
+
+  const saveSentences = async () => {
+    if (!selectedLesson || !updatedPracticeSentences) return;
+
+    const updatedLesson = { ...selectedLesson };
+    updatedLesson.practiceSentences = updatedPracticeSentences;
+    setSelectedLesson(updatedLesson);
+    if (!updatedLesson.id) {
+      console.error('Missing Lesson Id');
+      return;
+    }
+    await putToFb(updatedLesson.id, updatedLesson);
   };
 
   const addNewReading = () => {
@@ -186,6 +221,21 @@ export default function MyLessons() {
         query: { lessonId: lesson.id },
       });
     }
+  };
+
+  const addPracticeSentence = () => {
+    if (!updatedPracticeSentences) return;
+    setUpdatedPracticeSentences((prevState) => [
+      ...(prevState || []),
+      newSentence,
+    ]);
+    setNewSentence({ japanese: '', english: '' });
+  };
+
+  const deleteSentence = (sentenceIndex: number) => {
+    if (!selectedLesson || !updatedPracticeSentences) return;
+    const updatedSentences = updatedPracticeSentences.filter((_, index) => index != sentenceIndex);
+    setUpdatedPracticeSentences(updatedSentences);
   };
 
   function renderSelectedLesson(): JSX.Element | null {
@@ -322,19 +372,139 @@ export default function MyLessons() {
           ))}
         </ul>
 
-        <h3 className="mt-2 p-2 font-medium text-lg">Practice Sentences</h3>
-        <ul>
-          {selectedLesson.practiceSentences.map((sentence, index) => (
-            <li className="border my-8 rounded-sm" key={index}>
-              <div className="p-4 md:flex md:justify-between">
-                <p className="text-lg">{sentence.japanese}</p>
-                <p className="text-sm opacity-40 mt-2 md:ml-4 md:mt-0">{sentence.english}</p>
-              </div>
-            </li>
-          ))}
-        </ul>
+        <div className={isDialogOpen ? "" : "flex"}>
+          <h3 className="mt-2 p-2 font-medium text-lg">Practice Sentences</h3>
+          <Dialog
+            onOpenChange={(open) => {
+              if (updatedPracticeSentences != selectedLesson.practiceSentences) {
+                setAlertOpen(true);
+              }
+              setIsDialogOpen(open);
+            }}
+          >
+            <DialogTrigger onClick={() => setUpdatedPracticeSentences(selectedLesson.practiceSentences)} className="aboslute right-2"><FaRegEdit size={20} className='opacity-60 hover:opacity-100 transition-opacity mr-2' /></DialogTrigger>
+            <DialogContent className="mb-2">
+              <DialogHeader>
+                <DialogTitle>Edit Practice Sentences</DialogTitle>
+                <DialogDescription>
+                  {updatedPracticeSentences?.map((sentence, index) => (
+                    <li className="border my-8 rounded-sm list-none w-full p-2" key={index}>
+                      <div className="flex justify-between m-2">
+                        <h1>{index + 1}</h1>
+                        <button className="ml-1" onClick={() => deleteSentence(index)}><RiDeleteBin5Line size={22} /></button>
+                      </div>
+                      <div className="flex flex-col">
+                        <label className="text-sm mt-2">
+                          Japanese
+                        </label>
+                        <input
+                          type="text"
+                          id="term"
+                          value={updatedPracticeSentences?.[index].japanese ?? ''}
+                          onChange={(e) => {
+                            const newJapanese = e.target.value;
+                            setUpdatedPracticeSentences((prevState) => {
+                              const updatedState = [...(prevState || [])];
+                              updatedState[index] = {
+                                ...updatedState[index],
+                                japanese: newJapanese,
+                              };
+                              return updatedState;
+                            });
+                          }}
+                          className="m-1 border p-2 rounded mb-2 text-sm"
+                        />
+                      </div>
+                      <div className="flex flex-col">
+                        <label className="text-sm mt-2">
+                          Translation
+                        </label>
+                        <input
+                          type="text"
+                          id="term"
+                          value={updatedPracticeSentences?.[index].english ?? ''}
+                          onChange={(e) => {
+                            const newEnglish = e.target.value;
+                            setUpdatedPracticeSentences((prevState) => {
+                              const updatedState = [...(prevState || [])];
+                              updatedState[index] = {
+                                ...updatedState[index],
+                                english: newEnglish,
+                              };
+                              return updatedState;
+                            });
+                          }}
+                          className="m-1 border p-2 rounded mb-2 text-sm"
+                        />
+                      </div>
+                    </li>
+                  ))}
+                  <div className="flex flex-col">
+                    <h1 className="mb-2">Add New Practice Sentence</h1>
+                    <label htmlFor="password" className="text-sm">
+                      Japanese:
+                    </label>
+                    <input
+                      type="text"
+                      id="newJapanese"
+                      value={newSentence.japanese}
+                      onChange={(e) => {
+                        const newJapanese = e.target.value;
+                        setNewSentence((prevState) => ({
+                          ...prevState,
+                          japanese: newJapanese,
+                        }));
+                      }}
+                      className="m-1 border p-2 rounded mb-2 text-sm"
+                    />
+                    <label htmlFor="password" className="text-sm">
+                      English:
+                    </label>
+                    <input
+                      type="text"
+                      id="newEnglish"
+                      value={newSentence.english}
+                      onChange={(e) => {
+                        const newEnglish = e.target.value;
+                        setNewSentence((prevState) => ({
+                          ...prevState,
+                          english: newEnglish,
+                        }));
+                      }}
+                      className="m-1 border p-2 rounded mb-2 text-sm"
+                    />
+                    <button
+                      type="button"
+                      onClick={addPracticeSentence}
+                      className="m-2 bg-customGold text-left text-black text-sm px-2 py-1 rounded w-fit hover:opacity-50">Add Sentence</button>
+                  </div>
+                </DialogDescription>
+                <button
+                  type="button"
+                  onClick={saveSentences}
+                  className="w-full py-2 px-2 font-medium rounded-md bg-customBrownDark text-white hover:opacity-50"
+                >
+                  Save
+                </button>
+              </DialogHeader>
+            </DialogContent>
+          </Dialog >
+        </div>
+        {
+          selectedLesson.practiceSentences.length == 0 ? <h1>No Sentences</h1> :
+            <ul>
+              {selectedLesson.practiceSentences.map((sentence, index) => (
+                <li className="border my-8 rounded-sm" key={index}>
+                  <div className="p-4 md:flex md:justify-between">
+                    <p className="text-lg">{sentence.japanese}</p>
+                    <p className="text-sm opacity-40 mt-2 md:ml-4 md:mt-0">{sentence.english}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+        }
         <div className="flex flex-end">
-          <button className="bg-customBrownLight rounded-sm min-h-44px text-white flex justify-center items-center p-2 hover:bg-opacity-70 ml-auto" onClick={() => handleDeleteClick(selectedLesson)}>
+          <button className="bg-customBrownLight rounded-sm min-h-44px text-white flex justify-center items-center p-2 hover:bg-opacity-70 ml-auto" onClick={() => setConfirmDelete(true)}>
             <div className="flex">
               Delete {selectedLesson.name}
               <div className="pl-2">
@@ -343,7 +513,7 @@ export default function MyLessons() {
             </div>
           </button>
         </div>
-      </div>
+      </div >
     );
   }
 
@@ -368,15 +538,6 @@ export default function MyLessons() {
       </div>
     );
   }
-
-  const handleDeleteClick = async (lesson: Lesson) => {
-    const isConfirmed = window.confirm(
-      `Are you sure you want ot delete ${lesson.name}?`
-    );
-    if (isConfirmed) {
-      await deleteLesson(lesson.id);
-    }
-  };
 
   const deleteLesson = async (lessonId: string | undefined) => {
     if (!myLessons || !lessonId) return;
@@ -427,6 +588,38 @@ export default function MyLessons() {
         <h1 className="font-semibold text-lg pb-2">My Lessons</h1>
         {renderLessonButtons()}
         {renderSelectedLesson()}
+        <AlertDialog open={alertOpen}>
+          <AlertDialogContent className="bg-customBrownLight">
+            <AlertDialogHeader>
+              <AlertDialogTitle className="text-white">Do Not Forget to Save!</AlertDialogTitle>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel className="bg-white" onClick={() => {
+                saveSentences();
+                setAlertOpen(false);
+              }}>Save</AlertDialogCancel>
+              <AlertDialogAction className="hover:opacity-50" onClick={() => setAlertOpen(false)}>Continue</AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+        <AlertDialog open={confirmDelete}>
+          <AlertDialogContent className="bg-customBrownLight">
+            <AlertDialogHeader>
+              <AlertDialogTitle className="text-white">Are you sure you want to delete {selectedLesson?.name}?</AlertDialogTitle>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel className="bg-white" onClick={() => {
+                setConfirmDelete(false);
+              }}>Cancel</AlertDialogCancel>
+              <AlertDialogAction className="hover:opacity-50"
+                onClick={async () => {
+                  await deleteLesson(selectedLesson?.id);
+                  setConfirmDelete(false);
+                }}>
+                Delete</AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </div>
     </>
   );

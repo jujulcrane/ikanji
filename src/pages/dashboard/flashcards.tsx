@@ -196,8 +196,9 @@ export default function Flashcards() {
           Readings
         </label>
         <button
-          className="rounded-sm border"
+          className="rounded-sm border p-1 px-2 text-sm bg-customCream"
           type="button"
+          disabled={lesson.practiceSentences.length < 1}
           onClick={() => setIsPracticeSentences(!isPracticeSentences)}
         >
           practice sentences
