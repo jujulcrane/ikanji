@@ -8,6 +8,7 @@ import { getIdToken } from 'firebase/auth';
 import Image from 'next/image';
 import { TbTruckLoading } from "react-icons/tb";
 import { IoIosSettings } from "react-icons/io";
+import { Progress } from "@/components/ui/progress"
 
 interface MultipleChoiceQuestion {
   term: string;
@@ -447,6 +448,7 @@ export default function MultipleChoice() {
             <IoIosSettings size={24} className="ml-2" />
           </button>
         </div>
+        <Progress value={(currentQuestionIndex) / selectedSet.length * 100} className="mt-8 w-80" />
         {loadingAiSet && (
           <div className="inline-flex items-center">
             <h1>Generating AI set please wait...</h1>

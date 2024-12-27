@@ -23,6 +23,7 @@ export default function MultipleChoiceCard({
     newOptions.splice(randomIndex, 0, correct);
     setOptions(newOptions);
     setFeedback(null);
+    setSelected(null);
   }, [question, correct, incorrect]);
 
   const handleSelect = (e: React.MouseEvent<HTMLButtonElement>): void => {
@@ -40,7 +41,7 @@ export default function MultipleChoiceCard({
   };
 
   return (
-    <div className="flex flex-col items-center justify-center w-full mt-10">
+    <div className="flex flex-col items-center justify-center w-full mt-4">
       <div className="bg-customGold rounded-sm flex items-center justify-center pt-8 pb-4 w-96 h-64 mb-4">
         <h1 className="mx-2 text-3xl text-center leading-relaxed break-words overflow-hidden max-w-full">{question}</h1>
       </div>
