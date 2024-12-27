@@ -5,11 +5,21 @@ import { getIdToken } from 'firebase/auth';
 import { useState } from 'react';
 import { TbTruckLoading } from "react-icons/tb";
 import { MdAddShoppingCart } from "react-icons/md";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog"
 
 export default function GenkiLessons() {
   const [addedLesson, setAddedLesson] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [confirmAdd, setConfirmAdd] = useState<number | null>(null);
 
   const chapter10Lesson: Lesson = {
     name: "Genki Book 1 Chapter 10",
@@ -444,6 +454,8 @@ export default function GenkiLessons() {
     ]
   };
 
+  const allLessons: Array<Lesson> = [chapter3Lesson, chapter4Lesson, chapter5Lesson, chapter6Lesson, chapter7Lesson, chapter8Lesson, chapter9Lesson, chapter10Lesson];
+
 
   const displayLoading = () => {
     return (
@@ -456,7 +468,7 @@ export default function GenkiLessons() {
 
   const handleSuccess = () => {
     setAddedLesson(false);
-    setSuccessMessage(null);  // Clear the success message
+    setSuccessMessage(null);
   };
 
 
@@ -522,29 +534,43 @@ export default function GenkiLessons() {
           </div>
         </div>
       ) : (
-        <div className="grid md:grid-cols-3 sm:gird-cols-2 gird-cols-1 gap-x-4 gap-y-4 md:gap-y-2 items-center justify-center min-h-screen mx-auto md:w-2/3">
-          {[chapter3Lesson, chapter4Lesson, chapter5Lesson, chapter6Lesson, chapter7Lesson, chapter8Lesson, chapter9Lesson, chapter10Lesson].map((lesson, index) => (
-            <div className="border rounded-sm p-4 relative" key={index}>
+        <>
+          <div className="grid md:grid-cols-3 sm:gird-cols-2 gird-cols-1 gap-x-4 gap-y-4 md:gap-y-2 items-center justify-center min-h-screen mx-auto md:w-2/3">
+            {allLessons.map((lesson, index) => (
+              <div className="border rounded-sm p-4 relative" key={index}>
 
-              <h1 className="font-semibold mr-2">{`Genki Lesson ${index + 3}:`}</h1>
-              <p className="pt-1 md:pb-10 md:w-full w-3/4">{lesson.kanjiList.map((kanji) => kanji.character).join(", ")}</p>
-              <button
-                key={index}
-                className="bg-customCream rounded-sm p-2 my-2 flex justify-center hover:opacity-50 hover:scale-105 absolute bottom-2 right-2"
-                onClick={() => {
-                  const confirmed = window.confirm(`Are you sure you want to add Genki Lesson ${index + 3}?`);
-
-                  if (confirmed) {
-                    postRequest(lesson);
-                  }
-                }}
-                disabled={addedLesson}
-              >
-                <MdAddShoppingCart size={24} />
-              </button>
-            </div>
-          ))}
-        </div>
+                <h1 className="font-semibold mr-2">{`Genki Lesson ${index + 3}:`}</h1>
+                <p className="pt-1 md:pb-10 md:w-full w-3/4">{lesson.kanjiList.map((kanji) => kanji.character).join(", ")}</p>
+                <button
+                  key={index}
+                  className="bg-customCream rounded-sm p-2 my-2 flex justify-center hover:opacity-50 hover:scale-105 absolute bottom-2 right-2"
+                  onClick={() => {
+                    setConfirmAdd(index);
+                  }}
+                  disabled={addedLesson}
+                >
+                  <MdAddShoppingCart size={24} />
+                </button>
+              </div>
+            ))}
+          </div>
+          <AlertDialog open={confirmAdd != null}>
+            <AlertDialogContent className="bg-customBrownLight">
+              <AlertDialogHeader>
+                <AlertDialogTitle className="text-white">Are you sure you want to add Genki Lesson {confirmAdd! + 3}?</AlertDialogTitle>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel className="bg-white" onClick={() => {
+                  setConfirmAdd(null);
+                }}>Cancel</AlertDialogCancel>
+                <AlertDialogAction className="hover:opacity-50" onClick={() => {
+                  postRequest(allLessons[confirmAdd!]);
+                  setConfirmAdd(null);
+                }}>Add</AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+        </>
       )}
     </div>
   );
