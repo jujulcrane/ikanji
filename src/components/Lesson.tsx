@@ -4,7 +4,7 @@ export interface Lesson {
   kanjiList: Kanji[];
   practiceSentences: PracticeSentence[];
   quizSets?: QuizSets;
-  userId: string;
+  userId?: string;
   publishStatus?: 'pending' | 'published' | 'private';
 }
 
