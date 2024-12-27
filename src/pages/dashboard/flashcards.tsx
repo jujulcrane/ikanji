@@ -169,40 +169,52 @@ export default function Flashcards() {
     }
   };
 
+  const handleReturn = (lesson: Lesson) => {
+    if (lesson) {
+      router.push({
+        pathname: `/dashboard/my-lessons`,
+        query: { lessonId: lesson.id },
+      });
+    }
+  };
+
   return (
     <>
       <Navbar />
-      <div className="flex items-center space-x-2 m-2">
-        <Checkbox
-          id="meaning"
-          checked={isMeaningChecked}
-          onCheckedChange={handleMeaningCheck}
-        />
-        <label
-          htmlFor="meaning"
-          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-        >
-          Meaning
-        </label>
-        <Checkbox
-          id="readings"
-          checked={isReadingsChecked}
-          onCheckedChange={handleReadingCheck}
-        />
-        <label
-          htmlFor="readings"
-          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-        >
-          Readings
-        </label>
-        <button
-          className="rounded-sm border p-1 px-2 text-sm bg-customCream"
-          type="button"
-          disabled={lesson.practiceSentences.length < 1}
-          onClick={() => setIsPracticeSentences(!isPracticeSentences)}
-        >
-          practice sentences
-        </button>
+      <div className="mt-8 flex justify-center items-center">
+        <div className="flex items-center space-x-2 m-2">
+          <button className="bg-blue-400 text-white rounded-sm p-1 px-2 text-sm mr-2 hover:opacity-50" onClick={() => handleReturn(lesson)}>Return to Lesson</button>
+          <Checkbox
+            id="meaning"
+            checked={isMeaningChecked}
+            onCheckedChange={handleMeaningCheck}
+          />
+          <label
+            htmlFor="meaning"
+            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+          >
+            Meaning
+          </label>
+          <Checkbox
+            id="readings"
+            checked={isReadingsChecked}
+            onCheckedChange={handleReadingCheck}
+          />
+          <label
+            htmlFor="readings"
+            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+          >
+            Readings
+          </label>
+          <button
+            className="rounded-sm p-1 px-2 text-sm bg-customCream hover:opacity-70"
+            type="button"
+            disabled={lesson.practiceSentences.length < 1}
+            onClick={() => setIsPracticeSentences(!isPracticeSentences)}
+          >
+            Practice Sentences
+          </button>
+        </div>
       </div>
       <div className="flex flex-col items-center justfiy-center min-h-screen">
         {lesson.kanjiList && lesson.kanjiList.length > 0 && (

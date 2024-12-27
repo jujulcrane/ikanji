@@ -97,6 +97,7 @@ export function CreateNewLessonForm() {
       kanjiList: kanjiList,
       practiceSentences: practiceSentences,
       userId: user.uid,
+      publishStatus: 'private'
     };
 
     console.log('Creating Lesson:', newLesson);

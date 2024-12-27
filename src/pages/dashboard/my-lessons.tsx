@@ -3,7 +3,7 @@ import Navbar from '@/components/Navbar';
 import Button from '@/components/button';
 import { useLessons } from '@/hooks/use-lessons';
 import { auth } from '@/utils/firebase';
-import router from 'next/router';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { FaRegEdit } from "react-icons/fa";
 import { RiDeleteBin5Line } from "react-icons/ri";
@@ -20,8 +20,12 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
+import { Switch } from "@/components/ui/switch"
 
 export default function MyLessons() {
+  const router = useRouter();
+  const { lessonId } = router.query;
+
   const fetchedLessons: Lesson[] | null = useLessons();
   const [myLessons, setMyLessons] = useState<Lesson[] | null>(null);
   const [selectedLesson, setSelectedLesson] = useState<Lesson | null>(null);
@@ -39,13 +43,22 @@ export default function MyLessons() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [alertOpen, setAlertOpen] = useState<boolean>(false);
   const [confirmDelete, setConfirmDelete] = useState<boolean>(false);
+  const [confirmPublish, setConfirmPublish] = useState<boolean>(false);
+  const [confirmPrivate, setConfirmPrivate] = useState<boolean>(false);
 
   useEffect(() => {
     if (fetchedLessons) {
       setMyLessons(fetchedLessons);
       setLoading(false);
+
+      if (lessonId) {
+        const lessonToSelect = fetchedLessons.find(
+          (lesson) => lesson.id === lessonId
+        );
+        setSelectedLesson(lessonToSelect || null);
+      }
     }
-  }, [fetchedLessons]);
+  }, [fetchedLessons, lessonId]);
 
   console.log('Fetched Lessons:', myLessons);
 
@@ -503,7 +516,31 @@ export default function MyLessons() {
               ))}
             </ul>
         }
-        <div className="flex flex-end">
+        <div className="flex justify-between">
+          <div className="flex">
+            <Switch
+              className={`
+              ${selectedLesson.publishStatus === 'pending' ? 'data-[state=checked]:bg-orange-500' : 'data-[state=checked]:bg-green-500'}
+              data-[state=unchecked]:bg-red-500
+            `}
+              checked={selectedLesson.publishStatus == 'published' || selectedLesson.publishStatus == 'pending'}
+              onCheckedChange={() => {
+                if (!selectedLesson) return;
+
+                setSelectedLesson((prev) => {
+                  if (!prev) return prev;
+                  if (prev.publishStatus === undefined || prev.publishStatus === 'private') {
+                    setConfirmPublish(true);
+                  } else {
+                    setConfirmPrivate(true);
+                  }
+                  return prev;
+                });
+              }}
+            >
+            </Switch>
+            <p className="ml-2 uppercase">{selectedLesson.publishStatus}</p>
+          </div>
           <button className="bg-customBrownLight rounded-sm min-h-44px text-white flex justify-center items-center p-2 hover:bg-opacity-70 ml-auto" onClick={() => setConfirmDelete(true)}>
             <div className="flex">
               Delete {selectedLesson.name}
@@ -617,6 +654,58 @@ export default function MyLessons() {
                   setConfirmDelete(false);
                 }}>
                 Delete</AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+        <AlertDialog open={confirmPublish}>
+          <AlertDialogContent className="bg-customBrownLight">
+            <AlertDialogHeader>
+              <AlertDialogTitle className="text-white">Are you sure you want to publish {selectedLesson?.name}?</AlertDialogTitle>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel className="bg-white" onClick={() => {
+                setConfirmPublish(false);
+              }}>Cancel</AlertDialogCancel>
+              <AlertDialogAction className="hover:opacity-50"
+                onClick={async () => {
+                  if (selectedLesson && selectedLesson.id) {
+                    const updatedLesson: Lesson = {
+                      ...selectedLesson,
+                      publishStatus: 'pending',
+                    };
+                    setSelectedLesson(updatedLesson);
+                    if (!updatedLesson.id) return;
+                    await putToFb(updatedLesson.id, updatedLesson);
+                  }
+                  setConfirmPublish(false);
+                }}>
+                Publish</AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+        <AlertDialog open={confirmPrivate}>
+          <AlertDialogContent className="bg-customBrownLight">
+            <AlertDialogHeader>
+              <AlertDialogTitle className="text-white">Are you sure you want to make {selectedLesson?.name} private?</AlertDialogTitle>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel className="bg-white" onClick={() => {
+                setConfirmPrivate(false);
+              }}>Cancel</AlertDialogCancel>
+              <AlertDialogAction className="hover:opacity-50"
+                onClick={async () => {
+                  if (selectedLesson && selectedLesson.id) {
+                    const updatedLesson: Lesson = {
+                      ...selectedLesson,
+                      publishStatus: 'private',
+                    };
+                    setSelectedLesson(updatedLesson);
+                    if (!updatedLesson.id) return;
+                    await putToFb(updatedLesson.id, updatedLesson);
+                  }
+                  setConfirmPrivate(false);
+                }}>
+                Continue</AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
