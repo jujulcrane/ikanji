@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface MultipleChoiceProps {
   question: string;
@@ -15,10 +15,15 @@ export default function MultipleChoiceCard({
 }: MultipleChoiceProps) {
   const [selected, setSelected] = useState<string | null>(null);
   const [feedback, setFeedback] = useState<string | null>(null);
+  const [options, setOptions] = useState<string[]>([]);
 
-  const options = [...incorrect];
-  const randomIndex = Math.floor(Math.random() * (options.length + 1));
-  options.splice(randomIndex, 0, correct);
+  useEffect(() => {
+    const randomIndex = Math.floor(Math.random() * (options.length + 1));
+    const newOptions = [...incorrect];
+    newOptions.splice(randomIndex, 0, correct);
+    setOptions(newOptions);
+    setFeedback(null);
+  }, [question, correct, incorrect]);
 
   const handleSelect = (e: React.MouseEvent<HTMLButtonElement>): void => {
     const selectedValue = e.currentTarget.value;

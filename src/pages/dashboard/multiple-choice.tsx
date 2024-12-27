@@ -166,8 +166,13 @@ export default function MultipleChoice() {
   const [isReadings, setIsReadings] = useState(true);
   const [hasFetchedQuizSet, setHasFetchedQuizSet] = useState(false);
   const [loadingAiSet, setLoadingAiSet] = useState(true);
+  const [selectedCorrect, setSelectedCorrect] = useState<string | null>(null);
 
   const auth = getAuth();
+  const selectedSet = isReadings ? readingSet : aiSet;
+  const currentQuestion = selectedSet
+    ? selectedSet[currentQuestionIndex]
+    : null;
 
   useEffect(() => {
     if (lessonId) {
@@ -197,26 +202,6 @@ export default function MultipleChoice() {
     }
   }, [lessonId]);
 
-  // const generateFalseMultipleChoice = (async (readings: string[]) => {
-  //   try {
-  //   const res = await fetch("/api/generate-multiple-choice", {
-  //     method: "POST",
-  //     headers: { "Content-Type": "application/json" },
-  //     body: JSON.stringify({ readings}),
-  //   });
-
-  //   if (!res.ok) {
-  //     throw new Error("Failed to generate multiple choice");
-  //   }
-
-  //   return await res.json();
-
-  // } catch (error) {
-  //   console.error("Error generating multiple choice:", error);
-  //   return [];
-  // }
-  // });
-
   useEffect(() => {
     if (lesson && !hasFetchedQuizSet) {
       console.log('Lesson data:', lesson); // Debug log
@@ -243,6 +228,15 @@ export default function MultipleChoice() {
       }
     }
   }, [lesson, hasFetchedQuizSet]);
+
+  useEffect(() => {
+    if (currentQuestion) {
+      const randomCorrect = currentQuestion.correct[
+        randomIndex(0, currentQuestion.correct.length)
+      ];
+      setSelectedCorrect(randomCorrect);
+    }
+  }, [currentQuestion]);
 
   const generateAiSet = async () => {
     if (!lesson) return;
@@ -381,11 +375,6 @@ export default function MultipleChoice() {
     }
   };
 
-  const selectedSet = isReadings ? readingSet : aiSet;
-  const currentQuestion = selectedSet
-    ? selectedSet[currentQuestionIndex]
-    : null;
-
   if (!lesson || !selectedSet) {
     return (
       <div>
@@ -404,8 +393,8 @@ export default function MultipleChoice() {
           <Image
             src="/luffy-thumbs-up-one-piece.avif"
             alt="Luffy giving a thumbs-up"
-            width={300} // Adjust width as needed
-            height={150} // Adjust height as needed
+            width={300}
+            height={150}
             className="my-4"
           />
           <button
@@ -466,11 +455,7 @@ export default function MultipleChoice() {
         )}
         <MultipleChoiceCard
           question={currentQuestion.term}
-          correct={
-            currentQuestion.correct[
-            randomIndex(0, currentQuestion.correct.length)
-            ]
-          }
+          correct={selectedCorrect!}
           incorrect={currentQuestion.false}
           onCorrect={handleCorrectAnswer}
         />
