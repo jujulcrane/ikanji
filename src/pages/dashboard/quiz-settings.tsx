@@ -21,6 +21,7 @@ import {
 import { IoIosAddCircle } from "react-icons/io";
 import { TbTruckLoading } from "react-icons/tb";
 import { RiAiGenerate } from "react-icons/ri";
+import { IoArrowBackCircle } from "react-icons/io5";
 
 export default function QuizSettings() {
   const router = useRouter();
@@ -268,7 +269,7 @@ export default function QuizSettings() {
         </div> :
           <div>
             {loadingNewQuestion && displayLoading()}
-            <button onClick={() => returnToMult()} className='lg:absolute lg:left-2 lg:top-35 bg-customGold text-white hover:opacity-50 uppercase text-sm m-2 px-2 py-1 rounded-sm'>Return to multiple choice questions</button>
+            <button onClick={() => returnToMult()} className='lg:absolute lg:left-4 lg:top-32 bg-blue-400 text-white hover:opacity-50 uppercase text-sm m-2 px-2 py-1 rounded-sm'><div className="flex"><IoArrowBackCircle /><p>Return to multiple choice questions</p></div></button>
             <h1 className=" text-center text-2xl pt-8 font-semibold">Settings for {lesson?.name}</h1>
             <ul className="md:grid lg:grid-cols-3">
               {lesson?.quizSets?.aiSet?.map((question, index) => (

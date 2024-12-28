@@ -21,6 +21,160 @@ export default function GenkiLessons() {
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [confirmAdd, setConfirmAdd] = useState<number | null>(null);
 
+  const chapter12Lesson: Lesson = {
+    name: "Genki Lesson 12",
+    kanjiList: [
+      { character: "昔", meaning: "Old times", readings: ["むかし"] },
+      { character: "々", meaning: "Repetition of a kanji", readings: [] },
+      { character: "神", meaning: "God", readings: ["かみ", "じん", "しん"] },
+      { character: "早", meaning: "Early", readings: ["はや"] },
+      { character: "起", meaning: "To get up", readings: ["お", "き"] },
+      { character: "牛", meaning: "Cow", readings: ["うし"] },
+      { character: "使", meaning: "To use", readings: ["つか"] },
+      { character: "働", meaning: "To work", readings: ["はたら", "どう"] },
+      { character: "連", meaning: "To link", readings: ["つ", "れん"] },
+      { character: "別", meaning: "To separate", readings: ["わか", "べつ"] },
+      { character: "度", meaning: "Time; degrees", readings: ["ど"] },
+      { character: "赤", meaning: "Red", readings: ["あか"] },
+      { character: "青", meaning: "Blue", readings: ["あお"] },
+      { character: "色", meaning: "Color", readings: ["いろ", "しょく", "しき"] },
+    ],
+    practiceSentences: [
+      {
+        japanese: "昔話を読むのが好きなんです。",
+        english: "I like reading old stories."
+      },
+      {
+        japanese: "神社が静かすぎるので、少し怖いです。",
+        english: "The shrine is too quiet, so it's a little scary."
+      },
+      {
+        japanese: "今日は早く起きたんですけど、電車が遅れました。",
+        english: "I woke up early today, but the train was late."
+      },
+      {
+        japanese: "牛乳を飲みすぎると、お腹が痛くなるんです。",
+        english: "If I drink too much milk, my stomach hurts."
+      },
+      {
+        japanese: "この漢字の使い方を教えていただけますか。",
+        english: "Could you teach me how to use this kanji?"
+      },
+      {
+        japanese: "毎日働きすぎるので、疲れています。",
+        english: "I’m tired because I work too much every day."
+      },
+      {
+        japanese: "友達を連れてきたんですが、ここで待っています。",
+        english: "I brought my friend, but they are waiting here."
+      },
+      {
+        japanese: "時間がないので、別の道を使いましょう。",
+        english: "Since we don’t have time, let’s use a different route."
+      },
+      {
+        japanese: "今度の旅行はどこに行くんですか。",
+        english: "Where are you going on your next trip?"
+      },
+      {
+        japanese: "赤い花が咲きすぎて、庭がとてもきれいです。",
+        english: "So many red flowers have bloomed that the garden is very beautiful."
+      },
+      {
+        japanese: "空が青すぎて、写真みたいです。",
+        english: "The sky is so blue it looks like a photo."
+      },
+      {
+        japanese: "この色が好きなので、このシャツを買いました。",
+        english: "I bought this shirt because I like this color."
+      },
+    ],
+  };
+
+  const chapter11Lesson: Lesson = {
+    name: "Genki Lesson 11",
+    kanjiList: [
+      { character: "手", meaning: "Hand", readings: ["て"] },
+      { character: "紙", meaning: "Paper", readings: ["かみ"] },
+      { character: "好", meaning: "To like", readings: ["す", "こう"] },
+      { character: "近", meaning: "Near", readings: ["ちか", "きん"] },
+      { character: "明", meaning: "Bright", readings: ["あか", "めい"] },
+      { character: "病", meaning: "Illness", readings: ["びょう"] },
+      { character: "院", meaning: "Institution", readings: ["いん"] },
+      { character: "映", meaning: "To reflect", readings: ["えい"] },
+      { character: "画", meaning: "Picture; Brush-stroke", readings: ["が", "かく"] },
+      { character: "歌", meaning: "To sing; Song", readings: ["うた"] },
+      { character: "市", meaning: "City; Market", readings: ["し"] },
+      { character: "所", meaning: "Place", readings: ["ところ", "しょ"] },
+      { character: "勉", meaning: "To study; Exertion", readings: ["べん"] },
+      { character: "強", meaning: "Strong", readings: ["つよ", "きょう"] },
+      { character: "有", meaning: "To exist; Possess", readings: ["あ", "ゆう"] },
+      { character: "旅", meaning: "Travel; Trip", readings: ["たび", "りょ"] },
+    ],
+    practiceSentences: [
+      {
+        japanese: "手で紙を折ることがあります。",
+        english: "Sometimes I fold paper with my hands.",
+      },
+      {
+        japanese: "私の母は歌が上手ですが、病院で働いています。",
+        english: "My mother is good at singing, but she works at a hospital.",
+      },
+      {
+        japanese: "市に新しい映画館ができたので、映画を見たいです。",
+        english: "A new movie theater was built in the city, so I want to watch a movie.",
+      },
+      {
+        japanese: "明るいところで勉強するのが好きです。",
+        english: "I like studying in a bright place.",
+      },
+      {
+        japanese: "近くの旅館は強い風のため閉まっています。",
+        english: "The nearby inn is closed because of strong winds.",
+      },
+      {
+        japanese: "妹は手作りの絵を描きたがっています。",
+        english: "My younger sister wants to draw handmade pictures.",
+      },
+      {
+        japanese: "この店には赤いシャツや青いスカートがあります。",
+        english: "This store has red shirts and blue skirts.",
+      },
+      {
+        japanese: "彼は強いチームに入りたがっています。",
+        english: "He wants to join a strong team.",
+      },
+      {
+        japanese: "友達は市で有名な場所を探しています。",
+        english: "My friend is looking for famous places in the city.",
+      },
+      {
+        japanese: "勉強しすぎたので、映画や音楽でリラックスしたいです。",
+        english: "I studied too much, so I want to relax with movies or music.",
+      },
+      {
+        japanese: "手紙を書いたり、写真を撮ったりしました。",
+        english: "I wrote letters and took photos.",
+      },
+      {
+        japanese: "旅行する前に新しい地図を買いたいです。",
+        english: "I want to buy a new map before traveling.",
+      },
+      {
+        japanese: "近所の所は静かですが、たまに犬の声が聞こえます。",
+        english: "The neighborhood is quiet, but you can occasionally hear dogs barking.",
+      },
+      {
+        japanese: "子供たちは紙で作った映画のポスターを見たがっています。",
+        english: "The children want to see the movie poster made of paper.",
+      },
+      {
+        japanese: "病気のため学校を休むことがあります。",
+        english: "Sometimes I take a day off school because of illness.",
+      },
+    ],
+  };
+
   const chapter10Lesson: Lesson = {
     name: "Genki Book 1 Chapter 10",
     kanjiList: [
@@ -454,7 +608,7 @@ export default function GenkiLessons() {
     ]
   };
 
-  const allLessons: Array<Lesson> = [chapter3Lesson, chapter4Lesson, chapter5Lesson, chapter6Lesson, chapter7Lesson, chapter8Lesson, chapter9Lesson, chapter10Lesson];
+  const allLessons: Array<Lesson> = [chapter3Lesson, chapter4Lesson, chapter5Lesson, chapter6Lesson, chapter7Lesson, chapter8Lesson, chapter9Lesson, chapter10Lesson, chapter11Lesson, chapter12Lesson];
 
 
   const displayLoading = () => {
