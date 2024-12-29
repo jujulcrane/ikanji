@@ -25,7 +25,7 @@ export default function GenkiLessons() {
     name: "Genki Lesson 12",
     kanjiList: [
       { character: "昔", meaning: "Old times", readings: ["むかし"] },
-      { character: "々", meaning: "Repetition of a kanji", readings: [] },
+      { character: "々", meaning: "Repetition of a kanji", readings: ['repeat'] },
       { character: "神", meaning: "God", readings: ["かみ", "じん", "しん"] },
       { character: "早", meaning: "Early", readings: ["はや"] },
       { character: "起", meaning: "To get up", readings: ["お", "き"] },

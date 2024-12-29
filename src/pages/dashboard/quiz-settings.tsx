@@ -80,6 +80,7 @@ export default function QuizSettings() {
   const editQuestion = (question: MultipleChoiceQuestion, index: number) => {
     setEditingQuestion({ question, index });
     setUpdatedTerm(question.term);
+    setNewFeedBack(question.feedback ? question.feedback : '');
   };
 
   const generateAiQuestion = async () => {

@@ -34,7 +34,7 @@ export default async function handler(
   - question: The question text
   - correctAnswer: The correct answer kanji
   - incorrectOptions: An array of 3 incorrect kanji options
-  - feedback: A short statement explaining why the correct answer is correct. Only in the feedback, provide the hiragana readings for any kanji in the structure of kanji(hiragana) - for example: ”新聞（しんぶん）.” Keep the feedback as brief as possible`,
+  - feedback: A short statement explaining why the correct answer is correct. Only in the feedback, provide the hiragana readings for any kanji in the structure of kanji(hiragana) - for example: ”新聞（しんぶん）.” Keep the feedback as brief as possible and do not mention the other options, only the correct answer.`,
     });
     console.log('Element stream initialized:', elementStream);
 

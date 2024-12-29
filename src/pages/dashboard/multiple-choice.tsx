@@ -10,6 +10,17 @@ import { TbTruckLoading } from "react-icons/tb";
 import { IoIosSettings } from "react-icons/io";
 import { Progress } from "@/components/ui/progress"
 import { IoArrowBackOutline } from "react-icons/io5";
+import { FaRecycle } from "react-icons/fa6";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog"
 
 interface MultipleChoiceQuestion {
   term: string;
@@ -171,6 +182,7 @@ export default function MultipleChoice() {
   const [hasFetchedQuizSet, setHasFetchedQuizSet] = useState(false);
   const [loadingAiSet, setLoadingAiSet] = useState(true);
   const [selectedCorrect, setSelectedCorrect] = useState<string | null>(null);
+  const [confirmRefresh, setConfirmRefresh] = useState<boolean>(false);
 
   const auth = getAuth();
   const selectedSet = isReadings ? readingSet : aiSet;
@@ -225,7 +237,7 @@ export default function MultipleChoice() {
         );
         setReadingSet(newMultipleChoice);
 
-        generateAiSet();
+        generateAiSet(false);
 
         setHasFetchedQuizSet(true);
       } else {
@@ -243,14 +255,14 @@ export default function MultipleChoice() {
     }
   }, [currentQuestion]);
 
-  const generateAiSet = async () => {
+  const generateAiSet = async (regenerating: boolean) => {
     if (!lesson) return;
 
     try {
       console.log(
         'Generating AI Set for Kanji:',
         lesson.kanjiList.map((kanji) => kanji.character)
-      ); // Log Kanji being sent to the API
+      );
 
       const res = await fetch('/api/ai-multiple-choice', {
         method: 'POST',
@@ -285,6 +297,12 @@ export default function MultipleChoice() {
       );
 
       setAiSet(newAiSet);
+      if (regenerating) {
+        storeMultipleChoice({
+          readingSet: readingSet,
+          aiSet: newAiSet
+        });
+      }
       setLoadingAiSet(false);
     } catch (error) {
       console.error('Failed to generate AI set:', error);
@@ -400,6 +418,27 @@ export default function MultipleChoice() {
     );
   }
 
+  const regenerateReadingsQuizSet = (): void => {
+    const kanjiList = lesson.kanjiList || [];
+    if (kanjiList.length > 0) {
+      const newMultipleChoice: MultipleChoiceQuestion[] = kanjiList.map(
+        (kanji) => ({
+          term: kanji.character,
+          correct: kanji.readings,
+          false: generateWrongAnswers(kanji.readings),
+          feedback: kanji.meaning,
+        })
+      );
+      setReadingSet(newMultipleChoice);
+      storeMultipleChoice({
+        readingSet: newMultipleChoice,
+        aiSet: aiSet
+      });
+    } else {
+      console.error('Kanji list is empty or undefined');
+    }
+  };
+
   if (!currentQuestion) {
     return (
       <div>
@@ -463,6 +502,13 @@ export default function MultipleChoice() {
           >
             <IoIosSettings size={24} className="ml-2" />
           </button>
+          <button
+            className="hover:opacity-50"
+            disabled={loadingAiSet}
+            onClick={() => setConfirmRefresh(true)}
+          >
+            <FaRecycle size={24} className="ml-2" />
+          </button>
         </div>
         <Progress value={(currentQuestionIndex) / selectedSet.length * 100} className="mt-8 w-80" />
         {loadingAiSet && (
@@ -487,6 +533,34 @@ export default function MultipleChoice() {
           </button>
         )}
       </div>
+      <AlertDialog open={confirmRefresh}>
+        <AlertDialogContent className="bg-customBrownLight">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-white">Are you sure you want to regenerate the quiz sets?</AlertDialogTitle>
+            <AlertDialogDescription className="text-white">
+              You should regenerate the readings set if you have made any changes to kanji or readings of this lesson.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel className="bg-white" onClick={() => {
+              setConfirmRefresh(false);
+            }}>Cancel</AlertDialogCancel>
+            <AlertDialogAction className="hover:opacity-50"
+              onClick={() => {
+                setConfirmRefresh(false);
+                regenerateReadingsQuizSet();
+              }}>
+              Regenerate Readings Set</AlertDialogAction>
+            <AlertDialogAction className="hover:opacity-50"
+              onClick={() => {
+                setConfirmRefresh(false);
+                setLoadingAiSet(true);
+                generateAiSet(true);
+              }}>
+              Regenerate AI Set</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </>
   );
 }
