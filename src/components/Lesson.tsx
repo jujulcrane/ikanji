@@ -5,6 +5,7 @@ export interface Lesson {
   practiceSentences: PracticeSentence[];
   quizSets?: QuizSets;
   userId?: string;
+  createdAt?: string;
   publishStatus?: 'pending' | 'published' | 'private';
 }
 
@@ -18,6 +19,7 @@ export interface Kanji {
 export interface PracticeSentence {
   japanese: string;
   english: string;
+  audioUrl?: string;
 }
 
 export interface MultipleChoiceQuestion {

@@ -318,7 +318,7 @@ export default function MyLessons() {
         </div>
         <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {selectedLesson.kanjiList.map((kanji, index) => (
-            <li key={kanji.character} className='relative border p-4 rounded-lg bg-customCream/50 font-sansJP'>
+            <li key={`${lessonId}-${kanji.character}-${index}`} className='relative border p-4 rounded-lg bg-customCream/50 font-sansJP'>
               <Dialog>
                 <DialogTrigger onClick={() => editKanji(kanji, index)} className="aboslute right-2"><FaRegEdit size={22} className='opacity-60 hover:opacity-100 transition-opacity mr-2' /></DialogTrigger>
                 <DialogContent className="mb-2">
@@ -342,7 +342,7 @@ export default function MyLessons() {
                           Readings:
                         </label>
                         {editingKanji?.kanji.readings.map((reading, idx) => (
-                          <li className="list-none flex justify-between items-center ml-12" key={idx}>
+                          <li className="list-none flex justify-between items-center ml-12" key={`${reading}-${idx}`}>
                             {reading} <button className="mr-2" onClick={() => deleteReading(idx)}><RiDeleteBin5Line size={22} /></button>
                           </li>
                         ))}
@@ -377,7 +377,7 @@ export default function MyLessons() {
                 <h2 className="font-medium">Readings</h2>
                 <ul>
                   {kanji.readings.map((reading, index) => (
-                    <li key={index}>{reading}</li>
+                    <li key={`kanji-${reading}-${index}`}>{reading}</li>
                   ))}
                 </ul>
               </div>
@@ -401,7 +401,7 @@ export default function MyLessons() {
                 <DialogTitle>Edit Practice Sentences</DialogTitle>
                 <DialogDescription>
                   {updatedPracticeSentences?.map((sentence, index) => (
-                    <li className="border my-8 rounded-sm list-none w-full p-2" key={index}>
+                    <li className="border my-8 rounded-sm list-none w-full p-2" key={`${sentence}-${index}`}>
                       <div className="flex justify-between m-2">
                         <h1>{index + 1}</h1>
                         <button className="ml-1" onClick={() => deleteSentence(index)}><RiDeleteBin5Line size={22} /></button>
@@ -507,7 +507,7 @@ export default function MyLessons() {
           selectedLesson.practiceSentences.length == 0 ? <h1>No Sentences</h1> :
             <ul>
               {selectedLesson.practiceSentences.map((sentence, index) => (
-                <li className="border my-8 rounded-sm" key={index}>
+                <li className="border my-8 rounded-sm" key={`practice-${sentence}-${index}`}>
                   <div className="p-4 md:flex md:justify-between">
                     <p className="text-lg">{sentence.japanese}</p>
                     <p className="text-sm opacity-40 mt-2 md:ml-4 md:mt-0">{sentence.english}</p>
@@ -566,7 +566,7 @@ export default function MyLessons() {
       <div className="grid grid-cols-3 gap-2">
         {myLessons.map((lesson) => (
           <Button
-            key={lesson.name}
+            key={lesson.id}
             onClick={() => handleLessonSelect(lesson.name)}
           >
             {lesson.name}

@@ -43,7 +43,7 @@ export default async function handler(
       console.log('userId from request:', lesson.userId);
       console.log(lesson)
 
-      const lessonRef = await addDoc(collection(db, 'lessons'), {...lesson, userId})
+      const lessonRef = await addDoc(collection(db, 'lessons'), {...lesson, userId, createdAt: new Date().toISOString()})
       console.log('Adding lesson to Firestore:', lesson);
 
       res

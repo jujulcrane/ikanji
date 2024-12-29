@@ -9,6 +9,7 @@ import Image from 'next/image';
 import { TbTruckLoading } from "react-icons/tb";
 import { IoIosSettings } from "react-icons/io";
 import { Progress } from "@/components/ui/progress"
+import { IoArrowBackOutline } from "react-icons/io5";
 
 interface MultipleChoiceQuestion {
   term: string;
@@ -351,6 +352,15 @@ export default function MultipleChoice() {
     }
   };
 
+  const handleReturn = (lesson: Lesson) => {
+    if (lesson) {
+      router.push({
+        pathname: `/dashboard/my-lessons`,
+        query: { lessonId: lesson.id },
+      });
+    }
+  };
+
   const handleCorrectAnswer = () => {
     setShowNextButton(true);
   };
@@ -416,8 +426,9 @@ export default function MultipleChoice() {
   return (
     <>
       <Navbar />
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center pb-4">
         <div className="flex justify-content items-center mt-4">
+          <button className="bg-blue-400 text-white rounded-sm p-1 px-2 text-sm mr-2 hover:opacity-50" onClick={() => handleReturn(lesson)}><IoArrowBackOutline /></button>
           <button
             className="border rounded-sm p-2 m-1"
             onClick={() => {
