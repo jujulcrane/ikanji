@@ -26,11 +26,7 @@ export interface MultipleChoiceQuestion {
   term: string;
   correct: string[];
   false: string[];
-}
-
-export interface MultipleChoice {
-  questions: MultipleChoiceQuestion[];
-  name: 'readings' | 'ai';
+  feedback?: string;
 }
 
 export interface QuizSets {

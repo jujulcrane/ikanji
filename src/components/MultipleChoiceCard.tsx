@@ -4,6 +4,7 @@ interface MultipleChoiceProps {
   question: string;
   correct: string;
   incorrect: string[];
+  questionFeedback?: string;
   onCorrect: () => void;
 }
 
@@ -11,6 +12,7 @@ export default function MultipleChoiceCard({
   question,
   correct,
   incorrect,
+  questionFeedback = '',
   onCorrect,
 }: MultipleChoiceProps) {
   const [selected, setSelected] = useState<string | null>(null);
@@ -32,8 +34,13 @@ export default function MultipleChoiceCard({
 
     if (selectedValue === correct) {
       console.log('correct!');
-      setFeedback('Correct!');
       onCorrect();
+      if (questionFeedback.trim() === '') {
+        setFeedback('Correct!');
+      }
+      else {
+        setFeedback(questionFeedback);
+      }
     } else {
       console.log('incorrect');
       setFeedback('Incorrect. Try again!');

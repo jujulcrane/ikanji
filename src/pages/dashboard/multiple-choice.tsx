@@ -15,12 +15,14 @@ interface MultipleChoiceQuestion {
   term: string;
   correct: string[];
   false: string[];
+  feedback?: string;
 }
 
 type AiQuestion = {
   question: string;
   correctAnswer: string;
   incorrectOptions: string[];
+  feedback: string;
 };
 
 const hiragana = [
@@ -218,6 +220,7 @@ export default function MultipleChoice() {
             term: kanji.character,
             correct: kanji.readings,
             false: generateWrongAnswers(kanji.readings),
+            feedback: kanji.meaning,
           })
         );
         setReadingSet(newMultipleChoice);
@@ -267,6 +270,7 @@ export default function MultipleChoice() {
         question: string;
         correctAnswer: string;
         incorrectOptions: string[];
+        feedback: string;
       }[] = await res.json();
 
       console.log('Received AI Questions:', aiQuestions); // Log the AI questions returned from the API
@@ -276,6 +280,7 @@ export default function MultipleChoice() {
           term: q.question,
           correct: [q.correctAnswer],
           false: q.incorrectOptions,
+          feedback: q.feedback,
         })
       );
 
@@ -470,6 +475,7 @@ export default function MultipleChoice() {
           question={currentQuestion.term}
           correct={selectedCorrect!}
           incorrect={currentQuestion.false}
+          questionFeedback={currentQuestion.feedback}
           onCorrect={handleCorrectAnswer}
         />
         {showNextButton && (

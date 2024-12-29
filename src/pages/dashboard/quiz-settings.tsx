@@ -36,7 +36,8 @@ export default function QuizSettings() {
   const [newCorrectAnswer, setNewCorrectAnswer] = useState<string>('');
   const [confirmDelete, setConfirmDelete] = useState<number | null>(null);
   const [newOption, setNewOption] = useState<string>('');
-  const [newQuestion, setNewQuestion] = useState<MultipleChoiceQuestion>({ term: '', correct: [], false: [] })
+  const [newQuestion, setNewQuestion] = useState<MultipleChoiceQuestion>({ term: '', correct: [], false: [] });
+  const [newFeedBack, setNewFeedBack] = useState<string>('');
   const auth = getAuth();
 
   useEffect(() => {
@@ -103,15 +104,17 @@ export default function QuizSettings() {
         question: string;
         correctAnswer: string;
         incorrectOptions: string[];
+        feedback: string;
       }[] = await res.json();
 
-      console.log('Received AI Questions:', aiQuestions); // Log the AI questions returned from the API
+      console.log('Received AI Questions:', aiQuestions);
 
       const newAiSet: MultipleChoiceQuestion[] = aiQuestions.map(
         (q) => ({
           term: q.question,
           correct: [q.correctAnswer],
           false: q.incorrectOptions,
+          feedback: q.feedback,
         })
       );
       const firstQuestion: MultipleChoiceQuestion = newAiSet[0];
@@ -133,6 +136,7 @@ export default function QuizSettings() {
     putToFb(updatedLesson);
     setNewQuestion({ term: '', correct: [], false: [] });
     setUpdatedTerm('');
+    setNewFeedBack('');
     setNewCorrectAnswer('');
     setNewOption('');
   };
@@ -173,6 +177,7 @@ export default function QuizSettings() {
         ...editingQuestion.question,
         correct: editingQuestion.question.correct,
         term: updatedTerm,
+        feedback: newFeedBack,
       };
     }
     setLesson(updatedLesson);
@@ -324,7 +329,7 @@ export default function QuizSettings() {
                             ))}
                             <input
                               type="text"
-                              id="newAnswer"
+                              id="newOption"
                               value={newOption}
                               onChange={(e) => setNewOption(e.target.value)}
                               className="m-1 border p-2 rounded mb-2 text-sm"
@@ -333,6 +338,18 @@ export default function QuizSettings() {
                               type="button"
                               onClick={() => addAnswer('false')}
                               className="m-2 bg-customGold text-left text-black text-sm px-2 py-1 rounded w-fit hover:opacity-50">Add Option</button>
+                          </div>
+                          <div className="flex flex-col">
+                            <label className="text-sm mt-2">
+                              Feedback
+                            </label>
+                            <input
+                              type="text"
+                              id="feedback"
+                              value={newFeedBack}
+                              onChange={(e) => setNewFeedBack(e.target.value)}
+                              className="m-1 border p-2 rounded mb-2 text-sm"
+                            />
                           </div>
                         </DialogDescription>
                         <button
@@ -366,8 +383,14 @@ export default function QuizSettings() {
                       ))
                     }
                   </ul >
+                  <h1 className="text-sm mt-2">Feedback:</h1>
+                  {question.feedback && question.feedback.trim() !== '' ? (
+                    <p className="text-sm w-5/6">{question.feedback}</p>
+                  ) : (
+                    <p className="text-sm italic">None</p>
+                  )}
                   <div className="relative">
-                    <button onClick={() => setConfirmDelete(index)} className="absolute right-2 bottom-1"><RiDeleteBin5Line /></button>
+                    <button onClick={() => setConfirmDelete(index)} className="absolute right-2 bottom-1"><RiDeleteBin5Line size={26} /></button>
                   </div>
                 </li >
               ))
@@ -378,6 +401,7 @@ export default function QuizSettings() {
               setNewCorrectAnswer('');
               setNewOption('');
               setUpdatedTerm('');
+              setNewFeedBack('');
               setNewQuestion({ term: '', correct: [], false: [] });
             }}>
               <div className="flex justify-center items-center">
@@ -446,12 +470,27 @@ export default function QuizSettings() {
                         onClick={() => createAnswers('false')}
                         className="m-2 bg-customGold text-left text-black text-sm px-2 py-1 rounded w-fit hover:opacity-50">Add Option</button>
                     </div>
+                    <div className="flex flex-col">
+                      <label className="text-sm mt-2">
+                        Feedback
+                      </label>
+                      <input
+                        type="text"
+                        id="feedback"
+                        value={newFeedBack}
+                        onChange={(e) => setNewFeedBack(e.target.value)}
+                        className="m-1 border p-2 rounded mb-2 text-sm"
+                      />
+                    </div>
                   </DialogDescription>
                   <button
                     type="button"
                     disabled={newQuestion.false.length < 3 || newQuestion.correct.length < 1 || updatedTerm == ''}
                     onClick={() => {
-                      const question = ({ term: updatedTerm, correct: newQuestion.correct, false: newQuestion.false });
+                      const question: MultipleChoiceQuestion = ({ term: updatedTerm, correct: newQuestion.correct, false: newQuestion.false });
+                      if (newFeedBack != '') {
+                        question.feedback = newFeedBack;
+                      }
                       addQuestion(question);
                     }}
                     className="w-full py-2 px-2 font-medium rounded-md bg-customBrownDark text-white hover:opacity-50"

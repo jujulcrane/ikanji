@@ -7,6 +7,7 @@ const aiMultipleChoice = z.object({
   question: z.string(),
   correctAnswer: z.string(),
   incorrectOptions: z.array(z.string()).min(3),
+  feedback: z.string(),
 });
 
 type AIMultipleChoice = z.infer<typeof aiMultipleChoice>;
@@ -29,7 +30,11 @@ export default async function handler(
       model: openai('gpt-4-turbo'),
       output: 'array',
       schema: aiMultipleChoice,
-      prompt: `Create one multiple choice question based on these kanji: ${kanji.join(',')} to help me learn them. For example, in a question provide the Japanese sentence and ask which kanji completes the sentence. Focus on showing how the kanji are used in common phrases or with particles. Ensure the questions is intermediate difficulty. Be creative. Provide 1 correct answer and 3 convincing incorrect answers.`,
+      prompt: `Create one multiple-choice question based on at least 2 of these kanji: ${kanji.join(',')} to help me learn them. For example, in a question provide the Japanese sentence with kanji ommitted, for the student to complete the sentence. Focus on showing how the kanji are used in common phrases or with particles. Ensure the question is of intermediate difficulty. Provide 1 correct answer and 3 convincing incorrect answers. The structure should be:
+  - question: The question text
+  - correctAnswer: The correct answer kanji
+  - incorrectOptions: An array of 3 incorrect kanji options
+  - feedback: A short statement explaining why the correct answer is correct. Only in the feedback, provide the hiragana readings for any kanji in the structure of kanji(hiragana) - for example: ”新聞（しんぶん）.” Keep the feedback as brief as possible`,
     });
     console.log('Element stream initialized:', elementStream);
 
