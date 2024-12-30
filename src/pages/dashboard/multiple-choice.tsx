@@ -21,6 +21,8 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
+import KanjiListCard from '@/components/KanjiListCard';
+
 
 interface MultipleChoiceQuestion {
   term: string;
@@ -183,7 +185,6 @@ export default function MultipleChoice() {
   const [loadingAiSet, setLoadingAiSet] = useState(true);
   const [selectedCorrect, setSelectedCorrect] = useState<string | null>(null);
   const [confirmRefresh, setConfirmRefresh] = useState<boolean>(false);
-
   const auth = getAuth();
   const selectedSet = isReadings ? readingSet : aiSet;
   const currentQuestion = selectedSet
@@ -532,6 +533,9 @@ export default function MultipleChoice() {
             Next Question
           </button>
         )}
+        <div className="md:absolute md:top-57 left-5 pt-4">
+          <KanjiListCard kanjiList={lesson.kanjiList} />
+        </div>
       </div>
       <AlertDialog open={confirmRefresh}>
         <AlertDialogContent className="bg-customBrownLight">
