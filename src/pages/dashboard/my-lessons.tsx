@@ -671,7 +671,7 @@ export default function MyLessons() {
                   if (selectedLesson && selectedLesson.id) {
                     const updatedLesson: Lesson = {
                       ...selectedLesson,
-                      publishStatus: 'pending',
+                      publishStatus: 'published',
                     };
                     setSelectedLesson(updatedLesson);
                     if (!updatedLesson.id) return;

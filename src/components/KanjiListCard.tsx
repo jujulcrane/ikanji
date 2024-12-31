@@ -24,7 +24,7 @@ export default function KanjiListCard({ kanjiList }: KanjiListCardProps) {
               <li key={`${kanji.character}-${index}`} className="flex items-center space-y-2 md:space-y-0 text-xl">
                 <HoverCard>
                   <HoverCardTrigger asChild className="flex items-center justify-center max-w-max">
-                    <button className="hover:bg-gray-500 py-1 px-2 rounded-sm">{kanji.character}</button>
+                    <button className="hover:bg-gray-200 py-1 px-2 rounded-sm">{kanji.character}</button>
                   </HoverCardTrigger>
                   <HoverCardContent className="w-full">
                     <div className="flex justify-between space-x-4">

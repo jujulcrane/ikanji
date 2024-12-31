@@ -76,6 +76,15 @@ export default function Navbar() {
                   Add Genki Lessons
                 </Link>
               </li>
+              <li>
+                <Link
+                  href="/dashboard/explore-lessons"
+                  className="text-gray-900 dark:text-white hover:underline"
+                  aria-current="page"
+                >
+                  Explore Lessons
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
