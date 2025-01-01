@@ -1,7 +1,7 @@
 import { Lesson } from '@/components/Lesson';
 import { auth } from '@/utils/firebaseAdmin';
 import { db } from '@/utils/firebase';
-import { collection, addDoc } from 'firebase/firestore';
+import { collection, addDoc, arrayUnion, doc, updateDoc } from 'firebase/firestore';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 type ResponseData = {
@@ -43,8 +43,13 @@ export default async function handler(
       console.log('userId from request:', lesson.userId);
       console.log(lesson)
 
-      const lessonRef = await addDoc(collection(db, 'lessons'), {...lesson, userId, createdAt: new Date().toISOString()})
+      const lessonRef = await addDoc(collection(db, 'lessons'), {...lesson, userId, createdAt: new Date().toISOString()});
       console.log('Adding lesson to Firestore:', lesson);
+
+      const userRef = doc(db, "users", userId);
+      await updateDoc(userRef, {
+        lessonIds: arrayUnion(lessonRef.id),
+      });
 
       res
         .status(200)

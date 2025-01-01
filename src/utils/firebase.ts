@@ -9,6 +9,7 @@ import {
   signOut,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  updateProfile,
 } from 'firebase/auth';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -41,7 +42,20 @@ const createComponentWithAuth = withFirebaseAuth({
 const signInWithGoogle = async () => {
   try {
     const result = await signInWithPopup(auth, providers.googleProvider);
-    return result.user; // Return the user object
+    const user = result.user;
+    
+    await fetch('/api/create-user', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        uid: user.uid,
+        email: user.email,
+        displayName: user.displayName,
+      }),
+    });
+    return user;
   } catch (error) {
     console.error('Error during sign-in:', error);
     throw error;
@@ -58,14 +72,31 @@ const signInWithEmail = async (email: string, password: string) => {
   }
 };
 
-const createAccountWithEmail = async (email: string, password: string) => {
+const createAccountWithEmail = async (email: string, password: string, displayName: string) => {
   try {
     const userCredential = await createUserWithEmailAndPassword(
       auth,
       email,
       password
     );
-    return userCredential.user;
+    const user = userCredential.user;
+    if (user) {
+      await updateProfile(user, {
+        displayName: displayName,
+      });
+    }
+    await fetch('/api/create-user', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        uid: user.uid,
+        email: user.email,
+        displayName: displayName,
+      }),
+    });
+    return user;
   } catch (error) {
     console.error('Error during account creation:', error);
     throw error;

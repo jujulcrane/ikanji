@@ -1,6 +1,6 @@
 import { auth } from '@/utils/firebaseAdmin';
 import { db } from '@/utils/firebase';
-import { collection, doc, deleteDoc } from 'firebase/firestore';
+import { collection, doc, deleteDoc, arrayRemove, updateDoc, getDoc } from 'firebase/firestore';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 type ResponseData = {
@@ -31,7 +31,24 @@ export default async function handler(
 
       const lessonRef = doc(collection(db, 'lessons'),(lessonId));
 
+      const lessonSnapshot = await getDoc(lessonRef);
+      if (!lessonSnapshot.exists()) {
+        return res.status(404).json({ error: 'Lesson not found' });
+      }
+
+      const lessonData = lessonSnapshot.data();
+      const userId = lessonData.userId;
+
+      if (decodedToken.uid !== userId) {
+        return res.status(403).json({ error: 'Forbidden: User does not own this lesson' });
+      }
+      
       await deleteDoc(lessonRef);
+
+      const userRef = doc(db, 'users', userId);
+      await updateDoc(userRef, {
+        lessonIds: arrayRemove(lessonId),
+      });
 
       res.status(200).json({ message: 'Lesson deleted successfully!' });
     } catch (error) {

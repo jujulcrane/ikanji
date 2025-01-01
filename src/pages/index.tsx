@@ -24,6 +24,11 @@ export default function Home() {
 
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [displayName, setDisplayName] = useState<string>('');
+
+  const handleDisplayNameChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setDisplayName(event.target.value);
+  };
 
   const handleEmailChange = (event: ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
@@ -46,7 +51,7 @@ export default function Home() {
 
   const handleCreateAccount = async () => {
     try {
-      await createAccountWithEmail(email, password);
+      await createAccountWithEmail(email, password, displayName);
       console.log('account created successfully');
       router.push('/dashboard');
     } catch (error) {
@@ -127,6 +132,18 @@ export default function Home() {
                   <DialogHeader>
                     <DialogTitle>Create an Account</DialogTitle>
                     <DialogDescription>
+                      <div className="flex flex-col">
+                        <label htmlFor="displayName" className="text-sm mt-2">
+                          Username
+                        </label>
+                        <input
+                          type="text"
+                          id="displayName"
+                          value={displayName}
+                          onChange={handleDisplayNameChange}
+                          className="border p-2 rounded mb-2"
+                        />
+                      </div>
                       <div className="flex flex-col">
                         <label htmlFor="email" className="text-sm mt-2">
                           Email

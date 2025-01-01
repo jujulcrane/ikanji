@@ -34,4 +34,14 @@ export interface QuizSets {
   aiSet: MultipleChoiceQuestion[] | null;
 }
 
+export interface User {
+  name: string;
+  email: string;
+  profilePicture?: string;
+  createdAt: string;
+  lastLogin?: string;
+  lessonIds?: string[];
+  displayName: string;
+}
+
 export function Lesson() { }

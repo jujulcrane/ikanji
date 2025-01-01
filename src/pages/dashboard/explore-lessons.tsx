@@ -39,7 +39,6 @@ export default function ExploreLessons() {
   const [publicLessons, setPublicLessons] = useState<Lesson[] | null>(null);
   const [selectedLesson, setSelectedLesson] = useState<Lesson | null>(null);
   const [loadingLessons, setLoadingLessons] = useState<boolean>(true);
-  const [addedLesson, setAddedLesson] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [confirmAdd, setConfirmAdd] = useState<number | null>(null);
@@ -164,7 +163,6 @@ export default function ExploreLessons() {
           onClick={() => {
             setConfirmAdd(index);
           }}
-          disabled={addedLesson}
         >
           <MdAddShoppingCart size={24} />
         </button>
@@ -176,16 +174,16 @@ export default function ExploreLessons() {
     if (loadingLessons) {
       console.log('No lessons loaded yet');
       return <div className="flex items-center justify-center w-3/4 p-4">
-        <p className="min-h-[62vh] text-gray-200">Loading...</p>
+        <p className="min-h-[64vh] text-gray-200">Loading...</p>
       </div>;
     }
     if (!publicLessons || publicLessons.length === 0) {
       return <div className="flex items-center justify-center w-3/4 p-4">
-        <p className="min-h-[62vh] text-gray-200">No Lessons Available</p>
+        <p className="min-h-[64vh] text-gray-200">No Lessons Available</p>
       </div>;
     }
     return (
-      <div className="grid gird-cols-1 gap-y-2 items-center justify-center min-h-[65vh] mx-auto md:w-2/3 py-2">
+      <div className="grid gird-cols-1 gap-y-2 items-center justify-center min-h-[67vh] mx-auto md:w-2/3 py-2">
         {paginatedLessons?.map((lesson, index) => (
           <div className="border rounded-sm p-4 relative min-w-96 bg-customCream bg-opacity-70" key={index}>
 
@@ -213,7 +211,6 @@ export default function ExploreLessons() {
               onClick={() => {
                 setConfirmAdd(index);
               }}
-              disabled={addedLesson}
             >
               <MdAddShoppingCart size={24} />
             </button>}
@@ -233,13 +230,11 @@ export default function ExploreLessons() {
   };
 
   const handleSuccess = () => {
-    setAddedLesson(false);
     setSuccessMessage(null);
   };
 
   const postRequest = async (lessonToAdd: Lesson) => {
     setLoading(true);
-    setAddedLesson(true);
     setSuccessMessage(null);
 
     const user = auth.currentUser;
@@ -316,9 +311,9 @@ export default function ExploreLessons() {
           <AlertDialogContent className="bg-customBrownLight">
             <AlertDialogHeader>
               <AlertDialogTitle className="text-white">
-                {confirmAdd !== null && publicLessons
-                  ? publicLessons[confirmAdd]?.name
-                    ? `Are you sure you want to add ${publicLessons[confirmAdd].name}?`
+                {confirmAdd !== null && publicLessons && paginatedLessons
+                  ? paginatedLessons[confirmAdd]?.name
+                    ? `Are you sure you want to add ${paginatedLessons[confirmAdd].name}?`
                     : 'Unknown Lesson'
                   : 'Loading...'}
               </AlertDialogTitle>
@@ -328,8 +323,8 @@ export default function ExploreLessons() {
                 setConfirmAdd(null);
               }}>Cancel</AlertDialogCancel>
               <AlertDialogAction className="hover:opacity-50" onClick={() => {
-                if (publicLessons)
-                  postRequest(publicLessons[confirmAdd!]);
+                if (paginatedLessons)
+                  postRequest(paginatedLessons[confirmAdd!]);
                 setConfirmAdd(null);
               }}>Add</AlertDialogAction>
             </AlertDialogFooter>
