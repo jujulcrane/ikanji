@@ -3,7 +3,7 @@ import Button from './button';
 import { PracticeSentence, Kanji, Lesson } from './Lesson';
 import { auth } from '@/utils/firebase';
 import { getIdToken } from 'firebase/auth';
-import { TbTruckLoading } from "react-icons/tb";
+import { TbTruckLoading } from 'react-icons/tb';
 
 export function CreateNewLessonForm() {
   const [kanjiChar, setKanjiChar] = useState<string>('');
@@ -97,7 +97,7 @@ export function CreateNewLessonForm() {
       kanjiList: kanjiList,
       practiceSentences: practiceSentences,
       userId: user.uid,
-      publishStatus: 'private'
+      publishStatus: 'private',
     };
 
     console.log('Creating Lesson:', newLesson);
@@ -278,7 +278,9 @@ export function CreateNewLessonForm() {
               </button>
               {loadingAiSentences && (
                 <div className="inline-flex items-center">
-                  <h1 className="text-sm">Generating AI sentences please wait...</h1>
+                  <h1 className="text-sm">
+                    Generating AI sentences please wait...
+                  </h1>
                   <TbTruckLoading className="animate-spin" />
                 </div>
               )}
@@ -312,8 +314,8 @@ export function CreateNewLessonForm() {
           <Button onClick={handleSubmit} disabled={kanjiList.length == 0}>
             Create Lesson
           </Button>
-        </form >
-      </div >
+        </form>
+      </div>
     </>
   );
 }

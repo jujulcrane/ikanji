@@ -5,8 +5,8 @@ import { Lesson } from '@/components/Lesson';
 import Navbar from '@/components/Navbar';
 import { Checkbox } from '@/components/ui/checkbox';
 import { auth } from '@/utils/firebase';
-import { IoArrowBackOutline } from "react-icons/io5";
-import { FaShuffle } from "react-icons/fa6";
+import { IoArrowBackOutline } from 'react-icons/io5';
+import { FaShuffle } from 'react-icons/fa6';
 
 type Back = {
   meaning?: string;
@@ -77,7 +77,10 @@ export default function Flashcards() {
         }
         setIsMeaningChecked(false);
         setIsReadingsChecked(false);
-        const practiceIndex = Math.min(currentCardIndex, lesson.practiceSentences.length - 1);
+        const practiceIndex = Math.min(
+          currentCardIndex,
+          lesson.practiceSentences.length - 1
+        );
         newBack.english = lesson.practiceSentences[practiceIndex].english;
         setFront(lesson.practiceSentences[practiceIndex].japanese);
       } else {
@@ -202,7 +205,10 @@ export default function Flashcards() {
         ];
       }
 
-      const shuffledLesson = { ...lesson, practiceSentences: shuffledPracticeSentences };
+      const shuffledLesson = {
+        ...lesson,
+        practiceSentences: shuffledPracticeSentences,
+      };
       setLesson(shuffledLesson);
       const newFront = shuffledLesson.practiceSentences[0].japanese;
       const newBack: Back = {};
@@ -237,13 +243,17 @@ export default function Flashcards() {
     }
   };
 
-
   return (
     <>
       <Navbar />
       <div className="mt-8 flex justify-center items-center">
         <div className="flex items-center space-x-2 m-2">
-          <button className="bg-blue-400 text-white rounded-sm p-1 px-2 text-sm mr-2 hover:opacity-50" onClick={() => handleReturn(lesson)}><IoArrowBackOutline size={22} /></button>
+          <button
+            className="bg-blue-400 text-white rounded-sm p-1 px-2 text-sm mr-2 hover:opacity-50"
+            onClick={() => handleReturn(lesson)}
+          >
+            <IoArrowBackOutline size={22} />
+          </button>
           <Checkbox
             id="meaning"
             checked={isMeaningChecked}
@@ -269,7 +279,9 @@ export default function Flashcards() {
           <button
             className="rounded-sm p-1 px-2 text-sm bg-customCream hover:opacity-70"
             type="button"
-            disabled={lesson.practiceSentences.length < 1 || isPracticeSentences}
+            disabled={
+              lesson.practiceSentences.length < 1 || isPracticeSentences
+            }
             onClick={() => setIsPracticeSentences(!isPracticeSentences)}
           >
             Practice Sentences

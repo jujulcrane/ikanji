@@ -1,7 +1,7 @@
-import * as React from "react";
-import * as ScrollAreaPrimitive from "@radix-ui/react-scroll-area";
+import * as React from 'react';
+import * as ScrollAreaPrimitive from '@radix-ui/react-scroll-area';
 
-import { cn } from "@/lib/utils";
+import { cn } from '@/lib/utils';
 
 const ScrollArea = React.forwardRef<
   React.ElementRef<typeof ScrollAreaPrimitive.Root>,
@@ -9,7 +9,7 @@ const ScrollArea = React.forwardRef<
 >(({ className, children, ...props }, ref) => (
   <ScrollAreaPrimitive.Root
     ref={ref}
-    className={cn("relative overflow-hidden", className)}
+    className={cn('relative overflow-hidden', className)}
     {...props}
   >
     <ScrollAreaPrimitive.Viewport className="h-full w-full rounded-[inherit]">
@@ -28,10 +28,10 @@ const ScrollBar = React.forwardRef<
   <ScrollAreaPrimitive.ScrollAreaScrollbar
     ref={ref}
     className={cn(
-      "flex touch-none select-none transition-colors",
+      'flex touch-none select-none transition-colors',
       // Conditional styling for horizontal (default) and vertical (on md+ screens)
-      "h-2.5 w-full flex-col border-t border-t-transparent p-[1px]", // Horizontal styles
-      "md:h-full md:w-2.5 md:flex-row md:border-l md:border-l-transparent md:left-0", // Vertical styles for md+ screens
+      'h-2.5 w-full flex-col border-t border-t-transparent p-[1px]', // Horizontal styles
+      'md:h-full md:w-2.5 md:flex-row md:border-l md:border-l-transparent md:left-0', // Vertical styles for md+ screens
       className
     )}
     {...props}

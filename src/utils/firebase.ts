@@ -43,7 +43,7 @@ const signInWithGoogle = async () => {
   try {
     const result = await signInWithPopup(auth, providers.googleProvider);
     const user = result.user;
-    
+
     await fetch('/api/create-user', {
       method: 'POST',
       headers: {
@@ -72,7 +72,11 @@ const signInWithEmail = async (email: string, password: string) => {
   }
 };
 
-const createAccountWithEmail = async (email: string, password: string, displayName: string) => {
+const createAccountWithEmail = async (
+  email: string,
+  password: string,
+  displayName: string
+) => {
   try {
     const userCredential = await createUserWithEmailAndPassword(
       auth,

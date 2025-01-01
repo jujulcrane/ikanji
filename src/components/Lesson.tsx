@@ -35,13 +35,13 @@ export interface QuizSets {
 }
 
 export interface User {
-  name: string;
   email: string;
   profilePicture?: string;
   createdAt: string;
   lastLogin?: string;
   lessonIds?: string[];
   displayName: string;
+  id?: string;
 }
 
-export function Lesson() { }
+export function Lesson() {}

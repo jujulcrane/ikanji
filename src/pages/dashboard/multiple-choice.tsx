@@ -6,11 +6,11 @@ import { useState, useEffect } from 'react';
 import { getAuth } from 'firebase/auth';
 import { getIdToken } from 'firebase/auth';
 import Image from 'next/image';
-import { TbTruckLoading } from "react-icons/tb";
-import { IoIosSettings } from "react-icons/io";
-import { Progress } from "@/components/ui/progress"
-import { IoArrowBackOutline } from "react-icons/io5";
-import { FaRecycle } from "react-icons/fa6";
+import { TbTruckLoading } from 'react-icons/tb';
+import { IoIosSettings } from 'react-icons/io';
+import { Progress } from '@/components/ui/progress';
+import { IoArrowBackOutline } from 'react-icons/io5';
+import { FaRecycle } from 'react-icons/fa6';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -20,9 +20,8 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog"
+} from '@/components/ui/alert-dialog';
 import KanjiListCard from '@/components/KanjiListCard';
-
 
 interface MultipleChoiceQuestion {
   term: string;
@@ -249,9 +248,8 @@ export default function MultipleChoice() {
 
   useEffect(() => {
     if (currentQuestion) {
-      const randomCorrect = currentQuestion.correct[
-        randomIndex(0, currentQuestion.correct.length)
-      ];
+      const randomCorrect =
+        currentQuestion.correct[randomIndex(0, currentQuestion.correct.length)];
       setSelectedCorrect(randomCorrect);
     }
   }, [currentQuestion]);
@@ -301,7 +299,7 @@ export default function MultipleChoice() {
       if (regenerating) {
         storeMultipleChoice({
           readingSet: readingSet,
-          aiSet: newAiSet
+          aiSet: newAiSet,
         });
       }
       setLoadingAiSet(false);
@@ -433,7 +431,7 @@ export default function MultipleChoice() {
       setReadingSet(newMultipleChoice);
       storeMultipleChoice({
         readingSet: newMultipleChoice,
-        aiSet: aiSet
+        aiSet: aiSet,
       });
     } else {
       console.error('Kanji list is empty or undefined');
@@ -445,7 +443,9 @@ export default function MultipleChoice() {
       <div>
         <Navbar />
         <div className="flex flex-col items-center justify-center h-screen">
-          <p className="text-center text-xl font-semibold mb-4">You&apos;ve completed the lesson!</p>
+          <p className="text-center text-xl font-semibold mb-4">
+            You&apos;ve completed the lesson!
+          </p>
           <Image
             src="/luffy-thumbs-up-one-piece.avif"
             alt="Luffy giving a thumbs-up"
@@ -473,7 +473,12 @@ export default function MultipleChoice() {
       <Navbar />
       <div className="flex flex-col items-center pb-4">
         <div className="flex justify-content items-center mt-4">
-          <button className="bg-blue-400 text-white rounded-sm p-1 px-2 text-sm mr-2 hover:opacity-50" onClick={() => handleReturn(lesson)}><IoArrowBackOutline /></button>
+          <button
+            className="bg-blue-400 text-white rounded-sm p-1 px-2 text-sm mr-2 hover:opacity-50"
+            onClick={() => handleReturn(lesson)}
+          >
+            <IoArrowBackOutline />
+          </button>
           <button
             className="border rounded-sm p-2 m-1"
             onClick={() => {
@@ -511,7 +516,10 @@ export default function MultipleChoice() {
             <FaRecycle size={24} className="ml-2" />
           </button>
         </div>
-        <Progress value={(currentQuestionIndex) / selectedSet.length * 100} className="mt-8 w-80" />
+        <Progress
+          value={(currentQuestionIndex / selectedSet.length) * 100}
+          className="mt-8 w-80"
+        />
         {loadingAiSet && (
           <div className="inline-flex items-center">
             <h1>Generating AI set please wait...</h1>
@@ -540,28 +548,42 @@ export default function MultipleChoice() {
       <AlertDialog open={confirmRefresh}>
         <AlertDialogContent className="bg-customBrownLight">
           <AlertDialogHeader>
-            <AlertDialogTitle className="text-white">Are you sure you want to regenerate the quiz sets?</AlertDialogTitle>
+            <AlertDialogTitle className="text-white">
+              Are you sure you want to regenerate the quiz sets?
+            </AlertDialogTitle>
             <AlertDialogDescription className="text-white">
-              You should regenerate the readings set if you have made any changes to kanji or readings of this lesson.
+              You should regenerate the readings set if you have made any
+              changes to kanji or readings of this lesson.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel className="bg-white" onClick={() => {
-              setConfirmRefresh(false);
-            }}>Cancel</AlertDialogCancel>
-            <AlertDialogAction className="hover:opacity-50"
+            <AlertDialogCancel
+              className="bg-white"
+              onClick={() => {
+                setConfirmRefresh(false);
+              }}
+            >
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction
+              className="hover:opacity-50"
               onClick={() => {
                 setConfirmRefresh(false);
                 regenerateReadingsQuizSet();
-              }}>
-              Regenerate Readings Set</AlertDialogAction>
-            <AlertDialogAction className="hover:opacity-50"
+              }}
+            >
+              Regenerate Readings Set
+            </AlertDialogAction>
+            <AlertDialogAction
+              className="hover:opacity-50"
               onClick={() => {
                 setConfirmRefresh(false);
                 setLoadingAiSet(true);
                 generateAiSet(true);
-              }}>
-              Regenerate AI Set</AlertDialogAction>
+              }}
+            >
+              Regenerate AI Set
+            </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

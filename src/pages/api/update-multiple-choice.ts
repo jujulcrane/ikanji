@@ -1,7 +1,7 @@
 import { Lesson } from '@/components/Lesson';
 import { auth } from '@/utils/firebaseAdmin';
 import { db } from '@/utils/firebase';
-import { doc, updateDoc, getDoc } from "firebase/firestore";
+import { doc, updateDoc, getDoc } from 'firebase/firestore';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 type ResponseData = {
@@ -45,7 +45,7 @@ export default async function handler(
 
       console.log('Received in API:', { lessonId, newQuizSet });
 
-      const lessonRef = doc(db, "lessons", lessonId);
+      const lessonRef = doc(db, 'lessons', lessonId);
       console.log('got lessonref');
       const docSnap = await getDoc(lessonRef);
       console.log('got doc snap');

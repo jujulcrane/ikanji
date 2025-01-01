@@ -9,7 +9,7 @@ import {
   createAccountWithEmail,
 } from '../utils/firebase';
 import { FirebaseError } from 'firebase/app';
-import { FcGoogle } from "react-icons/fc";
+import { FcGoogle } from 'react-icons/fc';
 import {
   Dialog,
   DialogContent,
@@ -17,7 +17,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
+} from '@/components/ui/dialog';
 
 export default function Home() {
   const router = useRouter();
@@ -124,10 +124,13 @@ export default function Home() {
                 onClick={handleSignInWithGoogle}
                 className="flex items-center justify-center w-full py-2 px-2 font-medium rounded-md bg-black text-white hover:bg-gray-800"
               >
-                <FcGoogle size={24} className="mr-2" />Continue with Google
+                <FcGoogle size={24} className="mr-2" />
+                Continue with Google
               </button>
               <Dialog>
-                <DialogTrigger className="hover:underline">New to I-Kanji? Create an Account</DialogTrigger>
+                <DialogTrigger className="hover:underline">
+                  New to I-Kanji? Create an Account
+                </DialogTrigger>
                 <DialogContent className="bg-customCream">
                   <DialogHeader>
                     <DialogTitle>Create an Account</DialogTitle>

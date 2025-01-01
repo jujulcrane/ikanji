@@ -29,8 +29,9 @@ export default function Flashcard({
       <div className="relative w-96 h-64 cursor-pointer perspective">
         {/* Inner container that rotates */}
         <div
-          className={`relative w-full h-full transition-transform duration-500 ease-in-out transform-style-3d ${isFlipped ? 'rotate-y-180' : ''
-            }`}
+          className={`relative w-full h-full transition-transform duration-500 ease-in-out transform-style-3d ${
+            isFlipped ? 'rotate-y-180' : ''
+          }`}
         >
           {/* Front Side */}
           <div className="absolute w-full h-full bg-customBrownDark text-customCream rounded-lg shadow-xl flex items-center justify-center text-center backface-hidden">

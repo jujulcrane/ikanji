@@ -5,12 +5,18 @@ import { useLessons } from '@/hooks/use-lessons';
 import { auth } from '@/utils/firebase';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { FaRegEdit } from "react-icons/fa";
-import { RiDeleteBin5Line } from "react-icons/ri";
+import { FaRegEdit } from 'react-icons/fa';
+import { RiDeleteBin5Line } from 'react-icons/ri';
 import '@fontsource/noto-sans-jp';
 import { DialogHeader } from '@/components/ui/dialog';
-import { Dialog, DialogTrigger, DialogContent, DialogTitle, DialogDescription } from '@radix-ui/react-dialog';
-import { IoIosSettings } from "react-icons/io";
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogTitle,
+  DialogDescription,
+} from '@radix-ui/react-dialog';
+import { IoIosSettings } from 'react-icons/io';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -19,8 +25,8 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog"
-import { Switch } from "@/components/ui/switch"
+} from '@/components/ui/alert-dialog';
+import { Switch } from '@/components/ui/switch';
 
 export default function MyLessons() {
   const router = useRouter();
@@ -38,8 +44,13 @@ export default function MyLessons() {
   } | null>(null);
   const [updatedCharacter, setUpdatedCharacter] = useState<string>('');
   const [newReading, setNewReading] = useState<string>('');
-  const [updatedPracticeSentences, setUpdatedPracticeSentences] = useState<PracticeSentence[] | null>(null);
-  const [newSentence, setNewSentence] = useState<PracticeSentence>({ japanese: '', english: '' });
+  const [updatedPracticeSentences, setUpdatedPracticeSentences] = useState<
+    PracticeSentence[] | null
+  >(null);
+  const [newSentence, setNewSentence] = useState<PracticeSentence>({
+    japanese: '',
+    english: '',
+  });
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [alertOpen, setAlertOpen] = useState<boolean>(false);
   const [confirmDelete, setConfirmDelete] = useState<boolean>(false);
@@ -160,7 +171,10 @@ export default function MyLessons() {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${idToken}`,
         },
-        body: JSON.stringify({ lessonId: lessonId, updatedLesson: lessonToPut }),
+        body: JSON.stringify({
+          lessonId: lessonId,
+          updatedLesson: lessonToPut,
+        }),
       });
 
       if (!res.ok) {
@@ -175,7 +189,7 @@ export default function MyLessons() {
     } catch (error) {
       console.error('Error in saveLesson:', error);
     }
-  }
+  };
 
   const saveKanji = async () => {
     if (!selectedLesson || !editingKanji) return;
@@ -223,7 +237,9 @@ export default function MyLessons() {
     }
 
     const updatedKanji = { ...editingKanji.kanji };
-    updatedKanji.readings = updatedKanji.readings.filter((_, index) => index != readingIndex);
+    updatedKanji.readings = updatedKanji.readings.filter(
+      (_, index) => index != readingIndex
+    );
     setEditingKanji({ ...editingKanji, kanji: updatedKanji });
   };
 
@@ -247,7 +263,9 @@ export default function MyLessons() {
 
   const deleteSentence = (sentenceIndex: number) => {
     if (!selectedLesson || !updatedPracticeSentences) return;
-    const updatedSentences = updatedPracticeSentences.filter((_, index) => index != sentenceIndex);
+    const updatedSentences = updatedPracticeSentences.filter(
+      (_, index) => index != sentenceIndex
+    );
     setUpdatedPracticeSentences(updatedSentences);
   };
 
@@ -256,12 +274,12 @@ export default function MyLessons() {
 
     console.log('Rendering Lesson:', selectedLesson);
     return (
-      <div className='py-6'>
+      <div className="py-6">
         <div className="flex items-start space-x-2">
-          <h1 className='text-2xl font-semibold'>{selectedLesson.name}</h1>
+          <h1 className="text-2xl font-semibold">{selectedLesson.name}</h1>
           <button
             type="button"
-            className='opacity-60 hover:opacity-100 transition-opacity'
+            className="opacity-60 hover:opacity-100 transition-opacity"
             onClick={changeLessonName}
           >
             <FaRegEdit />
@@ -288,8 +306,8 @@ export default function MyLessons() {
           </>
         )}
         <div className="my-4 pb-2 space-y-2">
-          <h3 className='text-lg font-semibold'>Practice</h3>
-          <div className='flex'>
+          <h3 className="text-lg font-semibold">Practice</h3>
+          <div className="flex">
             <button
               onClick={() => handleLearning(selectedLesson, 'flashcards')}
               className="bg-customGold  w-44 h-20 rounded-md m-2"
@@ -299,7 +317,9 @@ export default function MyLessons() {
             </button>
             <div className="relative w-44 h-20 m-2">
               <button
-                onClick={() => handleLearning(selectedLesson, 'multiple-choice')}
+                onClick={() =>
+                  handleLearning(selectedLesson, 'multiple-choice')
+                }
                 className="bg-customGold  w-full h-full rounded-md"
                 type="button"
               >
@@ -307,8 +327,9 @@ export default function MyLessons() {
               </button>
               <button
                 className="hover:opacity-50 absolute top-2 right-2"
-                disabled={!(selectedLesson.quizSets) ||
-                  !(selectedLesson.quizSets.aiSet)}
+                disabled={
+                  !selectedLesson.quizSets || !selectedLesson.quizSets.aiSet
+                }
                 onClick={() => handleSettings(selectedLesson)}
               >
                 <IoIosSettings size={24} className="" />
@@ -318,9 +339,20 @@ export default function MyLessons() {
         </div>
         <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {selectedLesson.kanjiList.map((kanji, index) => (
-            <li key={`${lessonId}-${kanji.character}-${index}`} className='relative border p-4 rounded-lg bg-customCream/50 font-sansJP'>
+            <li
+              key={`${lessonId}-${kanji.character}-${index}`}
+              className="relative border p-4 rounded-lg bg-customCream/50 font-sansJP"
+            >
               <Dialog>
-                <DialogTrigger onClick={() => editKanji(kanji, index)} className="aboslute right-2"><FaRegEdit size={22} className='opacity-60 hover:opacity-100 transition-opacity mr-2' /></DialogTrigger>
+                <DialogTrigger
+                  onClick={() => editKanji(kanji, index)}
+                  className="aboslute right-2"
+                >
+                  <FaRegEdit
+                    size={22}
+                    className="opacity-60 hover:opacity-100 transition-opacity mr-2"
+                  />
+                </DialogTrigger>
                 <DialogContent className="mb-2">
                   <DialogHeader>
                     <DialogTitle>Edit Kanji</DialogTitle>
@@ -342,8 +374,17 @@ export default function MyLessons() {
                           Readings:
                         </label>
                         {editingKanji?.kanji.readings.map((reading, idx) => (
-                          <li className="list-none flex justify-between items-center ml-12" key={`${reading}-${idx}`}>
-                            {reading} <button className="mr-2" onClick={() => deleteReading(idx)}><RiDeleteBin5Line size={22} /></button>
+                          <li
+                            className="list-none flex justify-between items-center ml-12"
+                            key={`${reading}-${idx}`}
+                          >
+                            {reading}{' '}
+                            <button
+                              className="mr-2"
+                              onClick={() => deleteReading(idx)}
+                            >
+                              <RiDeleteBin5Line size={22} />
+                            </button>
                           </li>
                         ))}
                         <input
@@ -356,7 +397,10 @@ export default function MyLessons() {
                         <button
                           type="button"
                           onClick={addNewReading}
-                          className="m-2 bg-customGold text-left text-black text-sm px-2 py-1 rounded w-fit hover:opacity-50">Add Corect Answer</button>
+                          className="m-2 bg-customGold text-left text-black text-sm px-2 py-1 rounded w-fit hover:opacity-50"
+                        >
+                          Add Corect Answer
+                        </button>
                       </div>
                     </DialogDescription>
                     <button
@@ -368,7 +412,7 @@ export default function MyLessons() {
                     </button>
                   </DialogHeader>
                 </DialogContent>
-              </Dialog >
+              </Dialog>
               <div className="flex flex-col items-center space-y-2">
                 <h2 className="font-bold text-2xl">{kanji.character}</h2>
                 <span className="text-sm">{kanji.meaning}</span>
@@ -385,35 +429,55 @@ export default function MyLessons() {
           ))}
         </ul>
 
-        <div className={isDialogOpen ? "" : "flex"}>
+        <div className={isDialogOpen ? '' : 'flex'}>
           <h3 className="mt-2 p-2 font-medium text-lg">Practice Sentences</h3>
           <Dialog
             onOpenChange={(open) => {
-              if (updatedPracticeSentences != selectedLesson.practiceSentences) {
+              if (
+                updatedPracticeSentences != selectedLesson.practiceSentences
+              ) {
                 setAlertOpen(true);
               }
               setIsDialogOpen(open);
             }}
           >
-            <DialogTrigger onClick={() => setUpdatedPracticeSentences(selectedLesson.practiceSentences)} className="aboslute right-2"><FaRegEdit size={20} className='opacity-60 hover:opacity-100 transition-opacity mr-2' /></DialogTrigger>
+            <DialogTrigger
+              onClick={() =>
+                setUpdatedPracticeSentences(selectedLesson.practiceSentences)
+              }
+              className="aboslute right-2"
+            >
+              <FaRegEdit
+                size={20}
+                className="opacity-60 hover:opacity-100 transition-opacity mr-2"
+              />
+            </DialogTrigger>
             <DialogContent className="mb-2">
               <DialogHeader>
                 <DialogTitle>Edit Practice Sentences</DialogTitle>
                 <DialogDescription>
                   {updatedPracticeSentences?.map((sentence, index) => (
-                    <li className="border my-8 rounded-sm list-none w-full p-2" key={`${sentence}-${index}`}>
+                    <li
+                      className="border my-8 rounded-sm list-none w-full p-2"
+                      key={`${sentence}-${index}`}
+                    >
                       <div className="flex justify-between m-2">
                         <h1>{index + 1}</h1>
-                        <button className="ml-1" onClick={() => deleteSentence(index)}><RiDeleteBin5Line size={22} /></button>
+                        <button
+                          className="ml-1"
+                          onClick={() => deleteSentence(index)}
+                        >
+                          <RiDeleteBin5Line size={22} />
+                        </button>
                       </div>
                       <div className="flex flex-col">
-                        <label className="text-sm mt-2">
-                          Japanese
-                        </label>
+                        <label className="text-sm mt-2">Japanese</label>
                         <input
                           type="text"
                           id="term"
-                          value={updatedPracticeSentences?.[index].japanese ?? ''}
+                          value={
+                            updatedPracticeSentences?.[index].japanese ?? ''
+                          }
                           onChange={(e) => {
                             const newJapanese = e.target.value;
                             setUpdatedPracticeSentences((prevState) => {
@@ -429,13 +493,13 @@ export default function MyLessons() {
                         />
                       </div>
                       <div className="flex flex-col">
-                        <label className="text-sm mt-2">
-                          Translation
-                        </label>
+                        <label className="text-sm mt-2">Translation</label>
                         <input
                           type="text"
                           id="term"
-                          value={updatedPracticeSentences?.[index].english ?? ''}
+                          value={
+                            updatedPracticeSentences?.[index].english ?? ''
+                          }
                           onChange={(e) => {
                             const newEnglish = e.target.value;
                             setUpdatedPracticeSentences((prevState) => {
@@ -489,7 +553,10 @@ export default function MyLessons() {
                     <button
                       type="button"
                       onClick={addPracticeSentence}
-                      className="m-2 bg-customGold text-left text-black text-sm px-2 py-1 rounded w-fit hover:opacity-50">Add Sentence</button>
+                      className="m-2 bg-customGold text-left text-black text-sm px-2 py-1 rounded w-fit hover:opacity-50"
+                    >
+                      Add Sentence
+                    </button>
                   </div>
                 </DialogDescription>
                 <button
@@ -501,21 +568,27 @@ export default function MyLessons() {
                 </button>
               </DialogHeader>
             </DialogContent>
-          </Dialog >
+          </Dialog>
         </div>
-        {
-          selectedLesson.practiceSentences.length == 0 ? <h1>No Sentences</h1> :
-            <ul>
-              {selectedLesson.practiceSentences.map((sentence, index) => (
-                <li className="border my-8 rounded-sm" key={`practice-${sentence}-${index}`}>
-                  <div className="p-4 md:flex md:justify-between">
-                    <p className="text-lg">{sentence.japanese}</p>
-                    <p className="text-sm opacity-40 mt-2 md:ml-4 md:mt-0">{sentence.english}</p>
-                  </div>
-                </li>
-              ))}
-            </ul>
-        }
+        {selectedLesson.practiceSentences.length == 0 ? (
+          <h1>No Sentences</h1>
+        ) : (
+          <ul>
+            {selectedLesson.practiceSentences.map((sentence, index) => (
+              <li
+                className="border my-8 rounded-sm"
+                key={`practice-${sentence}-${index}`}
+              >
+                <div className="p-4 md:flex md:justify-between">
+                  <p className="text-lg">{sentence.japanese}</p>
+                  <p className="text-sm opacity-40 mt-2 md:ml-4 md:mt-0">
+                    {sentence.english}
+                  </p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
         <div className="flex justify-between">
           <div className="flex">
             <Switch
@@ -523,13 +596,19 @@ export default function MyLessons() {
               ${selectedLesson.publishStatus === 'pending' ? 'data-[state=checked]:bg-orange-500' : 'data-[state=checked]:bg-green-500'}
               data-[state=unchecked]:bg-red-500
             `}
-              checked={selectedLesson.publishStatus == 'published' || selectedLesson.publishStatus == 'pending'}
+              checked={
+                selectedLesson.publishStatus == 'published' ||
+                selectedLesson.publishStatus == 'pending'
+              }
               onCheckedChange={() => {
                 if (!selectedLesson) return;
 
                 setSelectedLesson((prev) => {
                   if (!prev) return prev;
-                  if (prev.publishStatus === undefined || prev.publishStatus === 'private') {
+                  if (
+                    prev.publishStatus === undefined ||
+                    prev.publishStatus === 'private'
+                  ) {
                     setConfirmPublish(true);
                   } else {
                     setConfirmPrivate(true);
@@ -537,11 +616,13 @@ export default function MyLessons() {
                   return prev;
                 });
               }}
-            >
-            </Switch>
+            ></Switch>
             <p className="ml-2 uppercase">{selectedLesson.publishStatus}</p>
           </div>
-          <button className="bg-customBrownLight rounded-sm min-h-44px text-white flex justify-center items-center p-2 hover:bg-opacity-70 ml-auto" onClick={() => setConfirmDelete(true)}>
+          <button
+            className="bg-customBrownLight rounded-sm min-h-44px text-white flex justify-center items-center p-2 hover:bg-opacity-70 ml-auto"
+            onClick={() => setConfirmDelete(true)}
+          >
             <div className="flex">
               Delete {selectedLesson.name}
               <div className="pl-2">
@@ -550,7 +631,7 @@ export default function MyLessons() {
             </div>
           </button>
         </div>
-      </div >
+      </div>
     );
   }
 
@@ -628,45 +709,75 @@ export default function MyLessons() {
         <AlertDialog open={alertOpen}>
           <AlertDialogContent className="bg-customBrownLight">
             <AlertDialogHeader>
-              <AlertDialogTitle className="text-white">Do Not Forget to Save!</AlertDialogTitle>
+              <AlertDialogTitle className="text-white">
+                Do Not Forget to Save!
+              </AlertDialogTitle>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel className="bg-white" onClick={() => {
-                saveSentences();
-                setAlertOpen(false);
-              }}>Save</AlertDialogCancel>
-              <AlertDialogAction className="hover:opacity-50" onClick={() => setAlertOpen(false)}>Continue</AlertDialogAction>
+              <AlertDialogCancel
+                className="bg-white"
+                onClick={() => {
+                  saveSentences();
+                  setAlertOpen(false);
+                }}
+              >
+                Save
+              </AlertDialogCancel>
+              <AlertDialogAction
+                className="hover:opacity-50"
+                onClick={() => setAlertOpen(false)}
+              >
+                Continue
+              </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
         <AlertDialog open={confirmDelete}>
           <AlertDialogContent className="bg-customBrownLight">
             <AlertDialogHeader>
-              <AlertDialogTitle className="text-white">Are you sure you want to delete {selectedLesson?.name}?</AlertDialogTitle>
+              <AlertDialogTitle className="text-white">
+                Are you sure you want to delete {selectedLesson?.name}?
+              </AlertDialogTitle>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel className="bg-white" onClick={() => {
-                setConfirmDelete(false);
-              }}>Cancel</AlertDialogCancel>
-              <AlertDialogAction className="hover:opacity-50"
+              <AlertDialogCancel
+                className="bg-white"
+                onClick={() => {
+                  setConfirmDelete(false);
+                }}
+              >
+                Cancel
+              </AlertDialogCancel>
+              <AlertDialogAction
+                className="hover:opacity-50"
                 onClick={async () => {
                   await deleteLesson(selectedLesson?.id);
                   setConfirmDelete(false);
-                }}>
-                Delete</AlertDialogAction>
+                }}
+              >
+                Delete
+              </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
         <AlertDialog open={confirmPublish}>
           <AlertDialogContent className="bg-customBrownLight">
             <AlertDialogHeader>
-              <AlertDialogTitle className="text-white">Are you sure you want to publish {selectedLesson?.name}?</AlertDialogTitle>
+              <AlertDialogTitle className="text-white">
+                Are you sure you want to publish {selectedLesson?.name}?
+              </AlertDialogTitle>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel className="bg-white" onClick={() => {
-                setConfirmPublish(false);
-              }}>Cancel</AlertDialogCancel>
-              <AlertDialogAction className="hover:opacity-50"
+              <AlertDialogCancel
+                className="bg-white"
+                onClick={() => {
+                  setConfirmPublish(false);
+                }}
+              >
+                Cancel
+              </AlertDialogCancel>
+              <AlertDialogAction
+                className="hover:opacity-50"
                 onClick={async () => {
                   if (selectedLesson && selectedLesson.id) {
                     const updatedLesson: Lesson = {
@@ -678,21 +789,31 @@ export default function MyLessons() {
                     await putToFb(updatedLesson.id, updatedLesson);
                   }
                   setConfirmPublish(false);
-                }}>
-                Publish</AlertDialogAction>
+                }}
+              >
+                Publish
+              </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
         <AlertDialog open={confirmPrivate}>
           <AlertDialogContent className="bg-customBrownLight">
             <AlertDialogHeader>
-              <AlertDialogTitle className="text-white">Are you sure you want to make {selectedLesson?.name} private?</AlertDialogTitle>
+              <AlertDialogTitle className="text-white">
+                Are you sure you want to make {selectedLesson?.name} private?
+              </AlertDialogTitle>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel className="bg-white" onClick={() => {
-                setConfirmPrivate(false);
-              }}>Cancel</AlertDialogCancel>
-              <AlertDialogAction className="hover:opacity-50"
+              <AlertDialogCancel
+                className="bg-white"
+                onClick={() => {
+                  setConfirmPrivate(false);
+                }}
+              >
+                Cancel
+              </AlertDialogCancel>
+              <AlertDialogAction
+                className="hover:opacity-50"
                 onClick={async () => {
                   if (selectedLesson && selectedLesson.id) {
                     const updatedLesson: Lesson = {
@@ -704,8 +825,10 @@ export default function MyLessons() {
                     await putToFb(updatedLesson.id, updatedLesson);
                   }
                   setConfirmPrivate(false);
-                }}>
-                Continue</AlertDialogAction>
+                }}
+              >
+                Continue
+              </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>

@@ -22,7 +22,7 @@ export default function Navbar() {
           </div>
           <div className="flex items-center space-x-6 rtl:space-x-reverse">
             <p className="text-sm  text-gray-500 dark:text-white hover:underline">
-              {user?.email ?? 'not signed in'}
+              {user?.displayName ?? 'not signed in'}
             </p>
             <button
               onClick={() => {

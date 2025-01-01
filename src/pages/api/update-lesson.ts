@@ -1,6 +1,6 @@
 import { auth } from '@/utils/firebaseAdmin';
 import { db } from '@/utils/firebase';
-import { doc, updateDoc, getDoc } from "firebase/firestore";
+import { doc, updateDoc, getDoc } from 'firebase/firestore';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 type ResponseData = {
@@ -36,7 +36,7 @@ export default async function handler(
       console.log('Received in API:', { lessonId, updatedLesson });
       console.log('Document reference:', lessonId);
 
-      const lessonRef = doc(db, "lessons", lessonId);
+      const lessonRef = doc(db, 'lessons', lessonId);
       const lessonSnapshot = await getDoc(lessonRef);
       console.log('got doc snap');
 
