@@ -27,6 +27,7 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import { Switch } from '@/components/ui/switch';
+import SaveWarning from '@/components/SaveWarning';
 
 export default function MyLessons() {
   const router = useRouter();
@@ -706,32 +707,11 @@ export default function MyLessons() {
         <h1 className="font-semibold text-lg pb-2">My Lessons</h1>
         {renderLessonButtons()}
         {renderSelectedLesson()}
-        <AlertDialog open={alertOpen}>
-          <AlertDialogContent className="bg-customBrownLight">
-            <AlertDialogHeader>
-              <AlertDialogTitle className="text-white">
-                Do Not Forget to Save!
-              </AlertDialogTitle>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel
-                className="bg-white"
-                onClick={() => {
-                  saveSentences();
-                  setAlertOpen(false);
-                }}
-              >
-                Save
-              </AlertDialogCancel>
-              <AlertDialogAction
-                className="hover:opacity-50"
-                onClick={() => setAlertOpen(false)}
-              >
-                Continue
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
+        <SaveWarning
+          saveContent={saveSentences}
+          alertOpen={alertOpen}
+          setAlertOpen={setAlertOpen}
+        />
         <AlertDialog open={confirmDelete}>
           <AlertDialogContent className="bg-customBrownLight">
             <AlertDialogHeader>

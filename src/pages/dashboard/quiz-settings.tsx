@@ -28,6 +28,7 @@ import { IoIosAddCircle } from 'react-icons/io';
 import { TbTruckLoading } from 'react-icons/tb';
 import { RiAiGenerate } from 'react-icons/ri';
 import { IoArrowBackCircle } from 'react-icons/io5';
+import SaveWarning from '@/components/SaveWarning';
 
 export default function QuizSettings() {
   const router = useRouter();
@@ -48,6 +49,7 @@ export default function QuizSettings() {
     false: [],
   });
   const [newFeedBack, setNewFeedBack] = useState<string>('');
+  const [alertOpen, setAlertOpen] = useState<boolean>(false);
   const auth = getAuth();
 
   useEffect(() => {
@@ -176,14 +178,13 @@ export default function QuizSettings() {
       } else {
         console.log('Lesson successfuly updated');
         setLesson(updatedLesson);
-        setEditingQuestion(null);
       }
     } catch (error) {
       console.error('Error in saveLesson:', error);
     }
   };
 
-  const saveQuestion = async () => {
+  const saveQuestion = async (idx?: number) => {
     if (!lesson || !editingQuestion) return;
 
     const updatedLesson = { ...lesson };
@@ -194,7 +195,12 @@ export default function QuizSettings() {
         term: updatedTerm,
         feedback: newFeedBack,
       };
+      const updatedQuestion = updatedLesson.quizSets.aiSet[editingQuestion.index];
+      if (idx) {
+        editQuestion(updatedQuestion, idx);
+      }
     }
+
     setLesson(updatedLesson);
     await putToFb(updatedLesson);
   };
@@ -293,15 +299,18 @@ export default function QuizSettings() {
       <Navbar />
       <div className="bg-customCream pb-72">
         {!lesson ? (
-          <div className="flex items-center justify-center h-screen">
-            <BiError size={32} className="mr-2" />
-            <h1 className=" text-center font-semibold text-2xl">
-              {' '}
-              No Multiple Choice Data Avaliable
-            </h1>
-            <BiError size={32} className="ml-2" />
-          </div>
-        ) : (
+          <h1 className=" text-center text-2xl min-h-screen">
+            Loading...
+          </h1>) : !lesson.quizSets ? (
+            <div className="flex items-center justify-center h-screen">
+              <BiError size={32} className="mr-2" />
+              <h1 className=" text-center font-semibold text-2xl">
+                {' '}
+                No Multiple Choice Data Avaliable
+              </h1>
+              <BiError size={32} className="ml-2" />
+            </div>
+          ) : (
           <div>
             {loadingNewQuestion && displayLoading()}
             <button
@@ -322,7 +331,16 @@ export default function QuizSettings() {
                   key={index}
                   className="list-none text-xl my-8 mx-6 rounded-sm p-4 bg-white"
                 >
-                  <Dialog>
+                  <Dialog
+                    onOpenChange={(open) => {
+                      if (!open) {
+                        if (
+                          editingQuestion?.question.correct != question.correct || editingQuestion?.question.false != question.false || updatedTerm != question.term || newFeedBack != question.feedback
+                        ) {
+                          setAlertOpen(true);
+                        }
+                      }
+                    }}>
                     <DialogTrigger
                       onClick={() => editQuestion(question, index)}
                       className="hover:underline"
@@ -430,7 +448,10 @@ export default function QuizSettings() {
                         </DialogDescription>
                         <button
                           type="button"
-                          onClick={saveQuestion}
+                          onClick={() => {
+                            saveQuestion(index);
+                            console.log(' reset editQuestion');
+                          }}
                           className="w-full py-2 px-2 font-medium rounded-md bg-customBrownDark text-white hover:opacity-50"
                         >
                           Save
@@ -667,6 +688,11 @@ export default function QuizSettings() {
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
+        <SaveWarning
+          saveContent={saveQuestion}
+          alertOpen={alertOpen}
+          setAlertOpen={setAlertOpen}
+        />
       </div>
     </>
   );

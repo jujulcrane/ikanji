@@ -204,7 +204,7 @@ export default function ExploreLessons() {
               >
                 <div className="p-4 md:flex md:justify-between">
                   <p className="text-lg">{sentence.japanese}</p>
-                  <p className="text-sm text-white mt-2 md:ml-4 md:mt-0">
+                  <p className="text-sm text-gray-600 mt-2 md:ml-4 md:mt-0">
                     {sentence.english}
                   </p>
                 </div>
