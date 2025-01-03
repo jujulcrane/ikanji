@@ -22,6 +22,7 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import KanjiListCard from '@/components/KanjiListCard';
+import { FaShuffle } from 'react-icons/fa6';
 
 interface MultipleChoiceQuestion {
   term: string;
@@ -438,6 +439,23 @@ export default function MultipleChoice() {
     }
   };
 
+  const shuffle = (quizSet: MultipleChoiceQuestion[]): void => {
+    const shuffledSet = [...quizSet];
+    for (let i = shuffledSet.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffledSet[i], shuffledSet[j]] = [
+        shuffledSet[j],
+        shuffledSet[i],
+      ];
+    }
+    if (isReadings) {
+      setReadingSet(shuffledSet);
+    } else {
+      setAiSet(shuffledSet);
+    }
+    setCurrentQuestionIndex(0);
+  }
+
   if (!currentQuestion) {
     return (
       <div>
@@ -477,7 +495,7 @@ export default function MultipleChoice() {
             className="bg-blue-400 text-white rounded-sm p-1 px-2 text-sm mr-2 hover:opacity-50"
             onClick={() => handleReturn(lesson)}
           >
-            <IoArrowBackOutline />
+            <IoArrowBackOutline size={22} />
           </button>
           <button
             className="border rounded-sm p-2 m-1"
@@ -489,7 +507,7 @@ export default function MultipleChoice() {
               }
             }}
           >
-            Readings Quiz Set
+            Readings Quiz
           </button>
           <button
             className="border rounded-sm p-2 m-1"
@@ -499,7 +517,19 @@ export default function MultipleChoice() {
             }}
             disabled={loadingAiSet}
           >
-            Practice with AI Set
+            AI Quiz
+          </button>
+          <button
+            className="rounded-sm p-1 px-2 ml-1 text-sm bg-black text-white hover:opacity-70"
+            onClick={() => {
+              if (isReadings && readingSet) {
+                shuffle(readingSet);
+              } else {
+                if (aiSet) shuffle(aiSet);
+                console.log('no aiset');
+              }
+            }}>
+            <FaShuffle size={22} />
           </button>
           <button
             className="hover:opacity-50"
