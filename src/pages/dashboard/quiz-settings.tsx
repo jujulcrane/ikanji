@@ -195,8 +195,8 @@ export default function QuizSettings() {
         term: updatedTerm,
         feedback: newFeedBack,
       };
-      const updatedQuestion = updatedLesson.quizSets.aiSet[editingQuestion.index];
       if (idx) {
+        const updatedQuestion = updatedLesson.quizSets.aiSet[editingQuestion.index];
         editQuestion(updatedQuestion, idx);
       }
     }
@@ -450,7 +450,6 @@ export default function QuizSettings() {
                           type="button"
                           onClick={() => {
                             saveQuestion(index);
-                            console.log(' reset editQuestion');
                           }}
                           className="w-full py-2 px-2 font-medium rounded-md bg-customBrownDark text-white hover:opacity-50"
                         >

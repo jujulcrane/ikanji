@@ -1,6 +1,6 @@
 import { useState, ChangeEvent, useCallback } from 'react';
 import Button from './button';
-import { PracticeSentence, Kanji, Lesson } from './Lesson';
+import { PracticeSentence, Kanji, Lesson, Reading } from './Lesson';
 import { auth } from '@/utils/firebase';
 import { getIdToken } from 'firebase/auth';
 import { TbTruckLoading } from 'react-icons/tb';
@@ -8,14 +8,12 @@ import { TbTruckLoading } from 'react-icons/tb';
 export function CreateNewLessonForm() {
   const [kanjiChar, setKanjiChar] = useState<string>('');
   const [meaning, setMeaning] = useState<string>('');
-  const [strokeOrder, setStrokeOrder] = useState<string>('');
-  const [reading, setReading] = useState<string>('');
+  const [readingValue, setReadingValue] = useState<string>('');
+  const [readingType, setReadingType] = useState<'kun' | 'on'>('kun');
   const [japanese, setJapanese] = useState<string>('');
   const [english, setEnglish] = useState<string>('');
   const [loadingAiSentences, setLoadingAiSentences] = useState(false);
-
-  const [readings, setReadings] = useState<string[]>([]);
-  const [practiceSentences, setPracticeSentences] = useState<
+  const [readings, setReadings] = useState<Reading[]>([]); const [practiceSentences, setPracticeSentences] = useState<
     PracticeSentence[]
   >([]);
   const [kanjiList, setKanjiList] = useState<Kanji[]>([]);
@@ -25,25 +23,24 @@ export function CreateNewLessonForm() {
     setName(event.target.value);
   };
 
-  const handleReadingChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setReading(e.target.value);
+  const handleReadingValueChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setReadingValue(e.target.value);
+  };
+
+  const handleReadingTypeChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    setReadingType(e.target.value as 'kun' | 'on');
   };
 
   const handleReadingSubmit = () => {
-    if (!reading.trim()) {
-      alert('Please add at least one reading.');
-      return;
-    } else {
-      setReadings((prevReadings) => [...prevReadings, reading]);
-      setReading('');
-    }
+    const newReading: Reading = { value: readingValue, type: readingType };
+    setReadings((prevReadings) => [...prevReadings, newReading]);
+    setReadingValue('');
   };
 
   const handleKanjiSubmit = () => {
     if (
       !kanjiChar.trim() ||
       !meaning.trim() ||
-      !strokeOrder.trim() ||
       readings.length === 0
     ) {
       alert('Please fill in all the fields and add at least one reading.');
@@ -52,7 +49,6 @@ export function CreateNewLessonForm() {
     const newKanji: Kanji = {
       character: kanjiChar,
       meaning: meaning,
-      strokeOrder: strokeOrder,
       readings: readings,
     };
 
@@ -60,7 +56,6 @@ export function CreateNewLessonForm() {
 
     setKanjiChar('');
     setMeaning('');
-    setStrokeOrder('');
     setReadings([]);
   };
 
@@ -122,8 +117,6 @@ export function CreateNewLessonForm() {
         setReadings([]);
         setKanjiChar('');
         setMeaning('');
-        setStrokeOrder('');
-        setReading('');
         setJapanese('');
         setEnglish('');
         setName('');
@@ -138,10 +131,16 @@ export function CreateNewLessonForm() {
   function renderKanjiList() {
     return kanjiList.map((kanji) => (
       <li key={kanji.character}>
-        <strong>{kanji.character}</strong>: {kanji.meaning} (Stroke Order:{' '}
-        {kanji.strokeOrder})
+        <strong>{kanji.character}</strong>: {kanji.meaning}
         <div>
-          <p>{kanji.readings.join(', ')}</p>
+          <p>
+            {kanji.readings.map((reading, index) => (
+              <span key={index}>
+                {reading.value} ({reading.type})
+                {index < kanji.readings.length - 1 ? ', ' : ''}
+              </span>
+            ))}
+          </p>
         </div>
       </li>
     ));
@@ -175,10 +174,11 @@ export function CreateNewLessonForm() {
   }
 
   function renderReadings() {
-    return readings.map((reading, index) => <li key={index}>{reading}</li>);
+    return readings.map((reading, index) => (
+      <li key={index}>{reading.value} ({reading.type})</li>
+    ));
   }
 
-  //function submiteform (POST)
   return (
     <>
       <div className="flex justify-center items-center min-h-screen bg-customCream">
@@ -228,34 +228,28 @@ export function CreateNewLessonForm() {
             />
           </div>
           <div>
-            <label className="p-2" htmlFor="strokeOrder">
-              Stroke Order IMG url
-            </label>
-            <input
-              className="border"
-              type="text"
-              id="strokeOrder"
-              value={strokeOrder}
-              onChange={(e) => setStrokeOrder(e.target.value)}
-            />
-          </div>
-          <div>
             <h1>Readings</h1>
             <ul>{renderReadings()}</ul>
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <label className="whitespace-nowrap" htmlFor="reading">
-                Readings
-              </label>
+              <label className="whitespace-nowrap" htmlFor="reading">Readings</label>
               <div className="flex">
                 <input
                   className="border rounded px-4 py-2 mr-2 md:mr-4 w-1/3 md:w-1/2 lg:w-2/3"
                   type="text"
                   id="reading"
-                  value={reading}
-                  onChange={handleReadingChange}
+                  value={readingValue}
+                  onChange={handleReadingValueChange}
                 />
+                <select
+                  className="border rounded px-4 py-2 mr-2"
+                  value={readingType}
+                  onChange={handleReadingTypeChange}
+                >
+                  <option value="kun">Kun</option>
+                  <option value="on">On</option>
+                </select>
                 <Button onClick={handleReadingSubmit}>Add Reading</Button>
               </div>
             </div>

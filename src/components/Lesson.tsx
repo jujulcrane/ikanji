@@ -13,7 +13,12 @@ export interface Kanji {
   character: string;
   meaning: string;
   strokeOrder?: string;
-  readings: string[];
+  readings: Reading[];
+}
+
+export interface Reading {
+  value: string;
+  type: 'kun' | 'on';
 }
 
 export interface PracticeSentence {
@@ -44,4 +49,4 @@ export interface User {
   id?: string;
 }
 
-export function Lesson() {}
+export function Lesson() { }

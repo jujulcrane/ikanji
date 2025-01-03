@@ -231,8 +231,8 @@ export default function MultipleChoice() {
         const newMultipleChoice: MultipleChoiceQuestion[] = kanjiList.map(
           (kanji) => ({
             term: kanji.character,
-            correct: kanji.readings,
-            false: generateWrongAnswers(kanji.readings),
+            correct: kanji.readings.map(reading => reading.value),
+            false: generateWrongAnswers(kanji.readings.map(reading => reading.value)),
             feedback: kanji.meaning,
           })
         );

@@ -24,28 +24,96 @@ export default function GenkiLessons() {
   const chapter12Lesson: Lesson = {
     name: 'Genki Lesson 12',
     kanjiList: [
-      { character: '昔', meaning: 'Old times', readings: ['むかし'] },
+      {
+        character: '昔',
+        meaning: 'Old times',
+        readings: [{ value: 'むかし', type: 'kun' }]
+      },
       {
         character: '々',
         meaning: 'Repetition of a kanji',
-        readings: ['repeat'],
+        readings: [{ value: 'repeat', type: 'kun' }]
       },
-      { character: '神', meaning: 'God', readings: ['かみ', 'じん', 'しん'] },
-      { character: '早', meaning: 'Early', readings: ['はや'] },
-      { character: '起', meaning: 'To get up', readings: ['お', 'き'] },
-      { character: '牛', meaning: 'Cow', readings: ['うし'] },
-      { character: '使', meaning: 'To use', readings: ['つか'] },
-      { character: '働', meaning: 'To work', readings: ['はたら', 'どう'] },
-      { character: '連', meaning: 'To link', readings: ['つ', 'れん'] },
-      { character: '別', meaning: 'To separate', readings: ['わか', 'べつ'] },
-      { character: '度', meaning: 'Time; degrees', readings: ['ど'] },
-      { character: '赤', meaning: 'Red', readings: ['あか'] },
-      { character: '青', meaning: 'Blue', readings: ['あお'] },
+      {
+        character: '神',
+        meaning: 'God',
+        readings: [
+          { value: 'かみ', type: 'kun' },
+          { value: 'じん', type: 'on' },
+          { value: 'しん', type: 'on' }
+        ]
+      },
+      {
+        character: '早',
+        meaning: 'Early',
+        readings: [{ value: 'はや', type: 'kun' }]
+      },
+      {
+        character: '起',
+        meaning: 'To get up',
+        readings: [
+          { value: 'お', type: 'kun' },
+          { value: 'き', type: 'kun' }
+        ]
+      },
+      {
+        character: '牛',
+        meaning: 'Cow',
+        readings: [{ value: 'うし', type: 'kun' }]
+      },
+      {
+        character: '使',
+        meaning: 'To use',
+        readings: [{ value: 'つか', type: 'kun' }]
+      },
+      {
+        character: '働',
+        meaning: 'To work',
+        readings: [
+          { value: 'はたら', type: 'kun' },
+          { value: 'どう', type: 'on' }
+        ]
+      },
+      {
+        character: '連',
+        meaning: 'To link',
+        readings: [
+          { value: 'つ', type: 'kun' },
+          { value: 'れん', type: 'on' }
+        ]
+      },
+      {
+        character: '別',
+        meaning: 'To separate',
+        readings: [
+          { value: 'わか', type: 'kun' },
+          { value: 'べつ', type: 'on' }
+        ]
+      },
+      {
+        character: '度',
+        meaning: 'Time; degrees',
+        readings: [{ value: 'ど', type: 'on' }]
+      },
+      {
+        character: '赤',
+        meaning: 'Red',
+        readings: [{ value: 'あか', type: 'kun' }]
+      },
+      {
+        character: '青',
+        meaning: 'Blue',
+        readings: [{ value: 'あお', type: 'kun' }]
+      },
       {
         character: '色',
         meaning: 'Color',
-        readings: ['いろ', 'しょく', 'しき'],
-      },
+        readings: [
+          { value: 'いろ', type: 'kun' },
+          { value: 'しょく', type: 'on' },
+          { value: 'しき', type: 'on' }
+        ]
+      }
     ],
     practiceSentences: [
       {
@@ -103,30 +171,110 @@ export default function GenkiLessons() {
   const chapter11Lesson: Lesson = {
     name: 'Genki Lesson 11',
     kanjiList: [
-      { character: '手', meaning: 'Hand', readings: ['て'] },
-      { character: '紙', meaning: 'Paper', readings: ['かみ'] },
-      { character: '好', meaning: 'To like', readings: ['す', 'こう'] },
-      { character: '近', meaning: 'Near', readings: ['ちか', 'きん'] },
-      { character: '明', meaning: 'Bright', readings: ['あか', 'めい'] },
-      { character: '病', meaning: 'Illness', readings: ['びょう'] },
-      { character: '院', meaning: 'Institution', readings: ['いん'] },
-      { character: '映', meaning: 'To reflect', readings: ['えい'] },
+      {
+        character: '手',
+        meaning: 'Hand',
+        readings: [{ value: 'て', type: 'kun' }]
+      },
+      {
+        character: '紙',
+        meaning: 'Paper',
+        readings: [{ value: 'かみ', type: 'kun' }]
+      },
+      {
+        character: '好',
+        meaning: 'To like',
+        readings: [
+          { value: 'す', type: 'kun' },
+          { value: 'こう', type: 'on' }
+        ]
+      },
+      {
+        character: '近',
+        meaning: 'Near',
+        readings: [
+          { value: 'ちか', type: 'kun' },
+          { value: 'きん', type: 'on' }
+        ]
+      },
+      {
+        character: '明',
+        meaning: 'Bright',
+        readings: [
+          { value: 'あか', type: 'kun' },
+          { value: 'めい', type: 'on' }
+        ]
+      },
+      {
+        character: '病',
+        meaning: 'Illness',
+        readings: [{ value: 'びょう', type: 'on' }]
+      },
+      {
+        character: '院',
+        meaning: 'Institution',
+        readings: [{ value: 'いん', type: 'on' }]
+      },
+      {
+        character: '映',
+        meaning: 'To reflect',
+        readings: [{ value: 'えい', type: 'on' }]
+      },
       {
         character: '画',
         meaning: 'Picture; Brush-stroke',
-        readings: ['が', 'かく'],
+        readings: [
+          { value: 'が', type: 'on' },
+          { value: 'かく', type: 'kun' }
+        ]
       },
-      { character: '歌', meaning: 'To sing; Song', readings: ['うた'] },
-      { character: '市', meaning: 'City; Market', readings: ['し'] },
-      { character: '所', meaning: 'Place', readings: ['ところ', 'しょ'] },
-      { character: '勉', meaning: 'To study; Exertion', readings: ['べん'] },
-      { character: '強', meaning: 'Strong', readings: ['つよ', 'きょう'] },
+      {
+        character: '歌',
+        meaning: 'To sing; Song',
+        readings: [{ value: 'うた', type: 'kun' }]
+      },
+      {
+        character: '市',
+        meaning: 'City; Market',
+        readings: [{ value: 'し', type: 'on' }]
+      },
+      {
+        character: '所',
+        meaning: 'Place',
+        readings: [
+          { value: 'ところ', type: 'kun' },
+          { value: 'しょ', type: 'on' }
+        ]
+      },
+      {
+        character: '勉',
+        meaning: 'To study; Exertion',
+        readings: [{ value: 'べん', type: 'on' }]
+      },
+      {
+        character: '強',
+        meaning: 'Strong',
+        readings: [
+          { value: 'つよ', type: 'kun' },
+          { value: 'きょう', type: 'on' }
+        ]
+      },
       {
         character: '有',
         meaning: 'To exist; Possess',
-        readings: ['あ', 'ゆう'],
+        readings: [
+          { value: 'あ', type: 'kun' },
+          { value: 'ゆう', type: 'on' }
+        ]
       },
-      { character: '旅', meaning: 'Travel; Trip', readings: ['たび', 'りょ'] },
+      {
+        character: '旅',
+        meaning: 'Travel; Trip',
+        readings: [
+          { value: 'たび', type: 'kun' },
+          { value: 'りょ', type: 'on' }
+        ]
+      }
     ],
     practiceSentences: [
       {
@@ -201,86 +349,128 @@ export default function GenkiLessons() {
         character: '住',
         meaning: 'to live',
         strokeOrder: 'https://example.com/stroke-order/住',
-        readings: ['じゅう', 'す'],
+        readings: [
+          { value: 'じゅう', type: 'on' },
+          { value: 'す', type: 'kun' }
+        ]
       },
       {
         character: '正',
         meaning: 'correct; new year',
         strokeOrder: 'https://example.com/stroke-order/正',
-        readings: ['しょう', 'ただ'],
+        readings: [
+          { value: 'しょう', type: 'on' },
+          { value: 'ただ', type: 'kun' }
+        ]
       },
       {
         character: '年',
         meaning: 'year',
         strokeOrder: 'https://example.com/stroke-order/年',
-        readings: ['ねん', 'とし'],
+        readings: [
+          { value: 'ねん', type: 'on' },
+          { value: 'とし', type: 'kun' }
+        ]
       },
       {
         character: '売',
         meaning: 'to sell',
         strokeOrder: 'https://example.com/stroke-order/売',
-        readings: ['ばい', 'う'],
+        readings: [
+          { value: 'ばい', type: 'on' },
+          { value: 'う', type: 'kun' }
+        ]
       },
       {
         character: '買',
         meaning: 'to buy',
         strokeOrder: 'https://example.com/stroke-order/買',
-        readings: ['ばい', 'か'],
+        readings: [
+          { value: 'ばい', type: 'on' },
+          { value: 'か', type: 'kun' }
+        ]
       },
       {
         character: '町',
         meaning: 'town',
         strokeOrder: 'https://example.com/stroke-order/町',
-        readings: ['ちょう', 'まち'],
+        readings: [
+          { value: 'ちょう', type: 'on' },
+          { value: 'まち', type: 'kun' }
+        ]
       },
       {
         character: '長',
         meaning: 'long; chief',
         strokeOrder: 'https://example.com/stroke-order/長',
-        readings: ['ちょう', 'なが'],
+        readings: [
+          { value: 'ちょう', type: 'on' },
+          { value: 'なが', type: 'kun' }
+        ]
       },
       {
         character: '道',
         meaning: 'road; way',
         strokeOrder: 'https://example.com/stroke-order/道',
-        readings: ['どう', 'みち'],
+        readings: [
+          { value: 'どう', type: 'on' },
+          { value: 'みち', type: 'kun' }
+        ]
       },
       {
         character: '雪',
         meaning: 'snow',
         strokeOrder: 'https://example.com/stroke-order/雪',
-        readings: ['せつ', 'ゆき'],
+        readings: [
+          { value: 'せつ', type: 'on' },
+          { value: 'ゆき', type: 'kun' }
+        ]
       },
       {
         character: '立',
         meaning: 'to stand',
         strokeOrder: 'https://example.com/stroke-order/立',
-        readings: ['りつ', 'た'],
+        readings: [
+          { value: 'りつ', type: 'on' },
+          { value: 'た', type: 'kun' }
+        ]
       },
       {
         character: '自',
         meaning: 'self',
         strokeOrder: 'https://example.com/stroke-order/自',
-        readings: ['じ'],
+        readings: [
+          { value: 'じ', type: 'on' }
+        ]
       },
       {
         character: '夜',
         meaning: 'night',
         strokeOrder: 'https://example.com/stroke-order/夜',
-        readings: ['や', 'よる', 'よ'],
+        readings: [
+          { value: 'や', type: 'on' },
+          { value: 'よる', type: 'kun' },
+          { value: 'よ', type: 'kun' }
+        ]
       },
       {
         character: '朝',
         meaning: 'morning',
         strokeOrder: 'https://example.com/stroke-order/朝',
-        readings: ['ちょう', 'あさ'],
+        readings: [
+          { value: 'ちょう', type: 'on' },
+          { value: 'あさ', type: 'kun' }
+        ]
       },
       {
         character: '持',
         meaning: 'to hold; to carry',
         strokeOrder: 'https://example.com/stroke-order/持',
-        readings: ['じ', 'も'],
-      },
+        readings: [
+          { value: 'じ', type: 'on' },
+          { value: 'も', type: 'kun' }
+        ]
+      }
     ],
     practiceSentences: [
       {
@@ -398,92 +588,141 @@ export default function GenkiLessons() {
         character: '午',
         meaning: 'noon',
         strokeOrder: 'https://example.com/stroke-order/午',
-        readings: ['ご'],
+        readings: [{ value: 'ご', type: 'on' }]
       },
       {
         character: '後',
         meaning: 'after; behind',
         strokeOrder: 'https://example.com/stroke-order/後',
-        readings: ['ご', 'あと', 'うし'],
+        readings: [
+          { value: 'ご', type: 'on' },
+          { value: 'あと', type: 'kun' },
+          { value: 'うし', type: 'kun' }
+        ]
       },
       {
         character: '前',
         meaning: 'before; front',
         strokeOrder: 'https://example.com/stroke-order/前',
-        readings: ['ぜん', 'まえ'],
+        readings: [
+          { value: 'ぜん', type: 'on' },
+          { value: 'まえ', type: 'kun' }
+        ]
       },
       {
         character: '名',
         meaning: 'name',
         strokeOrder: 'https://example.com/stroke-order/名',
-        readings: ['めい', 'な'],
+        readings: [
+          { value: 'めい', type: 'on' },
+          { value: 'な', type: 'kun' }
+        ]
       },
       {
         character: '白',
         meaning: 'white',
         strokeOrder: 'https://example.com/stroke-order/白',
-        readings: ['はく', 'しろ'],
+        readings: [
+          { value: 'はく', type: 'on' },
+          { value: 'しろ', type: 'kun' }
+        ]
       },
       {
         character: '雨',
         meaning: 'rain',
         strokeOrder: 'https://example.com/stroke-order/雨',
-        readings: ['う', 'あめ'],
+        readings: [
+          { value: 'う', type: 'on' },
+          { value: 'あめ', type: 'kun' }
+        ]
       },
       {
         character: '書',
         meaning: 'to write',
         strokeOrder: 'https://example.com/stroke-order/書',
-        readings: ['しょ', 'か'],
+        readings: [
+          { value: 'しょ', type: 'on' },
+          { value: 'か', type: 'kun' }
+        ]
       },
       {
         character: '友',
         meaning: 'friend',
         strokeOrder: 'https://example.com/stroke-order/友',
-        readings: ['ゆう', 'とも'],
+        readings: [
+          { value: 'ゆう', type: 'on' },
+          { value: 'とも', type: 'kun' }
+        ]
       },
       {
         character: '間',
         meaning: 'interval; between',
         strokeOrder: 'https://example.com/stroke-order/間',
-        readings: ['かん', 'あいだ', 'ま'],
+        readings: [
+          { value: 'かん', type: 'on' },
+          { value: 'あいだ', type: 'kun' },
+          { value: 'ま', type: 'kun' }
+        ]
       },
       {
         character: '家',
         meaning: 'house',
         strokeOrder: 'https://example.com/stroke-order/家',
-        readings: ['か', 'いえ', 'うち'],
+        readings: [
+          { value: 'か', type: 'on' },
+          { value: 'いえ', type: 'kun' },
+          { value: 'うち', type: 'kun' }
+        ]
       },
       {
         character: '話',
         meaning: 'to talk',
         strokeOrder: 'https://example.com/stroke-order/話',
-        readings: ['わ', 'はな', 'はなし'],
+        readings: [
+          { value: 'わ', type: 'on' },
+          { value: 'はな', type: 'kun' },
+          { value: 'はなし', type: 'kun' }
+        ]
       },
       {
         character: '少',
         meaning: 'few; little',
         strokeOrder: 'https://example.com/stroke-order/少',
-        readings: ['しょう', 'すく', 'すこ'],
+        readings: [
+          { value: 'しょう', type: 'on' },
+          { value: 'すく', type: 'kun' },
+          { value: 'すこ', type: 'kun' }
+        ]
       },
       {
         character: '古',
         meaning: 'old',
         strokeOrder: 'https://example.com/stroke-order/古',
-        readings: ['こ', 'ふる'],
+        readings: [
+          { value: 'こ', type: 'on' },
+          { value: 'ふる', type: 'kun' }
+        ]
       },
       {
         character: '知',
         meaning: 'to know',
         strokeOrder: 'https://example.com/stroke-order/知',
-        readings: ['ち', 'し'],
+        readings: [
+          { value: 'ち', type: 'on' },
+          { value: 'し', type: 'kun' }
+        ]
       },
       {
         character: '来',
         meaning: 'to come',
         strokeOrder: 'https://example.com/stroke-order/来',
-        readings: ['らい', 'く', 'き', 'こ'],
-      },
+        readings: [
+          { value: 'らい', type: 'on' },
+          { value: 'く', type: 'kun' },
+          { value: 'き', type: 'kun' },
+          { value: 'こ', type: 'kun' }
+        ]
+      }
     ],
     practiceSentences: [
       {
@@ -630,86 +869,121 @@ export default function GenkiLessons() {
         character: '員',
         meaning: 'member',
         strokeOrder: 'https://example.com/stroke-order/員',
-        readings: ['いん'],
+        readings: [{ value: 'いん', type: 'on' }]
       },
       {
         character: '新',
         meaning: 'new',
         strokeOrder: 'https://example.com/stroke-order/新',
-        readings: ['しん', 'あたら'],
+        readings: [
+          { value: 'しん', type: 'on' },
+          { value: 'あたら', type: 'kun' }
+        ]
       },
       {
         character: '聞',
         meaning: 'to listen; to ask',
         strokeOrder: 'https://example.com/stroke-order/聞',
-        readings: ['ぶん', 'き'],
+        readings: [
+          { value: 'ぶん', type: 'on' },
+          { value: 'き', type: 'kun' }
+        ]
       },
       {
         character: '作',
         meaning: 'to make',
         strokeOrder: 'https://example.com/stroke-order/作',
-        readings: ['さく', 'つく'],
+        readings: [
+          { value: 'さく', type: 'on' },
+          { value: 'つく', type: 'kun' }
+        ]
       },
       {
         character: '仕',
         meaning: 'to serve',
         strokeOrder: 'https://example.com/stroke-order/仕',
-        readings: ['し'],
+        readings: [{ value: 'し', type: 'on' }]
       },
       {
         character: '事',
         meaning: 'thing; matter',
         strokeOrder: 'https://example.com/stroke-order/事',
-        readings: ['じ', 'こと'],
+        readings: [
+          { value: 'じ', type: 'on' },
+          { value: 'こと', type: 'kun' }
+        ]
       },
       {
         character: '電',
         meaning: 'electricity',
         strokeOrder: 'https://example.com/stroke-order/電',
-        readings: ['でん'],
+        readings: [{ value: 'でん', type: 'on' }]
       },
       {
         character: '車',
         meaning: 'car',
         strokeOrder: 'https://example.com/stroke-order/車',
-        readings: ['しゃ', 'くるま'],
+        readings: [
+          { value: 'しゃ', type: 'on' },
+          { value: 'くるま', type: 'kun' }
+        ]
       },
       {
         character: '休',
         meaning: 'to rest',
         strokeOrder: 'https://example.com/stroke-order/休',
-        readings: ['きゅう', 'やす'],
+        readings: [
+          { value: 'きゅう', type: 'on' },
+          { value: 'やす', type: 'kun' }
+        ]
       },
       {
         character: '言',
         meaning: 'to say',
         strokeOrder: 'https://example.com/stroke-order/言',
-        readings: ['げん', 'い', 'こと'],
+        readings: [
+          { value: 'げん', type: 'on' },
+          { value: 'い', type: 'kun' },
+          { value: 'こと', type: 'kun' }
+        ]
       },
       {
         character: '読',
         meaning: 'to read',
         strokeOrder: 'https://example.com/stroke-order/読',
-        readings: ['どく', 'よ'],
+        readings: [
+          { value: 'どく', type: 'on' },
+          { value: 'よ', type: 'kun' }
+        ]
       },
       {
         character: '思',
         meaning: 'to think',
         strokeOrder: 'https://example.com/stroke-order/思',
-        readings: ['し', 'おも'],
+        readings: [
+          { value: 'し', type: 'on' },
+          { value: 'おも', type: 'kun' }
+        ]
       },
       {
         character: '次',
         meaning: 'next',
         strokeOrder: 'https://example.com/stroke-order/次',
-        readings: ['じ', 'つぎ'],
+        readings: [
+          { value: 'じ', type: 'on' },
+          { value: 'つぎ', type: 'kun' }
+        ]
       },
       {
         character: '何',
         meaning: 'what',
         strokeOrder: 'https://example.com/stroke-order/何',
-        readings: ['か', 'なに', 'なん'],
-      },
+        readings: [
+          { value: 'か', type: 'on' },
+          { value: 'なに', type: 'kun' },
+          { value: 'なん', type: 'kun' }
+        ]
+      }
     ],
     practiceSentences: [
       {
@@ -818,86 +1092,125 @@ export default function GenkiLessons() {
         character: '京',
         meaning: 'capital',
         strokeOrder: 'https://example.com/stroke-order/京',
-        readings: ['きょう', 'けい'],
+        readings: [
+          { value: 'きょう', type: 'on' },
+          { value: 'けい', type: 'on' }
+        ]
       },
       {
         character: '子',
         meaning: 'child',
         strokeOrder: 'https://example.com/stroke-order/子',
-        readings: ['し', 'こ'],
+        readings: [
+          { value: 'し', type: 'on' },
+          { value: 'こ', type: 'kun' }
+        ]
       },
       {
         character: '小',
         meaning: 'small',
         strokeOrder: 'https://example.com/stroke-order/小',
-        readings: ['しょう', 'ちい'],
+        readings: [
+          { value: 'しょう', type: 'on' },
+          { value: 'ちい', type: 'kun' }
+        ]
       },
       {
         character: '会',
         meaning: 'to meet',
         strokeOrder: 'https://example.com/stroke-order/会',
-        readings: ['かい', 'あ'],
+        readings: [
+          { value: 'かい', type: 'on' },
+          { value: 'あ', type: 'kun' }
+        ]
       },
       {
         character: '社',
         meaning: 'company; shrine',
         strokeOrder: 'https://example.com/stroke-order/社',
-        readings: ['しゃ', 'じゃ'],
+        readings: [
+          { value: 'しゃ', type: 'on' },
+          { value: 'じゃ', type: 'on' }
+        ]
       },
       {
         character: '父',
         meaning: 'father',
         strokeOrder: 'https://example.com/stroke-order/父',
-        readings: ['ふ', 'ちち', 'とう'],
+        readings: [
+          { value: 'ふ', type: 'on' },
+          { value: 'ちち', type: 'kun' },
+          { value: 'とう', type: 'kun' }
+        ]
       },
       {
         character: '母',
         meaning: 'mother',
         strokeOrder: 'https://example.com/stroke-order/母',
-        readings: ['ぼ', 'はは', 'かあ'],
+        readings: [
+          { value: 'ぼ', type: 'on' },
+          { value: 'はは', type: 'kun' },
+          { value: 'かあ', type: 'kun' }
+        ]
       },
       {
         character: '高',
         meaning: 'tall; high',
         strokeOrder: 'https://example.com/stroke-order/高',
-        readings: ['こう', 'たか'],
+        readings: [
+          { value: 'こう', type: 'on' },
+          { value: 'たか', type: 'kun' }
+        ]
       },
       {
         character: '校',
         meaning: 'school',
         strokeOrder: 'https://example.com/stroke-order/校',
-        readings: ['こう'],
+        readings: [{ value: 'こう', type: 'on' }]
       },
       {
         character: '毎',
         meaning: 'every',
         strokeOrder: 'https://example.com/stroke-order/毎',
-        readings: ['まい'],
+        readings: [{ value: 'まい', type: 'on' }]
       },
       {
         character: '語',
         meaning: 'language; word',
         strokeOrder: 'https://example.com/stroke-order/語',
-        readings: ['ご', 'かた'],
+        readings: [
+          { value: 'ご', type: 'on' },
+          { value: 'かた', type: 'kun' }
+        ]
       },
       {
         character: '文',
         meaning: 'sentence; literature',
         strokeOrder: 'https://example.com/stroke-order/文',
-        readings: ['ぶん', 'もん'],
+        readings: [
+          { value: 'ぶん', type: 'on' },
+          { value: 'もん', type: 'on' }
+        ]
       },
       {
         character: '帰',
         meaning: 'to return',
         strokeOrder: 'https://example.com/stroke-order/帰',
-        readings: ['き', 'かえ'],
+        readings: [
+          { value: 'き', type: 'on' },
+          { value: 'かえ', type: 'kun' }
+        ]
       },
       {
         character: '入',
         meaning: 'to enter',
         strokeOrder: 'https://example.com/stroke-order/入',
-        readings: ['にゅう', 'い', 'はい'],
-      },
+        readings: [
+          { value: 'にゅう', type: 'on' },
+          { value: 'い', type: 'kun' },
+          { value: 'はい', type: 'kun' }
+        ]
+      }
     ],
     practiceSentences: [
       {
@@ -1027,92 +1340,143 @@ export default function GenkiLessons() {
         character: '東',
         meaning: 'east',
         strokeOrder: 'https://example.com/stroke-order/東',
-        readings: ['とう', 'ひがし'],
+        readings: [
+          { value: 'とう', type: 'on' },
+          { value: 'ひがし', type: 'kun' }
+        ]
       },
       {
         character: '西',
         meaning: 'west',
         strokeOrder: 'https://example.com/stroke-order/西',
-        readings: ['せい', 'にし'],
+        readings: [
+          { value: 'せい', type: 'on' },
+          { value: 'にし', type: 'kun' }
+        ]
       },
       {
         character: '南',
         meaning: 'south',
         strokeOrder: 'https://example.com/stroke-order/南',
-        readings: ['なん', 'みなみ'],
+        readings: [
+          { value: 'なん', type: 'on' },
+          { value: 'みなみ', type: 'kun' }
+        ]
       },
       {
         character: '北',
         meaning: 'north',
         strokeOrder: 'https://example.com/stroke-order/北',
-        readings: ['ほく', 'きた'],
+        readings: [
+          { value: 'ほく', type: 'on' },
+          { value: 'きた', type: 'kun' }
+        ]
       },
       {
         character: '口',
         meaning: 'mouth; entrance',
         strokeOrder: 'https://example.com/stroke-order/口',
-        readings: ['こう', 'くち'],
+        readings: [
+          { value: 'こう', type: 'on' },
+          { value: 'くち', type: 'kun' }
+        ]
       },
       {
         character: '出',
         meaning: 'to exit',
         strokeOrder: 'https://example.com/stroke-order/出',
-        readings: ['しゅつ', 'で', 'だ'],
+        readings: [
+          { value: 'しゅつ', type: 'on' },
+          { value: 'で', type: 'kun' },
+          { value: 'だ', type: 'kun' }
+        ]
       },
       {
         character: '右',
         meaning: 'right',
         strokeOrder: 'https://example.com/stroke-order/右',
-        readings: ['う', 'みぎ'],
+        readings: [
+          { value: 'う', type: 'on' },
+          { value: 'みぎ', type: 'kun' }
+        ]
       },
       {
         character: '左',
         meaning: 'left',
         strokeOrder: 'https://example.com/stroke-order/左',
-        readings: ['さ', 'ひだり'],
+        readings: [
+          { value: 'さ', type: 'on' },
+          { value: 'ひだり', type: 'kun' }
+        ]
       },
       {
         character: '分',
         meaning: 'minute; to divide',
         strokeOrder: 'https://example.com/stroke-order/分',
-        readings: ['ふん', 'ぶん', 'ぷん', 'わ'],
+        readings: [
+          { value: 'ふん', type: 'on' },
+          { value: 'ぶん', type: 'on' },
+          { value: 'ぷん', type: 'on' },
+          { value: 'わ', type: 'kun' }
+        ]
       },
       {
         character: '先',
         meaning: 'ahead',
         strokeOrder: 'https://example.com/stroke-order/先',
-        readings: ['せん', 'さき'],
+        readings: [
+          { value: 'せん', type: 'on' },
+          { value: 'さき', type: 'kun' }
+        ]
       },
       {
         character: '生',
         meaning: 'life; birth',
         strokeOrder: 'https://example.com/stroke-order/生',
-        readings: ['せい', 'しょう', 'い', 'う'],
+        readings: [
+          { value: 'せい', type: 'on' },
+          { value: 'しょう', type: 'on' },
+          { value: 'い', type: 'kun' },
+          { value: 'う', type: 'kun' }
+        ]
       },
       {
         character: '大',
         meaning: 'big',
         strokeOrder: 'https://example.com/stroke-order/大',
-        readings: ['だい', 'たい', 'おお'],
+        readings: [
+          { value: 'だい', type: 'on' },
+          { value: 'たい', type: 'on' },
+          { value: 'おお', type: 'kun' }
+        ]
       },
       {
         character: '学',
         meaning: 'learning',
         strokeOrder: 'https://example.com/stroke-order/学',
-        readings: ['がく', 'まな'],
+        readings: [
+          { value: 'がく', type: 'on' },
+          { value: 'まな', type: 'kun' }
+        ]
       },
       {
         character: '外',
         meaning: 'outside',
         strokeOrder: 'https://example.com/stroke-order/外',
-        readings: ['がい', 'そと'],
+        readings: [
+          { value: 'がい', type: 'on' },
+          { value: 'そと', type: 'kun' }
+        ]
       },
       {
         character: '国',
         meaning: 'country',
         strokeOrder: 'https://example.com/stroke-order/国',
-        readings: ['こく', 'くに'],
-      },
+        readings: [
+          { value: 'こく', type: 'on' },
+          { value: 'くに', type: 'kun' }
+        ]
+      }
     ],
     practiceSentences: [
       {
@@ -1221,86 +1585,127 @@ export default function GenkiLessons() {
         character: '山',
         meaning: 'mountain',
         strokeOrder: 'https://example.com/stroke-order/山',
-        readings: ['さん', 'やま'],
+        readings: [
+          { value: 'さん', type: 'on' },
+          { value: 'やま', type: 'kun' }
+        ]
       },
       {
         character: '川',
         meaning: 'river',
         strokeOrder: 'https://example.com/stroke-order/川',
-        readings: ['せん', 'かわ'],
+        readings: [
+          { value: 'せん', type: 'on' },
+          { value: 'かわ', type: 'kun' }
+        ]
       },
       {
         character: '元',
         meaning: 'origin',
         strokeOrder: 'https://example.com/stroke-order/元',
-        readings: ['げん', 'がん', 'もと'],
+        readings: [
+          { value: 'げん', type: 'on' },
+          { value: 'がん', type: 'on' },
+          { value: 'もと', type: 'kun' }
+        ]
       },
       {
         character: '気',
         meaning: 'spirit; energy',
         strokeOrder: 'https://example.com/stroke-order/気',
-        readings: ['き', 'け'],
+        readings: [
+          { value: 'き', type: 'on' },
+          { value: 'け', type: 'on' }
+        ]
       },
       {
         character: '天',
         meaning: 'heaven',
         strokeOrder: 'https://example.com/stroke-order/天',
-        readings: ['てん'],
+        readings: [{ value: 'てん', type: 'on' }]
       },
       {
         character: '私',
         meaning: 'I; private',
         strokeOrder: 'https://example.com/stroke-order/私',
-        readings: ['わたし', 'し'],
+        readings: [
+          { value: 'わたし', type: 'kun' },
+          { value: 'し', type: 'on' }
+        ]
       },
       {
         character: '今',
         meaning: 'now',
         strokeOrder: 'https://example.com/stroke-order/今',
-        readings: ['こん', 'いま'],
+        readings: [
+          { value: 'こん', type: 'on' },
+          { value: 'いま', type: 'kun' }
+        ]
       },
       {
         character: '田',
         meaning: 'rice field',
         strokeOrder: 'https://example.com/stroke-order/田',
-        readings: ['でん', 'た'],
+        readings: [
+          { value: 'でん', type: 'on' },
+          { value: 'た', type: 'kun' }
+        ]
       },
       {
         character: '女',
         meaning: 'woman',
         strokeOrder: 'https://example.com/stroke-order/女',
-        readings: ['じょ', 'おんな'],
+        readings: [
+          { value: 'じょ', type: 'on' },
+          { value: 'おんな', type: 'kun' }
+        ]
       },
       {
         character: '男',
         meaning: 'man',
         strokeOrder: 'https://example.com/stroke-order/男',
-        readings: ['だん', 'おとこ'],
+        readings: [
+          { value: 'だん', type: 'on' },
+          { value: 'おとこ', type: 'kun' }
+        ]
       },
       {
         character: '見',
         meaning: 'to see',
         strokeOrder: 'https://example.com/stroke-order/見',
-        readings: ['けん', 'み'],
+        readings: [
+          { value: 'けん', type: 'on' },
+          { value: 'み', type: 'kun' }
+        ]
       },
       {
         character: '行',
         meaning: 'to go',
         strokeOrder: 'https://example.com/stroke-order/行',
-        readings: ['こう', 'ぎょう', 'い'],
+        readings: [
+          { value: 'こう', type: 'on' },
+          { value: 'ぎょう', type: 'on' },
+          { value: 'い', type: 'kun' }
+        ]
       },
       {
         character: '食',
         meaning: 'to eat',
         strokeOrder: 'https://example.com/stroke-order/食',
-        readings: ['しょく', 'た'],
+        readings: [
+          { value: 'しょく', type: 'on' },
+          { value: 'た', type: 'kun' }
+        ]
       },
       {
         character: '飲',
         meaning: 'to drink',
         strokeOrder: 'https://example.com/stroke-order/飲',
-        readings: ['いん', 'の'],
-      },
+        readings: [
+          { value: 'いん', type: 'on' },
+          { value: 'の', type: 'kun' }
+        ]
+      }
     ],
     practiceSentences: [
       {
@@ -1396,86 +1801,134 @@ export default function GenkiLessons() {
         character: '日',
         meaning: 'day, sun',
         strokeOrder: '4 strokes',
-        readings: ['にち', 'じつ', 'ひ'],
+        readings: [
+          { value: 'にち', type: 'on' },
+          { value: 'じつ', type: 'on' },
+          { value: 'ひ', type: 'kun' }
+        ]
       },
       {
         character: '本',
         meaning: 'book, origin',
         strokeOrder: '5 strokes',
-        readings: ['ほん', 'もと'],
+        readings: [
+          { value: 'ほん', type: 'on' },
+          { value: 'もと', type: 'kun' }
+        ]
       },
       {
         character: '人',
         meaning: 'person',
         strokeOrder: '2 strokes',
-        readings: ['じん', 'にん', 'ひと'],
+        readings: [
+          { value: 'じん', type: 'on' },
+          { value: 'にん', type: 'on' },
+          { value: 'ひと', type: 'kun' }
+        ]
       },
       {
         character: '月',
         meaning: 'month, moon',
         strokeOrder: '4 strokes',
-        readings: ['げつ', 'がつ', 'つき'],
+        readings: [
+          { value: 'げつ', type: 'on' },
+          { value: 'がつ', type: 'on' },
+          { value: 'つき', type: 'kun' }
+        ]
       },
       {
         character: '火',
         meaning: 'fire',
         strokeOrder: '4 strokes',
-        readings: ['か', 'ひ'],
+        readings: [
+          { value: 'か', type: 'on' },
+          { value: 'ひ', type: 'kun' }
+        ]
       },
       {
         character: '水',
         meaning: 'water',
         strokeOrder: '4 strokes',
-        readings: ['すい', 'みず'],
+        readings: [
+          { value: 'すい', type: 'on' },
+          { value: 'みず', type: 'kun' }
+        ]
       },
       {
         character: '木',
         meaning: 'tree, wood',
         strokeOrder: '4 strokes',
-        readings: ['もく', 'ぼく', 'き'],
+        readings: [
+          { value: 'もく', type: 'on' },
+          { value: 'ぼく', type: 'on' },
+          { value: 'き', type: 'kun' }
+        ]
       },
       {
         character: '金',
         meaning: 'gold, money',
         strokeOrder: '8 strokes',
-        readings: ['きん', 'こん', 'かね'],
+        readings: [
+          { value: 'きん', type: 'on' },
+          { value: 'こん', type: 'on' },
+          { value: 'かね', type: 'kun' }
+        ]
       },
       {
         character: '土',
         meaning: 'earth, soil',
         strokeOrder: '3 strokes',
-        readings: ['ど', 'と', 'つち'],
+        readings: [
+          { value: 'ど', type: 'on' },
+          { value: 'と', type: 'on' },
+          { value: 'つち', type: 'kun' }
+        ]
       },
       {
         character: '曜',
         meaning: 'day of the week',
         strokeOrder: '18 strokes',
-        readings: ['よう'],
+        readings: [{ value: 'よう', type: 'on' }]
       },
       {
         character: '上',
         meaning: 'above, up',
         strokeOrder: '3 strokes',
-        readings: ['じょう', 'うえ', 'あがる'],
+        readings: [
+          { value: 'じょう', type: 'on' },
+          { value: 'うえ', type: 'kun' },
+          { value: 'あがる', type: 'kun' }
+        ]
       },
       {
         character: '下',
         meaning: 'below, down',
         strokeOrder: '3 strokes',
-        readings: ['か', 'げ', 'した', 'さがる'],
+        readings: [
+          { value: 'か', type: 'on' },
+          { value: 'げ', type: 'on' },
+          { value: 'した', type: 'kun' },
+          { value: 'さがる', type: 'kun' }
+        ]
       },
       {
         character: '中',
         meaning: 'middle, inside',
         strokeOrder: '4 strokes',
-        readings: ['ちゅう', 'なか'],
+        readings: [
+          { value: 'ちゅう', type: 'on' },
+          { value: 'なか', type: 'kun' }
+        ]
       },
       {
         character: '半',
         meaning: 'half',
         strokeOrder: '5 strokes',
-        readings: ['はん', 'なかば'],
-      },
+        readings: [
+          { value: 'はん', type: 'on' },
+          { value: 'なかば', type: 'kun' }
+        ]
+      }
     ],
     practiceSentences: [
       {
@@ -1584,92 +2037,126 @@ export default function GenkiLessons() {
         character: '一',
         meaning: 'one',
         strokeOrder: '1 stroke',
-        readings: ['いち', 'ひと'],
+        readings: [
+          { value: 'いち', type: 'on' },
+          { value: 'ひと', type: 'kun' }
+        ]
       },
       {
         character: '二',
         meaning: 'two',
         strokeOrder: '2 strokes',
-        readings: ['に', 'ふた'],
+        readings: [
+          { value: 'に', type: 'on' },
+          { value: 'ふた', type: 'kun' }
+        ]
       },
       {
         character: '三',
         meaning: 'three',
         strokeOrder: '3 strokes',
-        readings: ['さん', 'み'],
+        readings: [
+          { value: 'さん', type: 'on' },
+          { value: 'み', type: 'kun' }
+        ]
       },
       {
         character: '四',
         meaning: 'four',
         strokeOrder: '5 strokes',
-        readings: ['し', 'よん'],
+        readings: [
+          { value: 'し', type: 'on' },
+          { value: 'よん', type: 'kun' }
+        ]
       },
       {
         character: '五',
         meaning: 'five',
         strokeOrder: '4 strokes',
-        readings: ['ご', 'いつ'],
+        readings: [
+          { value: 'ご', type: 'on' },
+          { value: 'いつ', type: 'kun' }
+        ]
       },
       {
         character: '六',
         meaning: 'six',
         strokeOrder: '4 strokes',
-        readings: ['ろく', 'む'],
+        readings: [
+          { value: 'ろく', type: 'on' },
+          { value: 'む', type: 'kun' }
+        ]
       },
       {
         character: '七',
         meaning: 'seven',
         strokeOrder: '2 strokes',
-        readings: ['しち', 'なな'],
+        readings: [
+          { value: 'しち', type: 'on' },
+          { value: 'なな', type: 'kun' }
+        ]
       },
       {
         character: '八',
         meaning: 'eight',
         strokeOrder: '2 strokes',
-        readings: ['はち', 'や'],
+        readings: [
+          { value: 'はち', type: 'on' },
+          { value: 'や', type: 'kun' }
+        ]
       },
       {
         character: '九',
         meaning: 'nine',
         strokeOrder: '2 strokes',
-        readings: ['きゅう', 'く', 'ここの'],
+        readings: [
+          { value: 'きゅう', type: 'on' },
+          { value: 'く', type: 'on' },
+          { value: 'ここの', type: 'kun' }
+        ]
       },
       {
         character: '十',
         meaning: 'ten',
         strokeOrder: '2 strokes',
-        readings: ['じゅう', 'とお'],
+        readings: [
+          { value: 'じゅう', type: 'on' },
+          { value: 'とお', type: 'kun' }
+        ]
       },
       {
         character: '百',
         meaning: 'hundred',
         strokeOrder: '6 strokes',
-        readings: ['ひゃく'],
+        readings: [{ value: 'ひゃく', type: 'on' }]
       },
       {
         character: '千',
         meaning: 'thousand',
         strokeOrder: '3 strokes',
-        readings: ['せん'],
+        readings: [{ value: 'せん', type: 'on' }]
       },
       {
         character: '万',
         meaning: 'ten thousand',
         strokeOrder: '3 strokes',
-        readings: ['まん'],
+        readings: [{ value: 'まん', type: 'on' }]
       },
       {
         character: '円',
         meaning: 'yen, circle',
         strokeOrder: '4 strokes',
-        readings: ['えん'],
+        readings: [{ value: 'えん', type: 'on' }]
       },
       {
         character: '時',
         meaning: 'time, hour',
         strokeOrder: '10 strokes',
-        readings: ['じ', 'とき'],
-      },
+        readings: [
+          { value: 'じ', type: 'on' },
+          { value: 'とき', type: 'kun' }
+        ]
+      }
     ],
     practiceSentences: [
       {

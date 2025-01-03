@@ -1,4 +1,4 @@
-import { Lesson, Kanji, PracticeSentence } from '@/components/Lesson';
+import { Lesson, Kanji, PracticeSentence, Reading } from '@/components/Lesson';
 import Navbar from '@/components/Navbar';
 import Button from '@/components/button';
 import { useLessons } from '@/hooks/use-lessons';
@@ -44,7 +44,7 @@ export default function MyLessons() {
     index: number;
   } | null>(null);
   const [updatedCharacter, setUpdatedCharacter] = useState<string>('');
-  const [newReading, setNewReading] = useState<string>('');
+  const [newReading, setNewReading] = useState<Reading>({ value: '', type: 'kun' });
   const [updatedPracticeSentences, setUpdatedPracticeSentences] = useState<
     PracticeSentence[] | null
   >(null);
@@ -72,7 +72,6 @@ export default function MyLessons() {
     }
   }, [fetchedLessons, lessonId]);
 
-  console.log('Fetched Lessons:', myLessons);
 
   const renderNameInput = () => {
     return (
@@ -89,14 +88,11 @@ export default function MyLessons() {
   };
 
   const changeLessonName = () => {
-    console.log('changing lesson name');
     setIsEditing(true);
-    console.log('new name: ' + newName);
   };
 
   const saveLessonName = async () => {
     if (!selectedLesson) return;
-    console.log('Saving new name', newName);
     setSelectedLesson({ ...selectedLesson, name: newName });
     setIsEditing(false);
 
@@ -108,10 +104,6 @@ export default function MyLessons() {
     }
     try {
       const idToken = await currentUser.getIdToken();
-      console.log('Sending to API:', {
-        lessonId: selectedLesson.id,
-        newLessonName: newName,
-      });
 
       const res = await fetch('/api/change-lesson-name', {
         method: 'PUT',
@@ -185,7 +177,6 @@ export default function MyLessons() {
       } else {
         console.log('Lesson successfuly updated');
         setSelectedLesson(lessonToPut);
-        setEditingKanji(null);
       }
     } catch (error) {
       console.error('Error in saveLesson:', error);
@@ -194,14 +185,20 @@ export default function MyLessons() {
 
   const saveKanji = async () => {
     if (!selectedLesson || !editingKanji) return;
-
-    const updatedLesson = { ...selectedLesson };
-    updatedLesson.kanjiList[editingKanji.index] = {
+    const updatedKanji = {
       ...editingKanji.kanji,
-      readings: editingKanji.kanji.readings,
       character: updatedCharacter,
     };
+
+    const updatedLesson = {
+      ...selectedLesson,
+      kanjiList: selectedLesson.kanjiList.map((kanji, index) =>
+        index === editingKanji.index ? updatedKanji : kanji
+      ),
+    };
+
     setSelectedLesson(updatedLesson);
+    setEditingKanji({ kanji: updatedKanji, index: editingKanji.index });
     if (!updatedLesson.id) {
       console.error('Missing Lesson Id');
       return;
@@ -227,7 +224,7 @@ export default function MyLessons() {
     const updatedKanji = { ...editingKanji.kanji };
     updatedKanji.readings = [...updatedKanji.readings, newReading];
     setEditingKanji({ ...editingKanji, kanji: updatedKanji });
-    setNewReading('');
+    setNewReading({ value: '', type: 'kun' });
   };
 
   const deleteReading = (readingIndex: number) => {
@@ -273,7 +270,6 @@ export default function MyLessons() {
   function renderSelectedLesson(): JSX.Element | null {
     if (!selectedLesson) return null;
 
-    console.log('Rendering Lesson:', selectedLesson);
     return (
       <div className="py-6">
         <div className="flex items-start space-x-2">
@@ -344,9 +340,11 @@ export default function MyLessons() {
               key={`${lessonId}-${kanji.character}-${index}`}
               className="relative border p-4 rounded-lg bg-customCream/50 font-sansJP"
             >
-              <Dialog>
+              <Dialog >
                 <DialogTrigger
-                  onClick={() => editKanji(kanji, index)}
+                  onClick={() => {
+                    editKanji(kanji, index);
+                  }}
                   className="aboslute right-2"
                 >
                   <FaRegEdit
@@ -379,7 +377,7 @@ export default function MyLessons() {
                             className="list-none flex justify-between items-center ml-12"
                             key={`${reading}-${idx}`}
                           >
-                            {reading}{' '}
+                            {reading.value} ({reading.type}){' '}
                             <button
                               className="mr-2"
                               onClick={() => deleteReading(idx)}
@@ -390,23 +388,31 @@ export default function MyLessons() {
                         ))}
                         <input
                           type="text"
-                          id="newAnswer"
-                          value={newReading}
-                          onChange={(e) => setNewReading(e.target.value)}
+                          id="newReadingValue"
+                          value={newReading.value}
+                          onChange={(e) => setNewReading({ ...newReading, value: e.target.value })}
                           className="m-1 border p-2 rounded mb-2 text-sm"
                         />
+                        <select
+                          value={newReading.type}
+                          onChange={(e) => setNewReading({ ...newReading, type: e.target.value as 'kun' | 'on' })}
+                          className="m-1 border p-2 rounded mb-2 text-sm"
+                        >
+                          <option value="kun">Kun</option>
+                          <option value="on">On</option>
+                        </select>
                         <button
                           type="button"
                           onClick={addNewReading}
                           className="m-2 bg-customGold text-left text-black text-sm px-2 py-1 rounded w-fit hover:opacity-50"
                         >
-                          Add Corect Answer
+                          Add New Reading
                         </button>
                       </div>
                     </DialogDescription>
                     <button
                       type="button"
-                      onClick={saveKanji}
+                      onClick={() => saveKanji()}
                       className="w-full py-2 px-2 font-medium rounded-md bg-customBrownDark text-white hover:opacity-50"
                     >
                       Save
@@ -422,7 +428,7 @@ export default function MyLessons() {
                 <h2 className="font-medium">Readings</h2>
                 <ul>
                   {kanji.readings.map((reading, index) => (
-                    <li key={`kanji-${reading}-${index}`}>{reading}</li>
+                    <li className={`${reading.type === 'kun' ? 'font-semibold' : ''}`} key={`kanji-${reading.value}-${index}`}>{reading.value}</li>
                   ))}
                 </ul>
               </div>
@@ -638,7 +644,6 @@ export default function MyLessons() {
 
   function renderLessonButtons(): JSX.Element | null {
     if (loading) {
-      console.log('No lessons loaded yet');
       return <p>Loading...</p>;
     }
     if (!myLessons || myLessons.length === 0) {

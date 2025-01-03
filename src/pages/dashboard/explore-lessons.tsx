@@ -184,9 +184,11 @@ export default function ExploreLessons() {
               <div>
                 <h2 className="font-medium">Readings</h2>
                 <ul>
-                  {kanji.readings.map((reading, index) => (
-                    <li key={`kanji-${reading}-${index}`}>{reading}</li>
-                  ))}
+                  <ul>
+                    {kanji.readings.map((reading, index) => (
+                      <li className={`${reading.type === 'kun' ? 'font-semibold' : ''}`} key={`kanji-${reading.value}-${index}`}>{reading.value}</li>
+                    ))}
+                  </ul>
                 </ul>
               </div>
             </li>
