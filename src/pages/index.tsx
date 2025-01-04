@@ -116,6 +116,7 @@ export default function Home() {
                 type="button"
                 onClick={handleSignInWithEmail}
                 className="w-full py-2 px-2 font-medium rounded-md bg-black text-white hover:bg-gray-800"
+                disabled={!email.includes('@') || password.trim().length < 1}
               >
                 Sign in with Email
               </button>
@@ -174,6 +175,7 @@ export default function Home() {
                     </DialogDescription>
                     <button
                       type="button"
+                      disabled={displayName.trim().length < 2 || !email.includes('@') || password.length < 1}
                       onClick={handleCreateAccount}
                       className="w-full py-2 px-2 font-medium rounded-md bg-customBrownDark text-customCream hover:opacity-50"
                     >

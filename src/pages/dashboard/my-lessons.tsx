@@ -578,7 +578,7 @@ export default function MyLessons() {
           </Dialog>
         </div>
         {selectedLesson.practiceSentences.length == 0 ? (
-          <h1>No Sentences</h1>
+          <h1 className="mb-4 italic">No Sentences</h1>
         ) : (
           <ul>
             {selectedLesson.practiceSentences.map((sentence, index) => (
@@ -624,7 +624,7 @@ export default function MyLessons() {
                 });
               }}
             ></Switch>
-            <p className="ml-2 uppercase">{selectedLesson.publishStatus}</p>
+            <p className="ml-2 uppercase text-sm sm:text-lg">{selectedLesson.publishStatus}</p>
           </div>
           <button
             className="bg-customBrownLight rounded-sm min-h-44px text-white flex justify-center items-center p-2 hover:bg-opacity-70 ml-auto"
