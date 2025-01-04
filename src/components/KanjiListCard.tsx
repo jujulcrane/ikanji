@@ -51,9 +51,9 @@ export default function KanjiListCard({ kanjiList }: KanjiListCardProps) {
                           {kanji.readings.map((reading, idx) => (
                             <li
                               className="list-none text-sm"
-                              key={`${reading}-${idx}`}
+                              key={`${reading.value}-${idx}`}
                             >
-                              {reading}
+                              {reading.value}
                             </li>
                           ))}
                           <div className="flex items-center pt-2">
