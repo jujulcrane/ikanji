@@ -231,8 +231,10 @@ export default function MultipleChoice() {
         const newMultipleChoice: MultipleChoiceQuestion[] = kanjiList.map(
           (kanji) => ({
             term: kanji.character,
-            correct: kanji.readings.map(reading => reading.value),
-            false: generateWrongAnswers(kanji.readings.map(reading => reading.value)),
+            correct: kanji.readings.map((reading) => reading.value),
+            false: generateWrongAnswers(
+              kanji.readings.map((reading) => reading.value)
+            ),
             feedback: kanji.meaning,
           })
         );
@@ -424,8 +426,10 @@ export default function MultipleChoice() {
       const newMultipleChoice: MultipleChoiceQuestion[] = kanjiList.map(
         (kanji) => ({
           term: kanji.character,
-          correct: kanji.readings.map(reading => reading.value),
-          false: generateWrongAnswers(kanji.readings.map(reading => reading.value)),
+          correct: kanji.readings.map((reading) => reading.value),
+          false: generateWrongAnswers(
+            kanji.readings.map((reading) => reading.value)
+          ),
           feedback: kanji.meaning,
         })
       );
@@ -443,10 +447,7 @@ export default function MultipleChoice() {
     const shuffledSet = [...quizSet];
     for (let i = shuffledSet.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
-      [shuffledSet[i], shuffledSet[j]] = [
-        shuffledSet[j],
-        shuffledSet[i],
-      ];
+      [shuffledSet[i], shuffledSet[j]] = [shuffledSet[j], shuffledSet[i]];
     }
     if (isReadings) {
       setReadingSet(shuffledSet);
@@ -454,7 +455,7 @@ export default function MultipleChoice() {
       setAiSet(shuffledSet);
     }
     setCurrentQuestionIndex(0);
-  }
+  };
 
   if (!currentQuestion) {
     return (
@@ -528,7 +529,8 @@ export default function MultipleChoice() {
                 if (aiSet) shuffle(aiSet);
                 console.log('no aiset');
               }
-            }}>
+            }}
+          >
             <FaShuffle size={22} />
           </button>
           <button

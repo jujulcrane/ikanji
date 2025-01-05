@@ -98,6 +98,32 @@ export default function QuizSettings() {
     setNewFeedBack(question.feedback ? question.feedback : '');
   };
 
+  const randomTheme = (): string => {
+    const themes: string[] = [
+      'history',
+      'entertainment and leisure',
+      'health and wellness',
+      'technology',
+      'practical use',
+      'activities and hobbies',
+      'interpersonal interactions',
+      'cultural and traditional contexts',
+      'everyday life',
+    ];
+    const rand = Math.floor(Math.random() * themes.length);
+    return themes[rand];
+  };
+
+  const shuffle = (kanji: string[]): string[] => {
+    for (let i = kanji.length - 1; i > 0; i--) {
+      const rand = Math.floor(Math.random() * (i + 1));
+      const temp = kanji[i];
+      kanji[i] = kanji[rand];
+      kanji[rand] = temp;
+    }
+    return kanji;
+  };
+
   const generateAiQuestion = async () => {
     if (!lesson) return;
     setLoadingNewQuestion(true);
@@ -108,7 +134,8 @@ export default function QuizSettings() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          kanji: lesson.kanjiList.map((kanji) => kanji.character),
+          kanji: shuffle(lesson.kanjiList.map((kanji) => kanji.character)),
+          randomTheme: randomTheme(),
         }),
       });
 
@@ -196,7 +223,8 @@ export default function QuizSettings() {
         feedback: newFeedBack,
       };
       if (idx) {
-        const updatedQuestion = updatedLesson.quizSets.aiSet[editingQuestion.index];
+        const updatedQuestion =
+          updatedLesson.quizSets.aiSet[editingQuestion.index];
         editQuestion(updatedQuestion, idx);
       }
     }
@@ -299,18 +327,17 @@ export default function QuizSettings() {
       <Navbar />
       <div className="bg-customCream pb-72">
         {!lesson ? (
-          <h1 className=" text-center text-2xl min-h-screen">
-            Loading...
-          </h1>) : !lesson.quizSets ? (
-            <div className="flex items-center justify-center h-screen">
-              <BiError size={32} className="mr-2" />
-              <h1 className=" text-center font-semibold text-2xl">
-                {' '}
-                No Multiple Choice Data Avaliable
-              </h1>
-              <BiError size={32} className="ml-2" />
-            </div>
-          ) : (
+          <h1 className=" text-center text-2xl min-h-screen">Loading...</h1>
+        ) : !lesson.quizSets ? (
+          <div className="flex items-center justify-center h-screen">
+            <BiError size={32} className="mr-2" />
+            <h1 className=" text-center font-semibold text-2xl">
+              {' '}
+              No Multiple Choice Data Avaliable
+            </h1>
+            <BiError size={32} className="ml-2" />
+          </div>
+        ) : (
           <div>
             {loadingNewQuestion && displayLoading()}
             <button
@@ -335,12 +362,17 @@ export default function QuizSettings() {
                     onOpenChange={(open) => {
                       if (!open) {
                         if (
-                          editingQuestion?.question.correct != question.correct || editingQuestion?.question.false != question.false || updatedTerm != question.term || newFeedBack != question.feedback
+                          editingQuestion?.question.correct !=
+                            question.correct ||
+                          editingQuestion?.question.false != question.false ||
+                          updatedTerm != question.term ||
+                          newFeedBack != question.feedback
                         ) {
                           setAlertOpen(true);
                         }
                       }
-                    }}>
+                    }}
+                  >
                     <DialogTrigger
                       onClick={() => editQuestion(question, index)}
                       className="hover:underline"

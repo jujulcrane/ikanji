@@ -88,7 +88,9 @@ export default function Flashcards() {
           newBack.meaning = lesson.kanjiList[currentCardIndex].meaning;
         }
         if (isReadingsChecked) {
-          newBack.readings = lesson.kanjiList[currentCardIndex].readings.map(reading => reading.value);
+          newBack.readings = lesson.kanjiList[currentCardIndex].readings.map(
+            (reading) => reading.value
+          );
         }
       }
 
@@ -153,7 +155,9 @@ export default function Flashcards() {
         newBack.meaning = lesson.kanjiList[nextIndex].meaning;
       }
       if (isReadingsChecked) {
-        newBack.readings = lesson.kanjiList[nextIndex].readings.map(reading => reading.value);
+        newBack.readings = lesson.kanjiList[nextIndex].readings.map(
+          (reading) => reading.value
+        );
       }
       setBack(newBack);
     }
@@ -177,7 +181,9 @@ export default function Flashcards() {
         newBack.meaning = lesson.kanjiList[prevIndex].meaning;
       }
       if (isReadingsChecked) {
-        newBack.readings = lesson.kanjiList[prevIndex].readings.map(reading => reading.value);
+        newBack.readings = lesson.kanjiList[prevIndex].readings.map(
+          (reading) => reading.value
+        );
       }
 
       setBack(newBack);
@@ -235,7 +241,9 @@ export default function Flashcards() {
         newBack.meaning = shuffledLesson.kanjiList[0].meaning;
       }
       if (isReadingsChecked) {
-        newBack.readings = shuffledLesson.kanjiList[0].readings.map(reading => reading.value);
+        newBack.readings = shuffledLesson.kanjiList[0].readings.map(
+          (reading) => reading.value
+        );
       }
       setFront(newFront);
       setBack(newBack);

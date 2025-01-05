@@ -44,7 +44,10 @@ export default function MyLessons() {
     index: number;
   } | null>(null);
   const [updatedCharacter, setUpdatedCharacter] = useState<string>('');
-  const [newReading, setNewReading] = useState<Reading>({ value: '', type: 'kun' });
+  const [newReading, setNewReading] = useState<Reading>({
+    value: '',
+    type: 'kun',
+  });
   const [updatedPracticeSentences, setUpdatedPracticeSentences] = useState<
     PracticeSentence[] | null
   >(null);
@@ -71,7 +74,6 @@ export default function MyLessons() {
       }
     }
   }, [fetchedLessons, lessonId]);
-
 
   const renderNameInput = () => {
     return (
@@ -340,7 +342,7 @@ export default function MyLessons() {
               key={`${lessonId}-${kanji.character}-${index}`}
               className="relative border p-4 rounded-lg bg-customCream/50 font-sansJP"
             >
-              <Dialog >
+              <Dialog>
                 <DialogTrigger
                   onClick={() => {
                     editKanji(kanji, index);
@@ -390,12 +392,22 @@ export default function MyLessons() {
                           type="text"
                           id="newReadingValue"
                           value={newReading.value}
-                          onChange={(e) => setNewReading({ ...newReading, value: e.target.value })}
+                          onChange={(e) =>
+                            setNewReading({
+                              ...newReading,
+                              value: e.target.value,
+                            })
+                          }
                           className="m-1 border p-2 rounded mb-2 text-sm"
                         />
                         <select
                           value={newReading.type}
-                          onChange={(e) => setNewReading({ ...newReading, type: e.target.value as 'kun' | 'on' })}
+                          onChange={(e) =>
+                            setNewReading({
+                              ...newReading,
+                              type: e.target.value as 'kun' | 'on',
+                            })
+                          }
                           className="m-1 border p-2 rounded mb-2 text-sm"
                         >
                           <option value="kun">Kun</option>
@@ -428,7 +440,12 @@ export default function MyLessons() {
                 <h2 className="font-medium">Readings</h2>
                 <ul>
                   {kanji.readings.map((reading, index) => (
-                    <li className={`${reading.type === 'kun' ? 'font-semibold' : ''}`} key={`kanji-${reading.value}-${index}`}>{reading.value}</li>
+                    <li
+                      className={`${reading.type === 'kun' ? 'font-semibold' : ''}`}
+                      key={`kanji-${reading.value}-${index}`}
+                    >
+                      {reading.value}
+                    </li>
                   ))}
                 </ul>
               </div>
@@ -624,7 +641,9 @@ export default function MyLessons() {
                 });
               }}
             ></Switch>
-            <p className="ml-2 uppercase text-sm sm:text-lg">{selectedLesson.publishStatus}</p>
+            <p className="ml-2 uppercase text-sm sm:text-lg">
+              {selectedLesson.publishStatus}
+            </p>
           </div>
           <button
             className="bg-customBrownLight rounded-sm min-h-44px text-white flex justify-center items-center p-2 hover:bg-opacity-70 ml-auto"

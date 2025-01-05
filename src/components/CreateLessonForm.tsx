@@ -15,7 +15,8 @@ export function CreateNewLessonForm() {
   const [japanese, setJapanese] = useState<string>('');
   const [english, setEnglish] = useState<string>('');
   const [loadingAiSentences, setLoadingAiSentences] = useState(false);
-  const [readings, setReadings] = useState<Reading[]>([]); const [practiceSentences, setPracticeSentences] = useState<
+  const [readings, setReadings] = useState<Reading[]>([]);
+  const [practiceSentences, setPracticeSentences] = useState<
     PracticeSentence[]
   >([]);
   const [kanjiList, setKanjiList] = useState<Kanji[]>([]);
@@ -45,11 +46,7 @@ export function CreateNewLessonForm() {
   };
 
   const handleKanjiSubmit = () => {
-    if (
-      !kanjiChar.trim() ||
-      !meaning.trim() ||
-      readings.length === 0
-    ) {
+    if (!kanjiChar.trim() || !meaning.trim() || readings.length === 0) {
       alert('Please fill in all the fields and add at least one reading.');
       return;
     }
@@ -195,7 +192,9 @@ export function CreateNewLessonForm() {
 
   function renderReadings() {
     return readings.map((reading, index) => (
-      <li key={index}>{reading.value} ({reading.type})</li>
+      <li key={index}>
+        {reading.value} ({reading.type})
+      </li>
     ));
   }
 
@@ -260,10 +259,13 @@ export function CreateNewLessonForm() {
               <ul>{renderKanjiList()}</ul>
             </div>
             <h1 className="font-semibold">Add Kanji From its Character</h1>
-            <div className='flex items-center justify-center gap-2 md:w-1/2'>
-              <label className="p-2">
-                Character
-              </label>
+            {character.length > 1 && (
+              <p className="text-red-400">
+                Please Provide Only 1 Character at a Time
+              </p>
+            )}
+            <div className="flex items-center justify-center gap-2 md:w-1/2">
+              <label className="p-2">Character</label>
               <input
                 className="border w-1/2"
                 type="text"
@@ -272,10 +274,18 @@ export function CreateNewLessonForm() {
                 onChange={(e) => setCharacter(e.target.value)}
               />
               <div className="w-1/3">
-                <Button onClick={fetchKanjiData}>Add</Button>
+                <Button
+                  disabled={character.length != 1}
+                  onClick={fetchKanjiData}
+                >
+                  Add
+                </Button>
               </div>
             </div>
-            <h1 className="font-semibold">Add Kanji Manually</h1>
+            <h1 className="font-semibold">
+              <p className="italic text-sm font-medium">*Optional*</p> Add Kanji
+              Manually
+            </h1>
             <div>
               <label className="p-2" htmlFor="kanjiChar">
                 Character
@@ -306,7 +316,9 @@ export function CreateNewLessonForm() {
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <label className="whitespace-nowrap" htmlFor="reading">Readings</label>
+                <label className="whitespace-nowrap" htmlFor="reading">
+                  Readings
+                </label>
                 <div className="flex">
                   <input
                     className="border rounded px-4 py-2 mr-2 md:mr-4 w-1/3 md:w-1/2 lg:w-2/3"
@@ -332,7 +344,9 @@ export function CreateNewLessonForm() {
             </div>
             <div>
               <div className="flex w-full justify-between items-center">
-                <h1 className="p-4 font-semibold text-lg">Practice Sentences</h1>
+                <h1 className="p-4 font-semibold text-lg">
+                  Practice Sentences
+                </h1>
                 <button
                   type="button"
                   className="text-blue-500 text-sm"
@@ -378,7 +392,10 @@ export function CreateNewLessonForm() {
               <Button onClick={handleSentenceSubmit}>Add</Button>
             </div>
 
-            <Button onClick={handleSubmit} disabled={kanjiList.length == 0 || name.trim().length < 1}>
+            <Button
+              onClick={handleSubmit}
+              disabled={kanjiList.length == 0 || name.trim().length < 1}
+            >
               Create Lesson
             </Button>
           </form>

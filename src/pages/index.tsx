@@ -175,7 +175,11 @@ export default function Home() {
                     </DialogDescription>
                     <button
                       type="button"
-                      disabled={displayName.trim().length < 2 || !email.includes('@') || password.length < 1}
+                      disabled={
+                        displayName.trim().length < 2 ||
+                        !email.includes('@') ||
+                        password.length < 1
+                      }
                       onClick={handleCreateAccount}
                       className="w-full py-2 px-2 font-medium rounded-md bg-customBrownDark text-customCream hover:opacity-50"
                     >

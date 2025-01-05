@@ -27,12 +27,12 @@ export default function GenkiLessons() {
       {
         character: '昔',
         meaning: 'Old times',
-        readings: [{ value: 'むかし', type: 'kun' }]
+        readings: [{ value: 'むかし', type: 'kun' }],
       },
       {
         character: '々',
         meaning: 'Repetition of a kanji',
-        readings: [{ value: 'repeat', type: 'kun' }]
+        readings: [{ value: 'repeat', type: 'kun' }],
       },
       {
         character: '神',
@@ -40,70 +40,70 @@ export default function GenkiLessons() {
         readings: [
           { value: 'かみ', type: 'kun' },
           { value: 'じん', type: 'on' },
-          { value: 'しん', type: 'on' }
-        ]
+          { value: 'しん', type: 'on' },
+        ],
       },
       {
         character: '早',
         meaning: 'Early',
-        readings: [{ value: 'はや', type: 'kun' }]
+        readings: [{ value: 'はや', type: 'kun' }],
       },
       {
         character: '起',
         meaning: 'To get up',
         readings: [
           { value: 'お', type: 'kun' },
-          { value: 'き', type: 'kun' }
-        ]
+          { value: 'き', type: 'kun' },
+        ],
       },
       {
         character: '牛',
         meaning: 'Cow',
-        readings: [{ value: 'うし', type: 'kun' }]
+        readings: [{ value: 'うし', type: 'kun' }],
       },
       {
         character: '使',
         meaning: 'To use',
-        readings: [{ value: 'つか', type: 'kun' }]
+        readings: [{ value: 'つか', type: 'kun' }],
       },
       {
         character: '働',
         meaning: 'To work',
         readings: [
           { value: 'はたら', type: 'kun' },
-          { value: 'どう', type: 'on' }
-        ]
+          { value: 'どう', type: 'on' },
+        ],
       },
       {
         character: '連',
         meaning: 'To link',
         readings: [
           { value: 'つ', type: 'kun' },
-          { value: 'れん', type: 'on' }
-        ]
+          { value: 'れん', type: 'on' },
+        ],
       },
       {
         character: '別',
         meaning: 'To separate',
         readings: [
           { value: 'わか', type: 'kun' },
-          { value: 'べつ', type: 'on' }
-        ]
+          { value: 'べつ', type: 'on' },
+        ],
       },
       {
         character: '度',
         meaning: 'Time; degrees',
-        readings: [{ value: 'ど', type: 'on' }]
+        readings: [{ value: 'ど', type: 'on' }],
       },
       {
         character: '赤',
         meaning: 'Red',
-        readings: [{ value: 'あか', type: 'kun' }]
+        readings: [{ value: 'あか', type: 'kun' }],
       },
       {
         character: '青',
         meaning: 'Blue',
-        readings: [{ value: 'あお', type: 'kun' }]
+        readings: [{ value: 'あお', type: 'kun' }],
       },
       {
         character: '色',
@@ -111,9 +111,9 @@ export default function GenkiLessons() {
         readings: [
           { value: 'いろ', type: 'kun' },
           { value: 'しょく', type: 'on' },
-          { value: 'しき', type: 'on' }
-        ]
-      }
+          { value: 'しき', type: 'on' },
+        ],
+      },
     ],
     practiceSentences: [
       {
@@ -174,107 +174,107 @@ export default function GenkiLessons() {
       {
         character: '手',
         meaning: 'Hand',
-        readings: [{ value: 'て', type: 'kun' }]
+        readings: [{ value: 'て', type: 'kun' }],
       },
       {
         character: '紙',
         meaning: 'Paper',
-        readings: [{ value: 'かみ', type: 'kun' }]
+        readings: [{ value: 'かみ', type: 'kun' }],
       },
       {
         character: '好',
         meaning: 'To like',
         readings: [
           { value: 'す', type: 'kun' },
-          { value: 'こう', type: 'on' }
-        ]
+          { value: 'こう', type: 'on' },
+        ],
       },
       {
         character: '近',
         meaning: 'Near',
         readings: [
           { value: 'ちか', type: 'kun' },
-          { value: 'きん', type: 'on' }
-        ]
+          { value: 'きん', type: 'on' },
+        ],
       },
       {
         character: '明',
         meaning: 'Bright',
         readings: [
           { value: 'あか', type: 'kun' },
-          { value: 'めい', type: 'on' }
-        ]
+          { value: 'めい', type: 'on' },
+        ],
       },
       {
         character: '病',
         meaning: 'Illness',
-        readings: [{ value: 'びょう', type: 'on' }]
+        readings: [{ value: 'びょう', type: 'on' }],
       },
       {
         character: '院',
         meaning: 'Institution',
-        readings: [{ value: 'いん', type: 'on' }]
+        readings: [{ value: 'いん', type: 'on' }],
       },
       {
         character: '映',
         meaning: 'To reflect',
-        readings: [{ value: 'えい', type: 'on' }]
+        readings: [{ value: 'えい', type: 'on' }],
       },
       {
         character: '画',
         meaning: 'Picture; Brush-stroke',
         readings: [
           { value: 'が', type: 'on' },
-          { value: 'かく', type: 'kun' }
-        ]
+          { value: 'かく', type: 'kun' },
+        ],
       },
       {
         character: '歌',
         meaning: 'To sing; Song',
-        readings: [{ value: 'うた', type: 'kun' }]
+        readings: [{ value: 'うた', type: 'kun' }],
       },
       {
         character: '市',
         meaning: 'City; Market',
-        readings: [{ value: 'し', type: 'on' }]
+        readings: [{ value: 'し', type: 'on' }],
       },
       {
         character: '所',
         meaning: 'Place',
         readings: [
           { value: 'ところ', type: 'kun' },
-          { value: 'しょ', type: 'on' }
-        ]
+          { value: 'しょ', type: 'on' },
+        ],
       },
       {
         character: '勉',
         meaning: 'To study; Exertion',
-        readings: [{ value: 'べん', type: 'on' }]
+        readings: [{ value: 'べん', type: 'on' }],
       },
       {
         character: '強',
         meaning: 'Strong',
         readings: [
           { value: 'つよ', type: 'kun' },
-          { value: 'きょう', type: 'on' }
-        ]
+          { value: 'きょう', type: 'on' },
+        ],
       },
       {
         character: '有',
         meaning: 'To exist; Possess',
         readings: [
           { value: 'あ', type: 'kun' },
-          { value: 'ゆう', type: 'on' }
-        ]
+          { value: 'ゆう', type: 'on' },
+        ],
       },
       {
         character: '旅',
         meaning: 'Travel; Trip',
         readings: [
           { value: 'たび', type: 'kun' },
-          { value: 'りょ', type: 'on' }
-        ]
-      }
+          { value: 'りょ', type: 'on' },
+        ],
+      },
     ],
     practiceSentences: [
       {
@@ -351,8 +351,8 @@ export default function GenkiLessons() {
         strokeOrder: 'https://example.com/stroke-order/住',
         readings: [
           { value: 'じゅう', type: 'on' },
-          { value: 'す', type: 'kun' }
-        ]
+          { value: 'す', type: 'kun' },
+        ],
       },
       {
         character: '正',
@@ -360,8 +360,8 @@ export default function GenkiLessons() {
         strokeOrder: 'https://example.com/stroke-order/正',
         readings: [
           { value: 'しょう', type: 'on' },
-          { value: 'ただ', type: 'kun' }
-        ]
+          { value: 'ただ', type: 'kun' },
+        ],
       },
       {
         character: '年',
@@ -369,8 +369,8 @@ export default function GenkiLessons() {
         strokeOrder: 'https://example.com/stroke-order/年',
         readings: [
           { value: 'ねん', type: 'on' },
-          { value: 'とし', type: 'kun' }
-        ]
+          { value: 'とし', type: 'kun' },
+        ],
       },
       {
         character: '売',
@@ -378,8 +378,8 @@ export default function GenkiLessons() {
         strokeOrder: 'https://example.com/stroke-order/売',
         readings: [
           { value: 'ばい', type: 'on' },
-          { value: 'う', type: 'kun' }
-        ]
+          { value: 'う', type: 'kun' },
+        ],
       },
       {
         character: '買',
@@ -387,8 +387,8 @@ export default function GenkiLessons() {
         strokeOrder: 'https://example.com/stroke-order/買',
         readings: [
           { value: 'ばい', type: 'on' },
-          { value: 'か', type: 'kun' }
-        ]
+          { value: 'か', type: 'kun' },
+        ],
       },
       {
         character: '町',
@@ -396,8 +396,8 @@ export default function GenkiLessons() {
         strokeOrder: 'https://example.com/stroke-order/町',
         readings: [
           { value: 'ちょう', type: 'on' },
-          { value: 'まち', type: 'kun' }
-        ]
+          { value: 'まち', type: 'kun' },
+        ],
       },
       {
         character: '長',
@@ -405,8 +405,8 @@ export default function GenkiLessons() {
         strokeOrder: 'https://example.com/stroke-order/長',
         readings: [
           { value: 'ちょう', type: 'on' },
-          { value: 'なが', type: 'kun' }
-        ]
+          { value: 'なが', type: 'kun' },
+        ],
       },
       {
         character: '道',
@@ -414,8 +414,8 @@ export default function GenkiLessons() {
         strokeOrder: 'https://example.com/stroke-order/道',
         readings: [
           { value: 'どう', type: 'on' },
-          { value: 'みち', type: 'kun' }
-        ]
+          { value: 'みち', type: 'kun' },
+        ],
       },
       {
         character: '雪',
@@ -423,8 +423,8 @@ export default function GenkiLessons() {
         strokeOrder: 'https://example.com/stroke-order/雪',
         readings: [
           { value: 'せつ', type: 'on' },
-          { value: 'ゆき', type: 'kun' }
-        ]
+          { value: 'ゆき', type: 'kun' },
+        ],
       },
       {
         character: '立',
@@ -432,16 +432,14 @@ export default function GenkiLessons() {
         strokeOrder: 'https://example.com/stroke-order/立',
         readings: [
           { value: 'りつ', type: 'on' },
-          { value: 'た', type: 'kun' }
-        ]
+          { value: 'た', type: 'kun' },
+        ],
       },
       {
         character: '自',
         meaning: 'self',
         strokeOrder: 'https://example.com/stroke-order/自',
-        readings: [
-          { value: 'じ', type: 'on' }
-        ]
+        readings: [{ value: 'じ', type: 'on' }],
       },
       {
         character: '夜',
@@ -450,8 +448,8 @@ export default function GenkiLessons() {
         readings: [
           { value: 'や', type: 'on' },
           { value: 'よる', type: 'kun' },
-          { value: 'よ', type: 'kun' }
-        ]
+          { value: 'よ', type: 'kun' },
+        ],
       },
       {
         character: '朝',
@@ -459,8 +457,8 @@ export default function GenkiLessons() {
         strokeOrder: 'https://example.com/stroke-order/朝',
         readings: [
           { value: 'ちょう', type: 'on' },
-          { value: 'あさ', type: 'kun' }
-        ]
+          { value: 'あさ', type: 'kun' },
+        ],
       },
       {
         character: '持',
@@ -468,9 +466,9 @@ export default function GenkiLessons() {
         strokeOrder: 'https://example.com/stroke-order/持',
         readings: [
           { value: 'じ', type: 'on' },
-          { value: 'も', type: 'kun' }
-        ]
-      }
+          { value: 'も', type: 'kun' },
+        ],
+      },
     ],
     practiceSentences: [
       {
@@ -588,7 +586,7 @@ export default function GenkiLessons() {
         character: '午',
         meaning: 'noon',
         strokeOrder: 'https://example.com/stroke-order/午',
-        readings: [{ value: 'ご', type: 'on' }]
+        readings: [{ value: 'ご', type: 'on' }],
       },
       {
         character: '後',
@@ -597,8 +595,8 @@ export default function GenkiLessons() {
         readings: [
           { value: 'ご', type: 'on' },
           { value: 'あと', type: 'kun' },
-          { value: 'うし', type: 'kun' }
-        ]
+          { value: 'うし', type: 'kun' },
+        ],
       },
       {
         character: '前',
@@ -606,8 +604,8 @@ export default function GenkiLessons() {
         strokeOrder: 'https://example.com/stroke-order/前',
         readings: [
           { value: 'ぜん', type: 'on' },
-          { value: 'まえ', type: 'kun' }
-        ]
+          { value: 'まえ', type: 'kun' },
+        ],
       },
       {
         character: '名',
@@ -615,8 +613,8 @@ export default function GenkiLessons() {
         strokeOrder: 'https://example.com/stroke-order/名',
         readings: [
           { value: 'めい', type: 'on' },
-          { value: 'な', type: 'kun' }
-        ]
+          { value: 'な', type: 'kun' },
+        ],
       },
       {
         character: '白',
@@ -624,8 +622,8 @@ export default function GenkiLessons() {
         strokeOrder: 'https://example.com/stroke-order/白',
         readings: [
           { value: 'はく', type: 'on' },
-          { value: 'しろ', type: 'kun' }
-        ]
+          { value: 'しろ', type: 'kun' },
+        ],
       },
       {
         character: '雨',
@@ -633,8 +631,8 @@ export default function GenkiLessons() {
         strokeOrder: 'https://example.com/stroke-order/雨',
         readings: [
           { value: 'う', type: 'on' },
-          { value: 'あめ', type: 'kun' }
-        ]
+          { value: 'あめ', type: 'kun' },
+        ],
       },
       {
         character: '書',
@@ -642,8 +640,8 @@ export default function GenkiLessons() {
         strokeOrder: 'https://example.com/stroke-order/書',
         readings: [
           { value: 'しょ', type: 'on' },
-          { value: 'か', type: 'kun' }
-        ]
+          { value: 'か', type: 'kun' },
+        ],
       },
       {
         character: '友',
@@ -651,8 +649,8 @@ export default function GenkiLessons() {
         strokeOrder: 'https://example.com/stroke-order/友',
         readings: [
           { value: 'ゆう', type: 'on' },
-          { value: 'とも', type: 'kun' }
-        ]
+          { value: 'とも', type: 'kun' },
+        ],
       },
       {
         character: '間',
@@ -661,8 +659,8 @@ export default function GenkiLessons() {
         readings: [
           { value: 'かん', type: 'on' },
           { value: 'あいだ', type: 'kun' },
-          { value: 'ま', type: 'kun' }
-        ]
+          { value: 'ま', type: 'kun' },
+        ],
       },
       {
         character: '家',
@@ -671,8 +669,8 @@ export default function GenkiLessons() {
         readings: [
           { value: 'か', type: 'on' },
           { value: 'いえ', type: 'kun' },
-          { value: 'うち', type: 'kun' }
-        ]
+          { value: 'うち', type: 'kun' },
+        ],
       },
       {
         character: '話',
@@ -681,8 +679,8 @@ export default function GenkiLessons() {
         readings: [
           { value: 'わ', type: 'on' },
           { value: 'はな', type: 'kun' },
-          { value: 'はなし', type: 'kun' }
-        ]
+          { value: 'はなし', type: 'kun' },
+        ],
       },
       {
         character: '少',
@@ -691,8 +689,8 @@ export default function GenkiLessons() {
         readings: [
           { value: 'しょう', type: 'on' },
           { value: 'すく', type: 'kun' },
-          { value: 'すこ', type: 'kun' }
-        ]
+          { value: 'すこ', type: 'kun' },
+        ],
       },
       {
         character: '古',
@@ -700,8 +698,8 @@ export default function GenkiLessons() {
         strokeOrder: 'https://example.com/stroke-order/古',
         readings: [
           { value: 'こ', type: 'on' },
-          { value: 'ふる', type: 'kun' }
-        ]
+          { value: 'ふる', type: 'kun' },
+        ],
       },
       {
         character: '知',
@@ -709,8 +707,8 @@ export default function GenkiLessons() {
         strokeOrder: 'https://example.com/stroke-order/知',
         readings: [
           { value: 'ち', type: 'on' },
-          { value: 'し', type: 'kun' }
-        ]
+          { value: 'し', type: 'kun' },
+        ],
       },
       {
         character: '来',
@@ -720,9 +718,9 @@ export default function GenkiLessons() {
           { value: 'らい', type: 'on' },
           { value: 'く', type: 'kun' },
           { value: 'き', type: 'kun' },
-          { value: 'こ', type: 'kun' }
-        ]
-      }
+          { value: 'こ', type: 'kun' },
+        ],
+      },
     ],
     practiceSentences: [
       {
@@ -869,7 +867,7 @@ export default function GenkiLessons() {
         character: '員',
         meaning: 'member',
         strokeOrder: 'https://example.com/stroke-order/員',
-        readings: [{ value: 'いん', type: 'on' }]
+        readings: [{ value: 'いん', type: 'on' }],
       },
       {
         character: '新',
@@ -877,8 +875,8 @@ export default function GenkiLessons() {
         strokeOrder: 'https://example.com/stroke-order/新',
         readings: [
           { value: 'しん', type: 'on' },
-          { value: 'あたら', type: 'kun' }
-        ]
+          { value: 'あたら', type: 'kun' },
+        ],
       },
       {
         character: '聞',
@@ -886,8 +884,8 @@ export default function GenkiLessons() {
         strokeOrder: 'https://example.com/stroke-order/聞',
         readings: [
           { value: 'ぶん', type: 'on' },
-          { value: 'き', type: 'kun' }
-        ]
+          { value: 'き', type: 'kun' },
+        ],
       },
       {
         character: '作',
@@ -895,14 +893,14 @@ export default function GenkiLessons() {
         strokeOrder: 'https://example.com/stroke-order/作',
         readings: [
           { value: 'さく', type: 'on' },
-          { value: 'つく', type: 'kun' }
-        ]
+          { value: 'つく', type: 'kun' },
+        ],
       },
       {
         character: '仕',
         meaning: 'to serve',
         strokeOrder: 'https://example.com/stroke-order/仕',
-        readings: [{ value: 'し', type: 'on' }]
+        readings: [{ value: 'し', type: 'on' }],
       },
       {
         character: '事',
@@ -910,14 +908,14 @@ export default function GenkiLessons() {
         strokeOrder: 'https://example.com/stroke-order/事',
         readings: [
           { value: 'じ', type: 'on' },
-          { value: 'こと', type: 'kun' }
-        ]
+          { value: 'こと', type: 'kun' },
+        ],
       },
       {
         character: '電',
         meaning: 'electricity',
         strokeOrder: 'https://example.com/stroke-order/電',
-        readings: [{ value: 'でん', type: 'on' }]
+        readings: [{ value: 'でん', type: 'on' }],
       },
       {
         character: '車',
@@ -925,8 +923,8 @@ export default function GenkiLessons() {
         strokeOrder: 'https://example.com/stroke-order/車',
         readings: [
           { value: 'しゃ', type: 'on' },
-          { value: 'くるま', type: 'kun' }
-        ]
+          { value: 'くるま', type: 'kun' },
+        ],
       },
       {
         character: '休',
@@ -934,8 +932,8 @@ export default function GenkiLessons() {
         strokeOrder: 'https://example.com/stroke-order/休',
         readings: [
           { value: 'きゅう', type: 'on' },
-          { value: 'やす', type: 'kun' }
-        ]
+          { value: 'やす', type: 'kun' },
+        ],
       },
       {
         character: '言',
@@ -944,8 +942,8 @@ export default function GenkiLessons() {
         readings: [
           { value: 'げん', type: 'on' },
           { value: 'い', type: 'kun' },
-          { value: 'こと', type: 'kun' }
-        ]
+          { value: 'こと', type: 'kun' },
+        ],
       },
       {
         character: '読',
@@ -953,8 +951,8 @@ export default function GenkiLessons() {
         strokeOrder: 'https://example.com/stroke-order/読',
         readings: [
           { value: 'どく', type: 'on' },
-          { value: 'よ', type: 'kun' }
-        ]
+          { value: 'よ', type: 'kun' },
+        ],
       },
       {
         character: '思',
@@ -962,8 +960,8 @@ export default function GenkiLessons() {
         strokeOrder: 'https://example.com/stroke-order/思',
         readings: [
           { value: 'し', type: 'on' },
-          { value: 'おも', type: 'kun' }
-        ]
+          { value: 'おも', type: 'kun' },
+        ],
       },
       {
         character: '次',
@@ -971,8 +969,8 @@ export default function GenkiLessons() {
         strokeOrder: 'https://example.com/stroke-order/次',
         readings: [
           { value: 'じ', type: 'on' },
-          { value: 'つぎ', type: 'kun' }
-        ]
+          { value: 'つぎ', type: 'kun' },
+        ],
       },
       {
         character: '何',
@@ -981,9 +979,9 @@ export default function GenkiLessons() {
         readings: [
           { value: 'か', type: 'on' },
           { value: 'なに', type: 'kun' },
-          { value: 'なん', type: 'kun' }
-        ]
-      }
+          { value: 'なん', type: 'kun' },
+        ],
+      },
     ],
     practiceSentences: [
       {
@@ -1094,8 +1092,8 @@ export default function GenkiLessons() {
         strokeOrder: 'https://example.com/stroke-order/京',
         readings: [
           { value: 'きょう', type: 'on' },
-          { value: 'けい', type: 'on' }
-        ]
+          { value: 'けい', type: 'on' },
+        ],
       },
       {
         character: '子',
@@ -1103,8 +1101,8 @@ export default function GenkiLessons() {
         strokeOrder: 'https://example.com/stroke-order/子',
         readings: [
           { value: 'し', type: 'on' },
-          { value: 'こ', type: 'kun' }
-        ]
+          { value: 'こ', type: 'kun' },
+        ],
       },
       {
         character: '小',
@@ -1112,8 +1110,8 @@ export default function GenkiLessons() {
         strokeOrder: 'https://example.com/stroke-order/小',
         readings: [
           { value: 'しょう', type: 'on' },
-          { value: 'ちい', type: 'kun' }
-        ]
+          { value: 'ちい', type: 'kun' },
+        ],
       },
       {
         character: '会',
@@ -1121,8 +1119,8 @@ export default function GenkiLessons() {
         strokeOrder: 'https://example.com/stroke-order/会',
         readings: [
           { value: 'かい', type: 'on' },
-          { value: 'あ', type: 'kun' }
-        ]
+          { value: 'あ', type: 'kun' },
+        ],
       },
       {
         character: '社',
@@ -1130,8 +1128,8 @@ export default function GenkiLessons() {
         strokeOrder: 'https://example.com/stroke-order/社',
         readings: [
           { value: 'しゃ', type: 'on' },
-          { value: 'じゃ', type: 'on' }
-        ]
+          { value: 'じゃ', type: 'on' },
+        ],
       },
       {
         character: '父',
@@ -1140,8 +1138,8 @@ export default function GenkiLessons() {
         readings: [
           { value: 'ふ', type: 'on' },
           { value: 'ちち', type: 'kun' },
-          { value: 'とう', type: 'kun' }
-        ]
+          { value: 'とう', type: 'kun' },
+        ],
       },
       {
         character: '母',
@@ -1150,8 +1148,8 @@ export default function GenkiLessons() {
         readings: [
           { value: 'ぼ', type: 'on' },
           { value: 'はは', type: 'kun' },
-          { value: 'かあ', type: 'kun' }
-        ]
+          { value: 'かあ', type: 'kun' },
+        ],
       },
       {
         character: '高',
@@ -1159,20 +1157,20 @@ export default function GenkiLessons() {
         strokeOrder: 'https://example.com/stroke-order/高',
         readings: [
           { value: 'こう', type: 'on' },
-          { value: 'たか', type: 'kun' }
-        ]
+          { value: 'たか', type: 'kun' },
+        ],
       },
       {
         character: '校',
         meaning: 'school',
         strokeOrder: 'https://example.com/stroke-order/校',
-        readings: [{ value: 'こう', type: 'on' }]
+        readings: [{ value: 'こう', type: 'on' }],
       },
       {
         character: '毎',
         meaning: 'every',
         strokeOrder: 'https://example.com/stroke-order/毎',
-        readings: [{ value: 'まい', type: 'on' }]
+        readings: [{ value: 'まい', type: 'on' }],
       },
       {
         character: '語',
@@ -1180,8 +1178,8 @@ export default function GenkiLessons() {
         strokeOrder: 'https://example.com/stroke-order/語',
         readings: [
           { value: 'ご', type: 'on' },
-          { value: 'かた', type: 'kun' }
-        ]
+          { value: 'かた', type: 'kun' },
+        ],
       },
       {
         character: '文',
@@ -1189,8 +1187,8 @@ export default function GenkiLessons() {
         strokeOrder: 'https://example.com/stroke-order/文',
         readings: [
           { value: 'ぶん', type: 'on' },
-          { value: 'もん', type: 'on' }
-        ]
+          { value: 'もん', type: 'on' },
+        ],
       },
       {
         character: '帰',
@@ -1198,8 +1196,8 @@ export default function GenkiLessons() {
         strokeOrder: 'https://example.com/stroke-order/帰',
         readings: [
           { value: 'き', type: 'on' },
-          { value: 'かえ', type: 'kun' }
-        ]
+          { value: 'かえ', type: 'kun' },
+        ],
       },
       {
         character: '入',
@@ -1208,9 +1206,9 @@ export default function GenkiLessons() {
         readings: [
           { value: 'にゅう', type: 'on' },
           { value: 'い', type: 'kun' },
-          { value: 'はい', type: 'kun' }
-        ]
-      }
+          { value: 'はい', type: 'kun' },
+        ],
+      },
     ],
     practiceSentences: [
       {
@@ -1342,8 +1340,8 @@ export default function GenkiLessons() {
         strokeOrder: 'https://example.com/stroke-order/東',
         readings: [
           { value: 'とう', type: 'on' },
-          { value: 'ひがし', type: 'kun' }
-        ]
+          { value: 'ひがし', type: 'kun' },
+        ],
       },
       {
         character: '西',
@@ -1351,8 +1349,8 @@ export default function GenkiLessons() {
         strokeOrder: 'https://example.com/stroke-order/西',
         readings: [
           { value: 'せい', type: 'on' },
-          { value: 'にし', type: 'kun' }
-        ]
+          { value: 'にし', type: 'kun' },
+        ],
       },
       {
         character: '南',
@@ -1360,8 +1358,8 @@ export default function GenkiLessons() {
         strokeOrder: 'https://example.com/stroke-order/南',
         readings: [
           { value: 'なん', type: 'on' },
-          { value: 'みなみ', type: 'kun' }
-        ]
+          { value: 'みなみ', type: 'kun' },
+        ],
       },
       {
         character: '北',
@@ -1369,8 +1367,8 @@ export default function GenkiLessons() {
         strokeOrder: 'https://example.com/stroke-order/北',
         readings: [
           { value: 'ほく', type: 'on' },
-          { value: 'きた', type: 'kun' }
-        ]
+          { value: 'きた', type: 'kun' },
+        ],
       },
       {
         character: '口',
@@ -1378,8 +1376,8 @@ export default function GenkiLessons() {
         strokeOrder: 'https://example.com/stroke-order/口',
         readings: [
           { value: 'こう', type: 'on' },
-          { value: 'くち', type: 'kun' }
-        ]
+          { value: 'くち', type: 'kun' },
+        ],
       },
       {
         character: '出',
@@ -1388,8 +1386,8 @@ export default function GenkiLessons() {
         readings: [
           { value: 'しゅつ', type: 'on' },
           { value: 'で', type: 'kun' },
-          { value: 'だ', type: 'kun' }
-        ]
+          { value: 'だ', type: 'kun' },
+        ],
       },
       {
         character: '右',
@@ -1397,8 +1395,8 @@ export default function GenkiLessons() {
         strokeOrder: 'https://example.com/stroke-order/右',
         readings: [
           { value: 'う', type: 'on' },
-          { value: 'みぎ', type: 'kun' }
-        ]
+          { value: 'みぎ', type: 'kun' },
+        ],
       },
       {
         character: '左',
@@ -1406,8 +1404,8 @@ export default function GenkiLessons() {
         strokeOrder: 'https://example.com/stroke-order/左',
         readings: [
           { value: 'さ', type: 'on' },
-          { value: 'ひだり', type: 'kun' }
-        ]
+          { value: 'ひだり', type: 'kun' },
+        ],
       },
       {
         character: '分',
@@ -1417,8 +1415,8 @@ export default function GenkiLessons() {
           { value: 'ふん', type: 'on' },
           { value: 'ぶん', type: 'on' },
           { value: 'ぷん', type: 'on' },
-          { value: 'わ', type: 'kun' }
-        ]
+          { value: 'わ', type: 'kun' },
+        ],
       },
       {
         character: '先',
@@ -1426,8 +1424,8 @@ export default function GenkiLessons() {
         strokeOrder: 'https://example.com/stroke-order/先',
         readings: [
           { value: 'せん', type: 'on' },
-          { value: 'さき', type: 'kun' }
-        ]
+          { value: 'さき', type: 'kun' },
+        ],
       },
       {
         character: '生',
@@ -1437,8 +1435,8 @@ export default function GenkiLessons() {
           { value: 'せい', type: 'on' },
           { value: 'しょう', type: 'on' },
           { value: 'い', type: 'kun' },
-          { value: 'う', type: 'kun' }
-        ]
+          { value: 'う', type: 'kun' },
+        ],
       },
       {
         character: '大',
@@ -1447,8 +1445,8 @@ export default function GenkiLessons() {
         readings: [
           { value: 'だい', type: 'on' },
           { value: 'たい', type: 'on' },
-          { value: 'おお', type: 'kun' }
-        ]
+          { value: 'おお', type: 'kun' },
+        ],
       },
       {
         character: '学',
@@ -1456,8 +1454,8 @@ export default function GenkiLessons() {
         strokeOrder: 'https://example.com/stroke-order/学',
         readings: [
           { value: 'がく', type: 'on' },
-          { value: 'まな', type: 'kun' }
-        ]
+          { value: 'まな', type: 'kun' },
+        ],
       },
       {
         character: '外',
@@ -1465,8 +1463,8 @@ export default function GenkiLessons() {
         strokeOrder: 'https://example.com/stroke-order/外',
         readings: [
           { value: 'がい', type: 'on' },
-          { value: 'そと', type: 'kun' }
-        ]
+          { value: 'そと', type: 'kun' },
+        ],
       },
       {
         character: '国',
@@ -1474,9 +1472,9 @@ export default function GenkiLessons() {
         strokeOrder: 'https://example.com/stroke-order/国',
         readings: [
           { value: 'こく', type: 'on' },
-          { value: 'くに', type: 'kun' }
-        ]
-      }
+          { value: 'くに', type: 'kun' },
+        ],
+      },
     ],
     practiceSentences: [
       {
@@ -1587,8 +1585,8 @@ export default function GenkiLessons() {
         strokeOrder: 'https://example.com/stroke-order/山',
         readings: [
           { value: 'さん', type: 'on' },
-          { value: 'やま', type: 'kun' }
-        ]
+          { value: 'やま', type: 'kun' },
+        ],
       },
       {
         character: '川',
@@ -1596,8 +1594,8 @@ export default function GenkiLessons() {
         strokeOrder: 'https://example.com/stroke-order/川',
         readings: [
           { value: 'せん', type: 'on' },
-          { value: 'かわ', type: 'kun' }
-        ]
+          { value: 'かわ', type: 'kun' },
+        ],
       },
       {
         character: '元',
@@ -1606,8 +1604,8 @@ export default function GenkiLessons() {
         readings: [
           { value: 'げん', type: 'on' },
           { value: 'がん', type: 'on' },
-          { value: 'もと', type: 'kun' }
-        ]
+          { value: 'もと', type: 'kun' },
+        ],
       },
       {
         character: '気',
@@ -1615,14 +1613,14 @@ export default function GenkiLessons() {
         strokeOrder: 'https://example.com/stroke-order/気',
         readings: [
           { value: 'き', type: 'on' },
-          { value: 'け', type: 'on' }
-        ]
+          { value: 'け', type: 'on' },
+        ],
       },
       {
         character: '天',
         meaning: 'heaven',
         strokeOrder: 'https://example.com/stroke-order/天',
-        readings: [{ value: 'てん', type: 'on' }]
+        readings: [{ value: 'てん', type: 'on' }],
       },
       {
         character: '私',
@@ -1630,8 +1628,8 @@ export default function GenkiLessons() {
         strokeOrder: 'https://example.com/stroke-order/私',
         readings: [
           { value: 'わたし', type: 'kun' },
-          { value: 'し', type: 'on' }
-        ]
+          { value: 'し', type: 'on' },
+        ],
       },
       {
         character: '今',
@@ -1639,8 +1637,8 @@ export default function GenkiLessons() {
         strokeOrder: 'https://example.com/stroke-order/今',
         readings: [
           { value: 'こん', type: 'on' },
-          { value: 'いま', type: 'kun' }
-        ]
+          { value: 'いま', type: 'kun' },
+        ],
       },
       {
         character: '田',
@@ -1648,8 +1646,8 @@ export default function GenkiLessons() {
         strokeOrder: 'https://example.com/stroke-order/田',
         readings: [
           { value: 'でん', type: 'on' },
-          { value: 'た', type: 'kun' }
-        ]
+          { value: 'た', type: 'kun' },
+        ],
       },
       {
         character: '女',
@@ -1657,8 +1655,8 @@ export default function GenkiLessons() {
         strokeOrder: 'https://example.com/stroke-order/女',
         readings: [
           { value: 'じょ', type: 'on' },
-          { value: 'おんな', type: 'kun' }
-        ]
+          { value: 'おんな', type: 'kun' },
+        ],
       },
       {
         character: '男',
@@ -1666,8 +1664,8 @@ export default function GenkiLessons() {
         strokeOrder: 'https://example.com/stroke-order/男',
         readings: [
           { value: 'だん', type: 'on' },
-          { value: 'おとこ', type: 'kun' }
-        ]
+          { value: 'おとこ', type: 'kun' },
+        ],
       },
       {
         character: '見',
@@ -1675,8 +1673,8 @@ export default function GenkiLessons() {
         strokeOrder: 'https://example.com/stroke-order/見',
         readings: [
           { value: 'けん', type: 'on' },
-          { value: 'み', type: 'kun' }
-        ]
+          { value: 'み', type: 'kun' },
+        ],
       },
       {
         character: '行',
@@ -1685,8 +1683,8 @@ export default function GenkiLessons() {
         readings: [
           { value: 'こう', type: 'on' },
           { value: 'ぎょう', type: 'on' },
-          { value: 'い', type: 'kun' }
-        ]
+          { value: 'い', type: 'kun' },
+        ],
       },
       {
         character: '食',
@@ -1694,8 +1692,8 @@ export default function GenkiLessons() {
         strokeOrder: 'https://example.com/stroke-order/食',
         readings: [
           { value: 'しょく', type: 'on' },
-          { value: 'た', type: 'kun' }
-        ]
+          { value: 'た', type: 'kun' },
+        ],
       },
       {
         character: '飲',
@@ -1703,9 +1701,9 @@ export default function GenkiLessons() {
         strokeOrder: 'https://example.com/stroke-order/飲',
         readings: [
           { value: 'いん', type: 'on' },
-          { value: 'の', type: 'kun' }
-        ]
-      }
+          { value: 'の', type: 'kun' },
+        ],
+      },
     ],
     practiceSentences: [
       {
@@ -1804,8 +1802,8 @@ export default function GenkiLessons() {
         readings: [
           { value: 'にち', type: 'on' },
           { value: 'じつ', type: 'on' },
-          { value: 'ひ', type: 'kun' }
-        ]
+          { value: 'ひ', type: 'kun' },
+        ],
       },
       {
         character: '本',
@@ -1813,8 +1811,8 @@ export default function GenkiLessons() {
         strokeOrder: '5 strokes',
         readings: [
           { value: 'ほん', type: 'on' },
-          { value: 'もと', type: 'kun' }
-        ]
+          { value: 'もと', type: 'kun' },
+        ],
       },
       {
         character: '人',
@@ -1823,8 +1821,8 @@ export default function GenkiLessons() {
         readings: [
           { value: 'じん', type: 'on' },
           { value: 'にん', type: 'on' },
-          { value: 'ひと', type: 'kun' }
-        ]
+          { value: 'ひと', type: 'kun' },
+        ],
       },
       {
         character: '月',
@@ -1833,8 +1831,8 @@ export default function GenkiLessons() {
         readings: [
           { value: 'げつ', type: 'on' },
           { value: 'がつ', type: 'on' },
-          { value: 'つき', type: 'kun' }
-        ]
+          { value: 'つき', type: 'kun' },
+        ],
       },
       {
         character: '火',
@@ -1842,8 +1840,8 @@ export default function GenkiLessons() {
         strokeOrder: '4 strokes',
         readings: [
           { value: 'か', type: 'on' },
-          { value: 'ひ', type: 'kun' }
-        ]
+          { value: 'ひ', type: 'kun' },
+        ],
       },
       {
         character: '水',
@@ -1851,8 +1849,8 @@ export default function GenkiLessons() {
         strokeOrder: '4 strokes',
         readings: [
           { value: 'すい', type: 'on' },
-          { value: 'みず', type: 'kun' }
-        ]
+          { value: 'みず', type: 'kun' },
+        ],
       },
       {
         character: '木',
@@ -1861,8 +1859,8 @@ export default function GenkiLessons() {
         readings: [
           { value: 'もく', type: 'on' },
           { value: 'ぼく', type: 'on' },
-          { value: 'き', type: 'kun' }
-        ]
+          { value: 'き', type: 'kun' },
+        ],
       },
       {
         character: '金',
@@ -1871,8 +1869,8 @@ export default function GenkiLessons() {
         readings: [
           { value: 'きん', type: 'on' },
           { value: 'こん', type: 'on' },
-          { value: 'かね', type: 'kun' }
-        ]
+          { value: 'かね', type: 'kun' },
+        ],
       },
       {
         character: '土',
@@ -1881,14 +1879,14 @@ export default function GenkiLessons() {
         readings: [
           { value: 'ど', type: 'on' },
           { value: 'と', type: 'on' },
-          { value: 'つち', type: 'kun' }
-        ]
+          { value: 'つち', type: 'kun' },
+        ],
       },
       {
         character: '曜',
         meaning: 'day of the week',
         strokeOrder: '18 strokes',
-        readings: [{ value: 'よう', type: 'on' }]
+        readings: [{ value: 'よう', type: 'on' }],
       },
       {
         character: '上',
@@ -1897,8 +1895,8 @@ export default function GenkiLessons() {
         readings: [
           { value: 'じょう', type: 'on' },
           { value: 'うえ', type: 'kun' },
-          { value: 'あがる', type: 'kun' }
-        ]
+          { value: 'あがる', type: 'kun' },
+        ],
       },
       {
         character: '下',
@@ -1908,8 +1906,8 @@ export default function GenkiLessons() {
           { value: 'か', type: 'on' },
           { value: 'げ', type: 'on' },
           { value: 'した', type: 'kun' },
-          { value: 'さがる', type: 'kun' }
-        ]
+          { value: 'さがる', type: 'kun' },
+        ],
       },
       {
         character: '中',
@@ -1917,8 +1915,8 @@ export default function GenkiLessons() {
         strokeOrder: '4 strokes',
         readings: [
           { value: 'ちゅう', type: 'on' },
-          { value: 'なか', type: 'kun' }
-        ]
+          { value: 'なか', type: 'kun' },
+        ],
       },
       {
         character: '半',
@@ -1926,9 +1924,9 @@ export default function GenkiLessons() {
         strokeOrder: '5 strokes',
         readings: [
           { value: 'はん', type: 'on' },
-          { value: 'なかば', type: 'kun' }
-        ]
-      }
+          { value: 'なかば', type: 'kun' },
+        ],
+      },
     ],
     practiceSentences: [
       {
@@ -2039,8 +2037,8 @@ export default function GenkiLessons() {
         strokeOrder: '1 stroke',
         readings: [
           { value: 'いち', type: 'on' },
-          { value: 'ひと', type: 'kun' }
-        ]
+          { value: 'ひと', type: 'kun' },
+        ],
       },
       {
         character: '二',
@@ -2048,8 +2046,8 @@ export default function GenkiLessons() {
         strokeOrder: '2 strokes',
         readings: [
           { value: 'に', type: 'on' },
-          { value: 'ふた', type: 'kun' }
-        ]
+          { value: 'ふた', type: 'kun' },
+        ],
       },
       {
         character: '三',
@@ -2057,8 +2055,8 @@ export default function GenkiLessons() {
         strokeOrder: '3 strokes',
         readings: [
           { value: 'さん', type: 'on' },
-          { value: 'み', type: 'kun' }
-        ]
+          { value: 'み', type: 'kun' },
+        ],
       },
       {
         character: '四',
@@ -2066,8 +2064,8 @@ export default function GenkiLessons() {
         strokeOrder: '5 strokes',
         readings: [
           { value: 'し', type: 'on' },
-          { value: 'よん', type: 'kun' }
-        ]
+          { value: 'よん', type: 'kun' },
+        ],
       },
       {
         character: '五',
@@ -2075,8 +2073,8 @@ export default function GenkiLessons() {
         strokeOrder: '4 strokes',
         readings: [
           { value: 'ご', type: 'on' },
-          { value: 'いつ', type: 'kun' }
-        ]
+          { value: 'いつ', type: 'kun' },
+        ],
       },
       {
         character: '六',
@@ -2084,8 +2082,8 @@ export default function GenkiLessons() {
         strokeOrder: '4 strokes',
         readings: [
           { value: 'ろく', type: 'on' },
-          { value: 'む', type: 'kun' }
-        ]
+          { value: 'む', type: 'kun' },
+        ],
       },
       {
         character: '七',
@@ -2093,8 +2091,8 @@ export default function GenkiLessons() {
         strokeOrder: '2 strokes',
         readings: [
           { value: 'しち', type: 'on' },
-          { value: 'なな', type: 'kun' }
-        ]
+          { value: 'なな', type: 'kun' },
+        ],
       },
       {
         character: '八',
@@ -2102,8 +2100,8 @@ export default function GenkiLessons() {
         strokeOrder: '2 strokes',
         readings: [
           { value: 'はち', type: 'on' },
-          { value: 'や', type: 'kun' }
-        ]
+          { value: 'や', type: 'kun' },
+        ],
       },
       {
         character: '九',
@@ -2112,8 +2110,8 @@ export default function GenkiLessons() {
         readings: [
           { value: 'きゅう', type: 'on' },
           { value: 'く', type: 'on' },
-          { value: 'ここの', type: 'kun' }
-        ]
+          { value: 'ここの', type: 'kun' },
+        ],
       },
       {
         character: '十',
@@ -2121,32 +2119,32 @@ export default function GenkiLessons() {
         strokeOrder: '2 strokes',
         readings: [
           { value: 'じゅう', type: 'on' },
-          { value: 'とお', type: 'kun' }
-        ]
+          { value: 'とお', type: 'kun' },
+        ],
       },
       {
         character: '百',
         meaning: 'hundred',
         strokeOrder: '6 strokes',
-        readings: [{ value: 'ひゃく', type: 'on' }]
+        readings: [{ value: 'ひゃく', type: 'on' }],
       },
       {
         character: '千',
         meaning: 'thousand',
         strokeOrder: '3 strokes',
-        readings: [{ value: 'せん', type: 'on' }]
+        readings: [{ value: 'せん', type: 'on' }],
       },
       {
         character: '万',
         meaning: 'ten thousand',
         strokeOrder: '3 strokes',
-        readings: [{ value: 'まん', type: 'on' }]
+        readings: [{ value: 'まん', type: 'on' }],
       },
       {
         character: '円',
         meaning: 'yen, circle',
         strokeOrder: '4 strokes',
-        readings: [{ value: 'えん', type: 'on' }]
+        readings: [{ value: 'えん', type: 'on' }],
       },
       {
         character: '時',
@@ -2154,9 +2152,9 @@ export default function GenkiLessons() {
         strokeOrder: '10 strokes',
         readings: [
           { value: 'じ', type: 'on' },
-          { value: 'とき', type: 'kun' }
-        ]
-      }
+          { value: 'とき', type: 'kun' },
+        ],
+      },
     ],
     practiceSentences: [
       {

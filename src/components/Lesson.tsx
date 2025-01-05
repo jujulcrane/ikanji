@@ -49,4 +49,4 @@ export interface User {
   id?: string;
 }
 
-export function Lesson() { }
+export function Lesson() {}
