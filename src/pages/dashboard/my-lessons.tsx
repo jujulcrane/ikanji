@@ -28,6 +28,8 @@ import {
 } from '@/components/ui/alert-dialog';
 import { Switch } from '@/components/ui/switch';
 import SaveWarning from '@/components/SaveWarning';
+import { IoIosAddCircle } from "react-icons/io";
+import { fetchKanji } from '@/hooks/fetch-kanji';
 
 export default function MyLessons() {
   const router = useRouter();
@@ -44,10 +46,12 @@ export default function MyLessons() {
     index: number;
   } | null>(null);
   const [updatedCharacter, setUpdatedCharacter] = useState<string>('');
+  const [updatedMeaning, setUpdatedMeaning] = useState<string>('');
   const [newReading, setNewReading] = useState<Reading>({
     value: '',
     type: 'kun',
   });
+  const [newReadingList, setNewReadingList] = useState<Reading[]>([]);
   const [updatedPracticeSentences, setUpdatedPracticeSentences] = useState<
     PracticeSentence[] | null
   >(null);
@@ -154,6 +158,7 @@ export default function MyLessons() {
   const editKanji = (kanji: Kanji, index: number) => {
     setEditingKanji({ kanji, index });
     setUpdatedCharacter(kanji.character);
+    setUpdatedMeaning(kanji.meaning);
   };
 
   const putToFb = async (lessonId: string, lessonToPut: Lesson) => {
@@ -190,6 +195,7 @@ export default function MyLessons() {
     const updatedKanji = {
       ...editingKanji.kanji,
       character: updatedCharacter,
+      meaning: updatedMeaning,
     };
 
     const updatedLesson = {
@@ -207,6 +213,53 @@ export default function MyLessons() {
     }
     await putToFb(updatedLesson.id, updatedLesson);
   };
+
+  const fetchKanjiData = async () => {
+    try {
+      const newKanji = await fetchKanji(updatedCharacter);
+      const updatedLesson: Lesson = {
+        ...selectedLesson,
+        kanjiList: [...(selectedLesson?.kanjiList || []), newKanji],
+        name: selectedLesson?.name || "Untitled Lesson",
+        practiceSentences: selectedLesson?.practiceSentences || [],
+      };
+
+      setSelectedLesson(updatedLesson);
+
+      setUpdatedCharacter('');
+
+      await putToFb(updatedLesson.id!, updatedLesson);
+    } catch (error) {
+      console.error('Error fetching kanji:', error);
+    }
+  };
+
+  const handleKanjiSubmit = async () => {
+    if (!updatedCharacter.trim() || !updatedMeaning.trim() || newReadingList.length === 0) {
+      alert('Please fill in all the fields and add at least one reading.');
+      return;
+    }
+    const newKanji: Kanji = {
+      character: updatedCharacter,
+      meaning: updatedMeaning,
+      readings: newReadingList,
+    };
+
+    const updatedLesson: Lesson = {
+      ...selectedLesson,
+      kanjiList: [...(selectedLesson?.kanjiList || []), newKanji],
+      name: selectedLesson?.name || "Untitled Lesson",
+      practiceSentences: selectedLesson?.practiceSentences || [],
+    };
+
+    setSelectedLesson(updatedLesson);
+
+    setUpdatedCharacter('');
+    setUpdatedMeaning('');
+    setNewReadingList([]);
+
+    await putToFb(updatedLesson.id!, updatedLesson);
+  }
 
   const saveSentences = async () => {
     if (!selectedLesson || !updatedPracticeSentences) return;
@@ -242,6 +295,14 @@ export default function MyLessons() {
     );
     setEditingKanji({ ...editingKanji, kanji: updatedKanji });
   };
+
+  function renderReadings() {
+    return newReadingList.map((reading, index) => (
+      <li key={index}>
+        {reading.value} ({reading.type})
+      </li>
+    ));
+  }
 
   const handleSettings = (lesson: Lesson) => {
     if (lesson) {
@@ -359,7 +420,7 @@ export default function MyLessons() {
                     <DialogTitle>Edit Kanji</DialogTitle>
                     <DialogDescription>
                       <div className="flex flex-col">
-                        <label htmlFor="email" className="text-sm mt-2">
+                        <label className="text-sm mt-2">
                           Character
                         </label>
                         <input
@@ -371,7 +432,19 @@ export default function MyLessons() {
                         />
                       </div>
                       <div className="flex flex-col">
-                        <label htmlFor="password" className="text-sm">
+                        <label className="text-sm mt-2">
+                          Meaning
+                        </label>
+                        <input
+                          type="text"
+                          id="meaning"
+                          value={updatedMeaning}
+                          onChange={(e) => setUpdatedMeaning(e.target.value)}
+                          className="m-1 border p-2 rounded mb-2 text-sm"
+                        />
+                      </div>
+                      <div className="flex flex-col">
+                        <label className="text-sm">
                           Readings:
                         </label>
                         {editingKanji?.kanji.readings.map((reading, idx) => (
@@ -451,6 +524,132 @@ export default function MyLessons() {
               </div>
             </li>
           ))}
+          <div>
+            <Dialog>
+              <DialogTrigger
+                onClick={() => {
+                  setUpdatedCharacter('');
+                  setUpdatedMeaning('');
+                  setNewReading({
+                    value: '',
+                    type: 'kun',
+                  });
+                }
+                }
+              >
+                <IoIosAddCircle
+                  size={42}
+                  className="opacity-60 hover:opacity-100 transition-opacity mr-2"
+                />
+              </DialogTrigger>
+              <DialogContent className="mb-2">
+                <DialogHeader>
+                  <DialogTitle><h1 className="font-semibold">Add Kanji From its Character</h1></DialogTitle>
+                  <DialogDescription>
+                    {updatedCharacter.length > 1 && (
+                      <p className="text-red-400">
+                        Please Provide Only 1 Character at a Time
+                      </p>
+                    )}
+                    <div className="flex items-center justify-center gap-2 md:w-1/2">
+                      <label className="p-2">Character</label>
+                      <input
+                        className="border w-1/2"
+                        type="text"
+                        id="character"
+                        value={updatedCharacter}
+                        onChange={(e) => setUpdatedCharacter(e.target.value)}
+                      />
+                      <div className="w-1/3">
+                        <Button
+                          disabled={updatedCharacter.length != 1}
+                          onClick={fetchKanjiData}
+                        >
+                          Add
+                        </Button>
+                      </div>
+                    </div>
+                    <h1 className="font-semibold">
+                      <p className="italic text-sm font-medium">OR </p> Add Kanji
+                      Manually
+                    </h1>
+                    <div>
+                      <label className="p-2">
+                        Character
+                      </label>
+                      <input
+                        className="border"
+                        type="text"
+                        id="kanjiChar"
+                        value={updatedCharacter}
+                        onChange={(e) => setUpdatedCharacter(e.target.value)}
+                      />
+                    </div>
+                    <div>
+                      <label className="p-2">
+                        Meaning
+                      </label>
+                      <input
+                        className="border"
+                        type="text"
+                        id="meaning"
+                        value={updatedMeaning}
+                        onChange={(e) => setUpdatedMeaning(e.target.value)}
+                      />
+                    </div>
+                    <div>
+                      <h1>Readings</h1>
+                      <ul>{renderReadings()}</ul>
+                    </div>
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <label className="whitespace-nowrap" htmlFor="reading">
+                          Readings
+                        </label>
+                        <div className="flex">
+                          <input
+                            className="border rounded px-4 py-2 mr-2 md:mr-4 w-1/3 md:w-1/2 lg:w-2/3"
+                            type="text"
+                            id="reading"
+                            value={newReading.value}
+                            onChange={(e) =>
+                              setNewReading((prev) => ({
+                                ...prev,
+                                value: e.target.value,
+                              }))
+                            }
+                          />
+                          <select
+                            className="border rounded px-4 py-2 mr-2"
+                            value={newReading.type}
+                            onChange={(e) =>
+                              setNewReading((prev) => ({
+                                ...prev,
+                                type: e.target.value as 'kun' | 'on',
+                              }))
+                            }
+                          >
+                            <option value="kun">Kun</option>
+                            <option value="on">On</option>
+                          </select>
+                          <Button onClick={() => {
+                            setNewReadingList((prevReadings) => [...prevReadings, newReading]);
+                            setNewReading({
+                              value: '',
+                              type: 'kun',
+                            });
+                          }}>Add Reading</Button>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="p-2">
+                      <Button onClick={handleKanjiSubmit}>Add Kanji</Button>
+                    </div>
+                  </DialogDescription>
+                </DialogHeader>
+              </DialogContent>
+            </Dialog>
+          </div>
         </ul>
 
         <div className={isDialogOpen ? '' : 'flex'}>
