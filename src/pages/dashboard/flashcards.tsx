@@ -27,6 +27,7 @@ export default function Flashcards() {
   const [finished, setFinished] = useState<boolean>(false);
   const [isMeaningChecked, setIsMeaningChecked] = useState(true);
   const [isReadingsChecked, setIsReadingsChecked] = useState(true);
+  const [reversed, setIsReversed] = useState(false);
 
   useEffect(() => {
     if (lessonId) {
@@ -161,7 +162,11 @@ export default function Flashcards() {
       }
       setBack(newBack);
     }
-    setIsFlipped(false);
+    if (reversed) {
+      setIsFlipped(true);
+    } else {
+      setIsFlipped(false);
+    }
   };
 
   const handleBack = () => {
@@ -188,7 +193,11 @@ export default function Flashcards() {
 
       setBack(newBack);
     }
-    setIsFlipped(false);
+    if (reversed) {
+      setIsFlipped(true);
+    } else {
+      setIsFlipped(false);
+    }
   };
 
   const handleReturn = (lesson: Lesson) => {
@@ -304,6 +313,13 @@ export default function Flashcards() {
         </button>
       </div>
       <div className="flex flex-col items-center justfiy-center min-h-screen">
+        <button
+          onClick={() => {
+            setIsReversed(!reversed);
+            setIsFlipped(!isFlipped);
+          }}
+          className="bg-gray-400 text-white text-sm p-2 mt-2 rounded-sm hover:opacity-50">Switch Term and Definition
+        </button>
         {lesson.kanjiList && lesson.kanjiList.length > 0 && (
           <Flashcard
             front={front}
