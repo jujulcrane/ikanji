@@ -22,7 +22,7 @@ export default function Flashcard({
 
   return (
     <div
-      className="flex items-center justify-center pt-8 pb-4"
+      className="flex items-center justify-center"
       onClick={handleFlip}
     >
       {/* Outer container with perspective */}
@@ -33,12 +33,12 @@ export default function Flashcard({
             }`}
         >
           {/* Front Side */}
-          <div className="absolute w-full h-full bg-customBrownDark text-customCream rounded-lg shadow-xl flex items-center justify-center text-center backface-hidden">
+          <div className="absolute w-full h-full bg-customBrownDark text-customCream rounded-lg shadow-xl flex items-center justify-center text-center backface-hidden cursor-pointer">
             <h2 className="m-4 text-2xl font-bold">{front}</h2>
           </div>
 
           {/* Back Side */}
-          <div className="absolute w-full h-full bg-customGold rounded-lg shadow-xl flex items-center justify-center text-center backface-hidden rotate-y-180">
+          <div className="absolute w-full h-full bg-customGold rounded-lg shadow-xl flex items-center justify-center text-center backface-hidden rotate-y-180 cursor-pointer">
             {back.meaning && <p className="text-xl">{back.meaning}</p>}
             {back.readings && (
               <ul>
