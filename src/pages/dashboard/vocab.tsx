@@ -117,7 +117,9 @@ export default function VocabPage() {
                 <Checkbox
                   id="readings"
                   checked={isReadingsChecked}
-                  onCheckedChange={() => setIsReadingsChecked(!isReadingsChecked)}
+                  onCheckedChange={() =>
+                    setIsReadingsChecked(!isReadingsChecked)
+                  }
                 />
                 <label htmlFor="readings" className="text-sm font-medium">
                   Readings

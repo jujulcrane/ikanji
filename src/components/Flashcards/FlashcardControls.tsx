@@ -37,7 +37,7 @@ export default function FlashcardControls({
       setIsMeaningChecked(true);
       setIsReadingsChecked(true);
     }
-  }
+  };
 
   return (
     <div className="mt-8 flex justify-center items-center">

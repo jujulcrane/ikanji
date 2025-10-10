@@ -28,7 +28,7 @@ import {
 } from '@/components/ui/alert-dialog';
 import { Switch } from '@/components/ui/switch';
 import SaveWarning from '@/components/SaveWarning';
-import { IoIosAddCircle } from "react-icons/io";
+import { IoIosAddCircle } from 'react-icons/io';
 import { fetchKanji } from '@/hooks/fetch-kanji';
 
 export default function MyLessons() {
@@ -220,7 +220,7 @@ export default function MyLessons() {
       const updatedLesson: Lesson = {
         ...selectedLesson,
         kanjiList: [...(selectedLesson?.kanjiList || []), newKanji],
-        name: selectedLesson?.name || "Untitled Lesson",
+        name: selectedLesson?.name || 'Untitled Lesson',
         practiceSentences: selectedLesson?.practiceSentences || [],
       };
 
@@ -235,7 +235,11 @@ export default function MyLessons() {
   };
 
   const handleKanjiSubmit = async () => {
-    if (!updatedCharacter.trim() || !updatedMeaning.trim() || newReadingList.length === 0) {
+    if (
+      !updatedCharacter.trim() ||
+      !updatedMeaning.trim() ||
+      newReadingList.length === 0
+    ) {
       alert('Please fill in all the fields and add at least one reading.');
       return;
     }
@@ -248,7 +252,7 @@ export default function MyLessons() {
     const updatedLesson: Lesson = {
       ...selectedLesson,
       kanjiList: [...(selectedLesson?.kanjiList || []), newKanji],
-      name: selectedLesson?.name || "Untitled Lesson",
+      name: selectedLesson?.name || 'Untitled Lesson',
       practiceSentences: selectedLesson?.practiceSentences || [],
     };
 
@@ -259,7 +263,7 @@ export default function MyLessons() {
     setNewReadingList([]);
 
     await putToFb(updatedLesson.id!, updatedLesson);
-  }
+  };
 
   const saveSentences = async () => {
     if (!selectedLesson || !updatedPracticeSentences) return;
@@ -420,9 +424,7 @@ export default function MyLessons() {
                     <DialogTitle>Edit Kanji</DialogTitle>
                     <DialogDescription>
                       <div className="flex flex-col">
-                        <label className="text-sm mt-2">
-                          Character
-                        </label>
+                        <label className="text-sm mt-2">Character</label>
                         <input
                           type="text"
                           id="term"
@@ -432,9 +434,7 @@ export default function MyLessons() {
                         />
                       </div>
                       <div className="flex flex-col">
-                        <label className="text-sm mt-2">
-                          Meaning
-                        </label>
+                        <label className="text-sm mt-2">Meaning</label>
                         <input
                           type="text"
                           id="meaning"
@@ -444,9 +444,7 @@ export default function MyLessons() {
                         />
                       </div>
                       <div className="flex flex-col">
-                        <label className="text-sm">
-                          Readings:
-                        </label>
+                        <label className="text-sm">Readings:</label>
                         {editingKanji?.kanji.readings.map((reading, idx) => (
                           <li
                             className="list-none flex justify-between items-center ml-12"
@@ -534,8 +532,7 @@ export default function MyLessons() {
                     value: '',
                     type: 'kun',
                   });
-                }
-                }
+                }}
               >
                 <IoIosAddCircle
                   size={42}
@@ -544,7 +541,11 @@ export default function MyLessons() {
               </DialogTrigger>
               <DialogContent className="mb-2">
                 <DialogHeader>
-                  <DialogTitle><h1 className="font-semibold">Add Kanji From its Character</h1></DialogTitle>
+                  <DialogTitle>
+                    <h1 className="font-semibold">
+                      Add Kanji From its Character
+                    </h1>
+                  </DialogTitle>
                   <DialogDescription>
                     {updatedCharacter.length > 1 && (
                       <p className="text-red-400">
@@ -570,13 +571,11 @@ export default function MyLessons() {
                       </div>
                     </div>
                     <h1 className="font-semibold">
-                      <p className="italic text-sm font-medium">OR </p> Add Kanji
-                      Manually
+                      <p className="italic text-sm font-medium">OR </p> Add
+                      Kanji Manually
                     </h1>
                     <div>
-                      <label className="p-2">
-                        Character
-                      </label>
+                      <label className="p-2">Character</label>
                       <input
                         className="border"
                         type="text"
@@ -586,9 +585,7 @@ export default function MyLessons() {
                       />
                     </div>
                     <div>
-                      <label className="p-2">
-                        Meaning
-                      </label>
+                      <label className="p-2">Meaning</label>
                       <input
                         className="border"
                         type="text"
@@ -632,13 +629,20 @@ export default function MyLessons() {
                             <option value="kun">Kun</option>
                             <option value="on">On</option>
                           </select>
-                          <Button onClick={() => {
-                            setNewReadingList((prevReadings) => [...prevReadings, newReading]);
-                            setNewReading({
-                              value: '',
-                              type: 'kun',
-                            });
-                          }}>Add Reading</Button>
+                          <Button
+                            onClick={() => {
+                              setNewReadingList((prevReadings) => [
+                                ...prevReadings,
+                                newReading,
+                              ]);
+                              setNewReading({
+                                value: '',
+                                type: 'kun',
+                              });
+                            }}
+                          >
+                            Add Reading
+                          </Button>
                         </div>
                       </div>
                     </div>

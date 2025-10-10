@@ -10,7 +10,9 @@ type Back = {
   english?: string;
 };
 
-export default function useFlashcardLesson(lessonId: string | string[] | undefined) {
+export default function useFlashcardLesson(
+  lessonId: string | string[] | undefined
+) {
   const [lesson, setLesson] = useState<Lesson | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
