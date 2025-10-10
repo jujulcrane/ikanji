@@ -1,0 +1,240 @@
+{
+  "title": "Quartet 1 Vocab",
+  "description": "Vocabulary from Quartet textbook - Handout 1 (ハンドアウト１)",
+  "items": [
+    {
+      "id": 1,
+      "page": 1,
+      "word": "習い事",
+      "reading": "ならいごと",
+      "meaning": "after-school acitivities, activities outside of school",
+      "readableKanji": "X",
+      "writableKanji": "X"
+    },
+    {
+      "id": 2,
+      "page": 1,
+      "word": "役に立つ",
+      "reading": "やくにたつ",
+      "meaning": "be useful",
+      "type": "うV",
+      "notes": "Kanji will be covered in Quartet Lesson 2"
+    },
+    {
+      "id": 3,
+      "page": 1,
+      "word": "Nのため{に/のN2}",
+      "reading": "",
+      "meaning": "for N",
+      "type": "文型・表現",
+      "notes": "This structural pattern will be covered again in Quartet Lesson 1"
+    },
+    {
+      "id": 4,
+      "page": 1,
+      "word": "それぞれ",
+      "reading": "",
+      "meaning": "respectively"
+    },
+    {
+      "id": 5,
+      "page": 1,
+      "word": "体操",
+      "reading": "たいそう",
+      "meaning": "gymnastics"
+    },
+    {
+      "id": 6,
+      "page": 1,
+      "word": "芸術",
+      "reading": "げいじゅつ",
+      "meaning": "art",
+      "readableKanji": "X",
+      "notes": "Genki Lesson 17読み物"
+    },
+    {
+      "id": 7,
+      "page": 1,
+      "word": "学習",
+      "reading": "がくしゅう",
+      "meaning": "study",
+      "readableKanji": "X",
+      "writableKanji": "X"
+    },
+    {
+      "id": 8,
+      "page": 1,
+      "word": "習字",
+      "reading": "しゅうじ",
+      "meaning": "calligraphy",
+      "readableKanji": "X",
+      "writableKanji": "X"
+    },
+    {
+      "id": 9,
+      "page": 1,
+      "word": "そろばん",
+      "reading": "そろばん",
+      "meaning": "respectively"
+    },
+    {
+      "id": 10,
+      "page": 1,
+      "word": "育つ",
+      "reading": "そだつ",
+      "meaning": "growing up",
+      "readableKanji": "X",
+      "type": "うV　(intransitive)",
+      "notes": "c.f.　育てる(transitive) Genki Lesson 22"
+    },
+    {
+      "id": 11,
+      "page": 1,
+      "word": "地域",
+      "reading": "ちいき",
+      "meaning": "region",
+      "readableKanji": "X"
+    },
+    {
+      "id": 12,
+      "page": 1,
+      "word": "費用",
+      "reading": "ひよう",
+      "meaning": "fee, cost",
+      "readableKanji": "X"
+    },
+    {
+      "id": 13,
+      "page": 2,
+      "word": "月謝",
+      "reading": "げっしゃ",
+      "meaning": "monthly fee"
+    },
+    {
+      "id": 14,
+      "page": 2,
+      "word": "入会金",
+      "reading": "にゅうかいきん",
+      "meaning": "admission fee",
+      "readableKanji": "X",
+      "writableKanji": "X"
+    },
+    {
+      "id": 15,
+      "page": 2,
+      "word": "だいたい",
+      "reading": "",
+      "meaning": "roughly"
+    },
+    {
+      "id": 16,
+      "page": 2,
+      "word": "受験",
+      "reading": "じゅけん",
+      "meaning": "taking entrance exam",
+      "notes": "Kanji will be covered in Quartet Lesson 1"
+    },
+    {
+      "id": 17,
+      "page": 2,
+      "word": "あるX",
+      "reading": "",
+      "meaning": "one, a certain X"
+    },
+    {
+      "id": 18,
+      "page": 2,
+      "word": "くらい",
+      "reading": "",
+      "meaning": "about , approximately"
+    },
+    {
+      "id": 19,
+      "page": 2,
+      "word": "通う",
+      "reading": "かよう",
+      "meaning": "to commute",
+      "readableKanji": "X",
+      "writableKanji": "X",
+      "type": "うV"
+    },
+    {
+      "id": 20,
+      "page": 2,
+      "word": "Vstem＋始める",
+      "reading": "Vstem＋はじめる",
+      "meaning": "to begin to do V",
+      "readableKanji": "X",
+      "writableKanji": "X",
+      "type": "文型・表現"
+    },
+    {
+      "id": 21,
+      "page": 2,
+      "word": "思い出す",
+      "reading": "おもいだす",
+      "meaning": "to recall",
+      "readableKanji": "X",
+      "writableKanji": "X",
+      "type": "うV",
+      "notes": "Genki Lesson 19 読み物"
+    },
+    {
+      "id": 22,
+      "page": 2,
+      "word": "図",
+      "reading": "ず",
+      "meaning": "figure, illustraion, picture",
+      "readableKanji": "X",
+      "writableKanji": "X"
+    },
+    {
+      "id": 23,
+      "page": 3,
+      "word": "場合",
+      "reading": "ばあい",
+      "meaning": "case",
+      "readableKanji": "X",
+      "writableKanji": "X",
+      "notes": "Genki Lesson 14 読み物"
+    },
+    {
+      "id": 24,
+      "page": 3,
+      "word": "嫌（な）",
+      "reading": "いや（な）",
+      "meaning": "unpleasant, annoying, disgusting, ",
+      "readableKanji": "X",
+      "type": "なAdj"
+    },
+    {
+      "id": 25,
+      "page": 3,
+      "word": "理由",
+      "reading": "りゆう",
+      "meaning": "reason",
+      "readableKanji": "X",
+      "writableKanji": "X"
+    },
+    {
+      "id": 26,
+      "page": 3,
+      "word": "Xを通して",
+      "reading": "Xをとおして",
+      "meaning": "through X",
+      "readableKanji": "X",
+      "writableKanji": "X",
+      "type": "文型・表現"
+    },
+    {
+      "id": 27,
+      "page": 3,
+      "word": "学ぶ",
+      "reading": "まなぶ",
+      "meaning": "to learn",
+      "readableKanji": "X",
+      "writableKanji": "X",
+      "type": "うV"
+    }
+  ]
+}
