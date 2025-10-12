@@ -28,6 +28,7 @@ export default function VocabPage() {
   const [showFlashcards, setShowFlashcards] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
+  const [isReversed, setIsReversed] = useState(false);
   const [isMeaningChecked, setIsMeaningChecked] = useState(true);
   const [isReadingsChecked, setIsReadingsChecked] = useState(true);
   const [vocabItems, setVocabItems] = useState<VocabItem[]>(vocabData.items);
@@ -55,7 +56,8 @@ export default function VocabPage() {
   const goToCard = (index: number) => {
     if (index >= 0 && index < vocabItems.length) {
       setCurrentIndex(index);
-      setIsFlipped(false);
+      // When reversed, start with flipped side (back/definition)
+      setIsFlipped(isReversed);
     }
   };
 
@@ -67,10 +69,14 @@ export default function VocabPage() {
     }
     setVocabItems(shuffled);
     setCurrentIndex(0);
-    setIsFlipped(false);
+    // When reversed, start with flipped side (back/definition)
+    setIsFlipped(isReversed);
   };
 
+  // Front is always the word
   const front = currentCard.word;
+
+  // Back is always meaning/readings based on checkboxes
   const back: {
     meaning?: string;
     readings?: string[];
@@ -103,36 +109,51 @@ export default function VocabPage() {
           </div>
         ) : (
           <>
-            <div className="mt-8 flex justify-center items-center">
-              <div className="flex items-center space-x-2 m-2">
-                <Checkbox
-                  id="meaning"
-                  checked={isMeaningChecked}
-                  onCheckedChange={() => setIsMeaningChecked(!isMeaningChecked)}
-                />
-                <label htmlFor="meaning" className="text-sm font-medium">
-                  Meaning
-                </label>
+            <div className="flex flex-col items-center space-y-4">
+              <div className="flex justify-center items-center">
+                <div className="flex items-center space-x-2 m-2">
+                  <Checkbox
+                    id="meaning"
+                    checked={isMeaningChecked}
+                    onCheckedChange={() =>
+                      setIsMeaningChecked(!isMeaningChecked)
+                    }
+                  />
+                  <label htmlFor="meaning" className="text-sm font-medium">
+                    Meaning
+                  </label>
 
-                <Checkbox
-                  id="readings"
-                  checked={isReadingsChecked}
-                  onCheckedChange={() =>
-                    setIsReadingsChecked(!isReadingsChecked)
-                  }
-                />
-                <label htmlFor="readings" className="text-sm font-medium">
-                  Readings
-                </label>
+                  <Checkbox
+                    id="readings"
+                    checked={isReadingsChecked}
+                    onCheckedChange={() =>
+                      setIsReadingsChecked(!isReadingsChecked)
+                    }
+                  />
+                  <label htmlFor="readings" className="text-sm font-medium">
+                    Readings
+                  </label>
+                </div>
+
+                <button
+                  type="button"
+                  className="rounded-sm p-1 px-2 text-sm bg-black text-white hover:opacity-70 cursor-pointer"
+                  onClick={shuffle}
+                  aria-label="Shuffle flashcards"
+                >
+                  <FaShuffle size={22} />
+                </button>
               </div>
 
               <button
-                type="button"
-                className="rounded-sm p-1 px-2 text-sm bg-black text-white hover:opacity-70 cursor-pointer"
-                onClick={shuffle}
-                aria-label="Shuffle flashcards"
+                onClick={() => {
+                  setIsReversed(!isReversed);
+                  // Toggle which side is shown
+                  setIsFlipped(!isFlipped);
+                }}
+                className="bg-gray-400 text-white text-sm p-2 rounded-sm hover:opacity-70 cursor-pointer"
               >
-                <FaShuffle size={22} />
+                Switch Term and Definition
               </button>
             </div>
 
@@ -161,6 +182,7 @@ export default function VocabPage() {
                 setShowFlashcards(false);
                 setCurrentIndex(0);
                 setIsFlipped(false);
+                setIsReversed(false);
                 setVocabItems(vocabData.items);
                 setIsMeaningChecked(true);
                 setIsReadingsChecked(true);
