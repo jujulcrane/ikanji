@@ -1,8 +1,10 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# Monorepo structure for ikanji
+# web/ - Next.js web app
+# mobile/ - React Native/Expo app
 
-# dependencies
-/node_modules
-/.pnp
+# Dependencies
+**/node_modules
+**/.pnp
 .pnp.*
 .yarn/*
 !.yarn/patches
@@ -10,38 +12,40 @@
 !.yarn/releases
 !.yarn/versions
 
-# testing
-/coverage
+# Testing
+**/coverage
 
-# next.js
-/.next/
-/out/
+# Build outputs
+**/build
+**/dist
+**/out
+**/.next
 
-# production
-/build
+# Environment files
+.env*
+!.env.example
 
-# misc
+# OS files
 .DS_Store
 *.pem
 
-# debug
+# Debug logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# env files (can opt-in for committing if needed)
-.env*
-
-# vercel
-.vercel
-
-# typescript
+# TypeScript
 *.tsbuildinfo
-next-env.d.ts
 
-# firebase config
+# IDE
+.vscode/
+.idea/
+
+# Firebase
 firebase.json
+*firebase-adminsdk*.json
 
-ikanji-fde0d-firebase-adminsdk-5rg25-1fc8f5cc96.json
+
 APP_SPECS.md
 IMPLEMENTATION_PLAN.md
+VOCAB_PAGE_SPECS.md

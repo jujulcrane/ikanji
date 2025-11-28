@@ -7,7 +7,7 @@ import Flashcard from '@/components/Flashcards/Flashcard';
 import FlashcardNavigation from '@/components/Flashcards/FlashcardNavigation';
 import { Checkbox } from '@/components/ui/checkbox';
 import { FaShuffle } from 'react-icons/fa6';
-import vocabData from '../../../data/quartet1-vocab.json';
+import vocabData from '../../../../data/quartet1-vocab.json';
 
 const AUTHORIZED_USER_ID = 'V7ZOSGug90XpRG09dFPJX9nNZex2';
 
