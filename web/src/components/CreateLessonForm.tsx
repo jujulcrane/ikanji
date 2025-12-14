@@ -6,6 +6,7 @@ import { getIdToken } from 'firebase/auth';
 import { TbTruckLoading } from 'react-icons/tb';
 import { fetchKanji } from '@/hooks/fetch-kanji';
 import { useRouter } from 'next/router';
+import { LessonFileUpload } from './LessonFileUpload';
 
 export function CreateNewLessonForm() {
   const [kanjiChar, setKanjiChar] = useState<string>('');
@@ -86,6 +87,17 @@ export function CreateNewLessonForm() {
 
     setJapanese('');
     setEnglish('');
+  };
+
+  const handleFileDataParsed = (data: {
+    lessonName: string;
+    kanjiList: Kanji[];
+    practiceSentences: PracticeSentence[];
+  }) => {
+    // Populate form with parsed data
+    setName(data.lessonName);
+    setKanjiList(data.kanjiList);
+    setPracticeSentences(data.practiceSentences);
   };
 
   const handleSubmit = async () => {
@@ -242,6 +254,7 @@ export function CreateNewLessonForm() {
             onSubmit={handleSubmit}
           >
             <h1 className="font-semibold p-8 text-lg">Create New Lesson</h1>
+
             <div>
               <label htmlFor="name" className="p-2">
                 Lesson Name
@@ -392,9 +405,19 @@ export function CreateNewLessonForm() {
               <Button onClick={handleSentenceSubmit}>Add</Button>
             </div>
 
+            <div className="pt-8 mt-8 border-t-2 border-gray-200">
+              <h2 className="text-lg font-semibold mb-4">
+                Or Import Lesson from File
+              </h2>
+              <LessonFileUpload onDataParsed={handleFileDataParsed} />
+            </div>
+
             <Button
               onClick={handleSubmit}
-              disabled={kanjiList.length == 0 || name.trim().length < 1}
+              disabled={
+                name.trim().length < 1 ||
+                (kanjiList.length == 0 && practiceSentences.length == 0)
+              }
             >
               Create Lesson
             </Button>
