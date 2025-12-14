@@ -23,14 +23,22 @@ const iosClientId =
   process.env.EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID;
 
 if (webClientId) {
-  GoogleSignin.configure({
-    webClientId,
-    iosClientId, // Explicitly provide iOS client ID
-    offlineAccess: false,
-  });
+  try {
+    GoogleSignin.configure({
+      webClientId,
+      iosClientId, // Explicitly provide iOS client ID
+      offlineAccess: false,
+    });
+  } catch (error) {
+    console.error('Error configuring Google Sign In:', error);
+  }
 }
 
 export const signInWithGoogle = async () => {
+  if (!auth) {
+    throw new Error('Firebase is not initialized. Please check your configuration.');
+  }
+
   try {
     // Check if Google Play services are available (Android)
     await GoogleSignin.hasPlayServices();
@@ -86,6 +94,10 @@ export const signInWithGoogle = async () => {
 };
 
 export const signInWithEmail = async (email: string, password: string) => {
+  if (!auth) {
+    throw new Error('Firebase is not initialized. Please check your configuration.');
+  }
+
   try {
     const result = await signInWithEmailAndPassword(auth, email, password);
     return result.user;
@@ -100,6 +112,10 @@ export const createAccountWithEmail = async (
   password: string,
   displayName: string
 ) => {
+  if (!auth) {
+    throw new Error('Firebase is not initialized. Please check your configuration.');
+  }
+
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
@@ -128,6 +144,10 @@ export const createAccountWithEmail = async (
 };
 
 export const signOut = async () => {
+  if (!auth) {
+    throw new Error('Firebase is not initialized. Please check your configuration.');
+  }
+
   try {
     await firebaseSignOut(auth);
   } catch (error) {
@@ -137,9 +157,17 @@ export const signOut = async () => {
 };
 
 export const getCurrentUser = (): FirebaseUser | null => {
+  if (!auth) {
+    return null;
+  }
   return auth.currentUser;
 };
 
 export const onAuthStateChange = (callback: (user: FirebaseUser | null) => void) => {
+  if (!auth) {
+    // If Firebase is not initialized, call callback with null and return a no-op unsubscribe
+    callback(null);
+    return () => {};
+  }
   return onAuthStateChanged(auth, callback);
 };

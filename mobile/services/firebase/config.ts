@@ -1,6 +1,6 @@
-import { initializeApp } from 'firebase/app';
-import { initializeAuth, getReactNativePersistence } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
+import { initializeApp, FirebaseApp } from 'firebase/app';
+import { initializeAuth, getReactNativePersistence, Auth } from 'firebase/auth';
+import { getFirestore, Firestore } from 'firebase/firestore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Constants from 'expo-constants';
 
@@ -15,29 +15,44 @@ const firebaseConfig = {
 };
 
 // Validate Firebase configuration
-const validateConfig = () => {
+const validateConfig = (): boolean => {
   const requiredKeys = ['apiKey', 'authDomain', 'projectId', 'storageBucket', 'messagingSenderId', 'appId'];
   const missingKeys = requiredKeys.filter(key => !firebaseConfig[key as keyof typeof firebaseConfig]);
 
   if (missingKeys.length > 0) {
-    console.warn(
-      `⚠️ Missing Firebase configuration keys: ${missingKeys.join(', ')}\n` +
-      'Please update your .env file with your Firebase credentials.'
+    console.error(
+      `❌ Missing Firebase configuration keys: ${missingKeys.join(', ')}\n` +
+      'Firebase services will not work. Please configure environment variables in EAS or .env file.'
     );
+    return false;
   }
+  return true;
 };
 
-validateConfig();
+let app: FirebaseApp | null = null;
+let auth: Auth | null = null;
+let db: Firestore | null = null;
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
+// Only initialize Firebase if configuration is valid
+if (validateConfig()) {
+  try {
+    // Initialize Firebase
+    app = initializeApp(firebaseConfig);
 
-// Initialize Firebase Auth with AsyncStorage persistence
-export const auth = initializeAuth(app, {
-  persistence: getReactNativePersistence(AsyncStorage),
-});
+    // Initialize Firebase Auth with AsyncStorage persistence
+    auth = initializeAuth(app, {
+      persistence: getReactNativePersistence(AsyncStorage),
+    });
 
-// Initialize Firestore
-export const db = getFirestore(app);
+    // Initialize Firestore
+    db = getFirestore(app);
 
+    console.log('✅ Firebase initialized successfully');
+  } catch (error) {
+    console.error('❌ Error initializing Firebase:', error);
+  }
+}
+
+// Export with null checks
+export { auth, db };
 export default app;

@@ -37,14 +37,16 @@ module.exports = {
     },
     ios: {
       supportsTablet: true,
-      bundleIdentifier: 'com.ikanji.app',
+      bundleIdentifier: 'com.juju.ikanji',
+      buildNumber: '1',
     },
     android: {
       adaptiveIcon: {
         foregroundImage: './assets/adaptive-icon.png',
         backgroundColor: '#EFE5C8',
       },
-      package: 'com.ikanji.app',
+      package: 'com.juju.ikanji',
+      versionCode: 1,
       edgeToEdgeEnabled: true,
       predictiveBackGestureEnabled: false,
     },
@@ -53,6 +55,9 @@ module.exports = {
     },
     plugins,
     extra: {
+      eas: {
+        projectId: 'ff981917-8d2f-4268-99e2-4dbdd207e22b',
+      },
       EXPO_PUBLIC_FIREBASE_API_KEY: process.env.EXPO_PUBLIC_FIREBASE_API_KEY,
       EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN: process.env.EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN,
       EXPO_PUBLIC_FIREBASE_PROJECT_ID: process.env.EXPO_PUBLIC_FIREBASE_PROJECT_ID,

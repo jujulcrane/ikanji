@@ -20,6 +20,10 @@ const LESSONS_COLLECTION = 'lessons';
 
 // User operations
 export const createUser = async (user: User) => {
+  if (!db) {
+    throw new Error('Firestore is not initialized. Please check your configuration.');
+  }
+
   try {
     const userRef = doc(db, USERS_COLLECTION, user.id || '');
     await updateDoc(userRef, {
@@ -36,6 +40,11 @@ export const createUser = async (user: User) => {
 };
 
 export const getUser = async (userId: string): Promise<User | null> => {
+  if (!db) {
+    console.warn('Firestore is not initialized. Returning null.');
+    return null;
+  }
+
   try {
     const userRef = doc(db, USERS_COLLECTION, userId);
     const userSnap = await getDoc(userRef);
@@ -52,6 +61,10 @@ export const getUser = async (userId: string): Promise<User | null> => {
 
 // Lesson operations
 export const createLesson = async (lesson: Lesson, userId: string): Promise<string> => {
+  if (!db) {
+    throw new Error('Firestore is not initialized. Please check your configuration.');
+  }
+
   try {
     const lessonData = {
       ...lesson,
@@ -69,6 +82,11 @@ export const createLesson = async (lesson: Lesson, userId: string): Promise<stri
 };
 
 export const getLessons = async (userId: string): Promise<Lesson[]> => {
+  if (!db) {
+    console.warn('Firestore is not initialized. Returning empty array.');
+    return [];
+  }
+
   try {
     const q = query(
       collection(db, LESSONS_COLLECTION),
@@ -91,6 +109,11 @@ export const getLessons = async (userId: string): Promise<Lesson[]> => {
 };
 
 export const getLesson = async (lessonId: string): Promise<Lesson | null> => {
+  if (!db) {
+    console.warn('Firestore is not initialized. Returning null.');
+    return null;
+  }
+
   try {
     const lessonRef = doc(db, LESSONS_COLLECTION, lessonId);
     const lessonSnap = await getDoc(lessonRef);
@@ -109,6 +132,10 @@ export const updateLesson = async (
   lessonId: string,
   updates: Partial<Lesson>
 ): Promise<void> => {
+  if (!db) {
+    throw new Error('Firestore is not initialized. Please check your configuration.');
+  }
+
   try {
     const lessonRef = doc(db, LESSONS_COLLECTION, lessonId);
     await updateDoc(lessonRef, updates);
@@ -119,6 +146,10 @@ export const updateLesson = async (
 };
 
 export const deleteLesson = async (lessonId: string): Promise<void> => {
+  if (!db) {
+    throw new Error('Firestore is not initialized. Please check your configuration.');
+  }
+
   try {
     const lessonRef = doc(db, LESSONS_COLLECTION, lessonId);
     await deleteDoc(lessonRef);
@@ -129,6 +160,11 @@ export const deleteLesson = async (lessonId: string): Promise<void> => {
 };
 
 export const getPublicLessons = async (): Promise<Lesson[]> => {
+  if (!db) {
+    console.warn('Firestore is not initialized. Returning empty array.');
+    return [];
+  }
+
   try {
     const q = query(
       collection(db, LESSONS_COLLECTION),
